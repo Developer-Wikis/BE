@@ -18,7 +18,7 @@ public class QuestionCreateController {
 
   @PostMapping
   public ResponseEntity<Long> create(@RequestBody CreateQuestionRequest createQuestionRequest) {
-    Long id = questionCreateService.questionCreate(createQuestionRequest);
+    Long id = questionCreateService.create(createQuestionRequest);
     return ResponseEntity.ok(id);
   }
 }

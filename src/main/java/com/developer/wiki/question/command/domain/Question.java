@@ -67,4 +67,21 @@ public class Question {
       throw new NotMatchPasswordException();
     }
   }
+
+  public void changePassword(String password) {
+    matchPassword(password);
+    this.password = password;
+  }
+
+  public void changeTitle(String title) {
+    this.title = title;
+  }
+
+  public void changeCategory(Category category) {
+    this.category = category;
+  }
+
+  public void changeAdditionQuestions(List<String> additionQuestions) {
+    this.additionQuestions = additionQuestions;
+  }
 }

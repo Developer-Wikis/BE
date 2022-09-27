@@ -15,7 +15,7 @@ public class QuestionCreateService {
 
   private final QuestionRepository questionRepository;
 
-  public Long questionCreate(CreateQuestionRequest createQuestionRequest) {
+  public Long create(CreateQuestionRequest createQuestionRequest) {
     Question question = QuestionConverter.toQuestion(createQuestionRequest);
     return questionRepository.save(question).getId();
   }
