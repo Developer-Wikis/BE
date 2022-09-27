@@ -3,6 +3,7 @@ package com.developer.wiki.question.command.domain;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -45,6 +47,9 @@ public class Question {
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
+  private List<Comment> histories = new ArrayList<>();
 
   public Question(String title, String nickname, String password, Category category,
       List<String> additionQuestions) {
