@@ -1,7 +1,7 @@
 package com.developer.wiki.question.presentation;
 
+import com.developer.wiki.question.command.application.CommentPasswordMatchService;
 import com.developer.wiki.question.command.application.MatchPasswordRequest;
-import com.developer.wiki.question.command.application.QuestionPasswordMatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/questions")
+@RequestMapping("/api/v1/comments")
 @RequiredArgsConstructor
 public class CommentPasswordMatchController {
 
-  private final QuestionPasswordMatchService questionPasswordMatchService;
+  private final CommentPasswordMatchService commentPasswordMatchService;
 
-  @PostMapping("{questionId}/match")
-  public ResponseEntity<Void> matchPassword(@PathVariable Long questionId,
+  @PostMapping("{commentId}/match")
+  public ResponseEntity<Void> matchPassword(@PathVariable Long commentId,
       @RequestBody MatchPasswordRequest matchPasswordRequest) {
-    questionPasswordMatchService.matchPassword(questionId, matchPasswordRequest);
+    commentPasswordMatchService.matchPassword(commentId, matchPasswordRequest);
     return ResponseEntity.ok(null);
   }
 }
