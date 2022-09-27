@@ -1,6 +1,6 @@
 package com.developer.wiki.question.command.application.comment;
 
-import com.developer.wiki.question.command.application.CreateCommentRequest;
+import com.developer.wiki.question.command.application.dto.CreateCommentRequest;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.CommentRepository;
 import com.developer.wiki.question.command.domain.EntityNotFoundException;

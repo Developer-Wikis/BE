@@ -1,6 +1,6 @@
 package com.developer.wiki.question.command.application.question;
 
-import com.developer.wiki.question.command.application.PasswordRequest;
+import com.developer.wiki.question.command.application.dto.PasswordRequest;
 import com.developer.wiki.question.command.domain.EntityNotFoundException;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;

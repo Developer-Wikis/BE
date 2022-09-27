@@ -1,4 +1,4 @@
-package com.developer.wiki.question.command.application;
+package com.developer.wiki.question.command.application.dto;
 
 import com.developer.wiki.question.command.domain.Category;
 import java.util.List;

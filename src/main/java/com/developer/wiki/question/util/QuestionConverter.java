@@ -1,6 +1,6 @@
 package com.developer.wiki.question.util;
 
-import com.developer.wiki.question.command.application.CreateQuestionRequest;
+import com.developer.wiki.question.command.application.dto.CreateQuestionRequest;
 import com.developer.wiki.question.command.domain.Question;
 
 public class QuestionConverter {

@@ -1,4 +1,4 @@
-package com.developer.wiki.question.command.application;
+package com.developer.wiki.question.command.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCommentRequest {
+public class PasswordRequest {
 
-  private String nickname;
   private String password;
-  private String content;
 }

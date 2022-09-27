@@ -1,6 +1,6 @@
 package com.developer.wiki.question.command.application.question;
 
-import com.developer.wiki.question.command.application.ModifyQuestionRequest;
+import com.developer.wiki.question.command.application.dto.ModifyQuestionRequest;
 import com.developer.wiki.question.command.domain.EntityNotFoundException;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;

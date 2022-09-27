@@ -1,7 +1,7 @@
 package com.developer.wiki.question.presentation.comment;
 
-import com.developer.wiki.question.command.application.PasswordRequest;
 import com.developer.wiki.question.command.application.comment.CommentPasswordMatchService;
+import com.developer.wiki.question.command.application.dto.PasswordRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

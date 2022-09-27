@@ -1,6 +1,6 @@
 package com.developer.wiki.question.presentation.question;
 
-import com.developer.wiki.question.command.application.PasswordRequest;
+import com.developer.wiki.question.command.application.dto.PasswordRequest;
 import com.developer.wiki.question.command.application.question.QuestionDeleteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
