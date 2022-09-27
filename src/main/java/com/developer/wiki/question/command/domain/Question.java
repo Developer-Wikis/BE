@@ -1,5 +1,6 @@
 package com.developer.wiki.question.command.domain;
 
+import com.developer.wiki.question.command.PasswordEncrypter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,5 +60,11 @@ public class Question {
     this.category = category;
     this.additionQuestions = additionQuestions;
     this.createdAt = LocalDateTime.now();
+  }
+
+  public void matchPassword(String password) {
+    if (!PasswordEncrypter.isMatch(password, this.password)) {
+      throw new NotMatchPasswordException();
+    }
   }
 }

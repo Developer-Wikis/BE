@@ -1,5 +1,6 @@
 package com.developer.wiki.question.command.domain;
 
+import com.developer.wiki.question.command.PasswordEncrypter;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,4 +40,9 @@ public class Comment {
   @JoinColumn(name = "question")
   private Question question;
 
+  public void matchPassword(String password) {
+    if (!PasswordEncrypter.isMatch(password, this.password)) {
+      throw new NotMatchPasswordException();
+    }
+  }
 }
