@@ -45,6 +45,7 @@ public class Comment {
     this.password = password;
     this.content = content;
     this.question = question;
+    this.createdAt = LocalDateTime.now();
   }
 
   public void matchPassword(String password) {
