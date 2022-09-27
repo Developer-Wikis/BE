@@ -58,7 +58,7 @@ public class Question {
   private LocalDateTime createdAt;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
-  private List<Comment> histories = new ArrayList<>();
+  private List<Comment> comments = new ArrayList<>();
 
   public Question(String title, String nickname, String password, Category category,
       List<String> additionQuestions) {
