@@ -1,7 +1,7 @@
-package com.developer.wiki.question.presentation;
+package com.developer.wiki.question.presentation.question;
 
 import com.developer.wiki.question.command.application.CreateQuestionRequest;
-import com.developer.wiki.question.command.application.QuestionCreateService;
+import com.developer.wiki.question.command.application.question.QuestionCreateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

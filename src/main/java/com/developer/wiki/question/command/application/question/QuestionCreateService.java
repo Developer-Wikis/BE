@@ -1,6 +1,7 @@
-package com.developer.wiki.question.command.application;
+package com.developer.wiki.question.command.application.question;
 
 import com.developer.wiki.question.command.QuestionConverter;
+import com.developer.wiki.question.command.application.CreateQuestionRequest;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
 import lombok.RequiredArgsConstructor;

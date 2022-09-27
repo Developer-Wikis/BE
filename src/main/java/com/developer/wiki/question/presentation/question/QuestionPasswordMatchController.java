@@ -1,7 +1,7 @@
-package com.developer.wiki.question.presentation;
+package com.developer.wiki.question.presentation.question;
 
-import com.developer.wiki.question.command.application.MatchPasswordRequest;
-import com.developer.wiki.question.command.application.QuestionPasswordMatchService;
+import com.developer.wiki.question.command.application.PasswordRequest;
+import com.developer.wiki.question.command.application.question.QuestionPasswordMatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +19,8 @@ public class QuestionPasswordMatchController {
 
   @PostMapping("{questionId}/match")
   public ResponseEntity<Void> matchPassword(@PathVariable Long questionId,
-      @RequestBody MatchPasswordRequest matchPasswordRequest) {
-    questionPasswordMatchService.matchPassword(questionId, matchPasswordRequest);
+      @RequestBody PasswordRequest passwordRequest) {
+    questionPasswordMatchService.matchPassword(questionId, passwordRequest);
     return ResponseEntity.ok(null);
   }
 }
