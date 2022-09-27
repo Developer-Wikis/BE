@@ -1,4 +1,4 @@
-package com.developer.wiki.question.command;
+package com.developer.wiki.question.util;
 
 import com.developer.wiki.question.command.application.CreateCommentRequest;
 import com.developer.wiki.question.command.domain.Comment;

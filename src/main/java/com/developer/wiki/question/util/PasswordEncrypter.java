@@ -1,4 +1,4 @@
-package com.developer.wiki.question.command;
+package com.developer.wiki.question.util;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 

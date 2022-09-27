@@ -1,6 +1,6 @@
 package com.developer.wiki.question.command.domain;
 
-import com.developer.wiki.question.command.PasswordEncrypter;
+import com.developer.wiki.question.util.PasswordEncrypter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
