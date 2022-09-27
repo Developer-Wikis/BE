@@ -1,0 +1,20 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: 'create-drop'
+    properties:
+      hibernate.format_sql: true
+      hibernate:
+        default_batch_fetch_size: 1000
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: ENC(Shi88mmynj9fB5p3hGXpGp0EA7svRF8NcrHTs78QiLT3BEcDard0vt+BiQ1w/R+s76kCYTf9H+Y=)
+    username: ENC(/hjUBd+M+No2p8plU+7ocg==)
+    password: ENC(ulowOhMLazuXDVAwlywccg==)
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
