@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 public class SummaryCommentResponse {
 
+  private Long id;
   private String nickname;
   private String content;
   @DateTimeFormat(pattern = "yyyy-MM-dd")

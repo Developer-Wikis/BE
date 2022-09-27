@@ -15,6 +15,7 @@ public class CommentConverter {
 
   public static SummaryCommentResponse ofSummary(Comment comment) {
     return SummaryCommentResponse.builder()
+        .id(comment.getId())
         .nickname(comment.getNickname())
         .content(comment.getContent())
         .createdAt(comment.getCreatedAt())
