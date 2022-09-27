@@ -37,7 +37,7 @@ public class Comment {
   private LocalDateTime createdAt;
 
   @ManyToOne
-  @JoinColumn(name = "question")
+  @JoinColumn(name = "question_id")
   private Question question;
 
   public Comment(String nickname, String password, String content, Question question) {

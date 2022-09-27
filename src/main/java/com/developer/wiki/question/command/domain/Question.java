@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "question")
@@ -43,6 +44,13 @@ public class Question {
   @Column(name = "category")
   private Category category = Category.없음;
 
+  @Column(name = "view_count")
+  private Long viewCount;
+
+  @Formula("(select count(1) from comment c where c.question_id=id)")
+  @Column(name = "comment_count")
+  private Long commentCount;
+
   @ElementCollection(fetch = FetchType.LAZY)
   private List<String> additionQuestions = new ArrayList<>();
 
@@ -58,6 +66,7 @@ public class Question {
     this.nickname = nickname;
     this.password = password;
     this.category = category;
+    this.viewCount = 0L;
     this.additionQuestions = additionQuestions;
     this.createdAt = LocalDateTime.now();
   }
