@@ -40,8 +40,7 @@ public class Comment {
   @JoinColumn(name = "question")
   private Question question;
 
-  public Comment(String nickname, String password, String content,
-      Question question) {
+  public Comment(String nickname, String password, String content, Question question) {
     this.nickname = nickname;
     this.password = password;
     this.content = content;
@@ -52,5 +51,14 @@ public class Comment {
     if (!PasswordEncrypter.isMatch(password, this.password)) {
       throw new NotMatchPasswordException();
     }
+  }
+
+  public void changePassword(String password) {
+    matchPassword(password);
+    this.password = password;
+  }
+
+  public void changeContent(String content) {
+    this.content = content;
   }
 }

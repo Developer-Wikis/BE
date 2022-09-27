@@ -1,7 +1,7 @@
 package com.developer.wiki.question.presentation.comment;
 
-import com.developer.wiki.question.command.application.comment.CommentPasswordMatchService;
-import com.developer.wiki.question.command.application.dto.PasswordRequest;
+import com.developer.wiki.question.command.application.comment.CommentModifyService;
+import com.developer.wiki.question.command.application.dto.ModifyCommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CommentModifyController {
 
-  private final CommentPasswordMatchService commentPasswordMatchService;
+  private final CommentModifyService commentModifyService;
 
   @PutMapping("/{commentId}")
   public ResponseEntity<Void> modify(@PathVariable Long commentId,
-      @RequestBody PasswordRequest passwordRequest) {
-    commentPasswordMatchService.matchPassword(commentId, passwordRequest);
+      @RequestBody ModifyCommentRequest modifyCommentRequest) {
+    commentModifyService.modify(commentId, modifyCommentRequest);
     return ResponseEntity.ok(null);
   }
 }
