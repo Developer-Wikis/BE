@@ -14,7 +14,7 @@ public class CommentPasswordMatchService {
 
   private final CommentRepository commentRepository;
 
-  public void matchPassword(Long id, MatchPasswordRequest passwordRequest) {
+  public void matchPassword(Long id, PasswordRequest passwordRequest) {
     Comment comment = commentRepository.findById(id).orElseThrow(EntityExistsException::new);
     comment.matchPassword(passwordRequest.getPassword());
   }

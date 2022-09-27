@@ -1,4 +1,4 @@
-package com.developer.wiki.question.presentation;
+package com.developer.wiki.question.presentation.comment;
 
 import com.developer.wiki.question.command.application.CommentPasswordMatchService;
 import com.developer.wiki.question.command.application.PasswordRequest;

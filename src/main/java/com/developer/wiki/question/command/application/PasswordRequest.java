@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MatchPasswordRequest {
+public class PasswordRequest {
 
   private String password;
 }
