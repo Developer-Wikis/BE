@@ -1,5 +1,6 @@
-package com.developer.wiki.question.command.application;
+package com.developer.wiki.question.command.application.comment;
 
+import com.developer.wiki.question.command.application.PasswordRequest;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.CommentRepository;
 import com.developer.wiki.question.command.domain.EntityNotFoundException;
@@ -14,7 +15,7 @@ public class CommentDeleteService {
 
   private final CommentRepository commentRepository;
 
-  public void commentDelete(Long id, PasswordRequest passwordRequest) {
+  public void delete(Long id, PasswordRequest passwordRequest) {
     Comment comment = commentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     comment.matchPassword(passwordRequest.getPassword());
     commentRepository.delete(comment);

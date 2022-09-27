@@ -1,5 +1,6 @@
-package com.developer.wiki.question.command.application;
+package com.developer.wiki.question.command.application.comment;
 
+import com.developer.wiki.question.command.application.PasswordRequest;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.CommentRepository;
 import javax.persistence.EntityExistsException;
