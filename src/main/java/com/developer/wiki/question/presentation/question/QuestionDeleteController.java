@@ -16,7 +16,7 @@ public class QuestionDeleteController {
 
   private final QuestionDeleteService questionDeleteService;
 
-  @DeleteMapping("{questionId}")
+  @DeleteMapping("/{questionId}")
   public ResponseEntity<Void> delete(@PathVariable Long questionId, PasswordRequest passwordRequest) {
     questionDeleteService.delete(questionId,passwordRequest);
     return ResponseEntity.ok(null);

@@ -16,7 +16,7 @@ public class CommentDeleteController {
 
   private final CommentDeleteService commentDeleteService;
 
-  @DeleteMapping("{commentId}")
+  @DeleteMapping("/{commentId}")
   public ResponseEntity<Void> delete(@PathVariable Long commentId,
       PasswordRequest passwordRequest) {
     commentDeleteService.delete(commentId, passwordRequest);

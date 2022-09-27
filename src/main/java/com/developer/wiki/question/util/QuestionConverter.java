@@ -2,6 +2,7 @@ package com.developer.wiki.question.util;
 
 import com.developer.wiki.question.command.application.dto.CreateQuestionRequest;
 import com.developer.wiki.question.command.domain.Question;
+import com.developer.wiki.question.query.application.DetailQuestionResponse;
 import com.developer.wiki.question.query.application.SummaryQuestionResponse;
 
 public class QuestionConverter {
@@ -17,5 +18,12 @@ public class QuestionConverter {
         .nickname(question.getNickname()).category(question.getCategory())
         .viewCount(question.getViewCount()).commentCount(question.getCommentCount())
         .createdAt(question.getCreatedAt()).build();
+  }
+
+  public static DetailQuestionResponse ofDetail(Question question) {
+    return DetailQuestionResponse.builder().id(question.getId()).title(question.getTitle())
+        .nickname(question.getNickname()).category(question.getCategory())
+        .additionQuestions(question.getAdditionQuestions()).viewCount(question.getViewCount())
+        .commentCount(question.getCommentCount()).createdAt(question.getCreatedAt()).build();
   }
 }

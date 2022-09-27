@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +17,7 @@ public class QuestionSummaryController {
 
   private final QuestionSummaryService questionSummaryService;
 
-  @PostMapping
+  @GetMapping
   public ResponseEntity<Slice<SummaryQuestionResponse>> getSlice(Pageable pageable) {
     Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findSlice(pageable);
     return ResponseEntity.ok(summarySlice);

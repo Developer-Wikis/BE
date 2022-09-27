@@ -17,7 +17,7 @@ public class QuestionPasswordMatchController {
 
   private final QuestionPasswordMatchService questionPasswordMatchService;
 
-  @PostMapping("{questionId}/match")
+  @PostMapping("/{questionId}/match")
   public ResponseEntity<Void> matchPassword(@PathVariable Long questionId,
       @RequestBody PasswordRequest passwordRequest) {
     questionPasswordMatchService.matchPassword(questionId, passwordRequest);
