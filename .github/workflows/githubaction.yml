@@ -49,3 +49,9 @@ jobs:
       run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
+          
+    - name: Docker build
+      run: |
+           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+           docker build -t zzandi .
+           docker push ${{ secrets.DOCKER_HUB_REPO }}
