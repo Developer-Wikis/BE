@@ -57,7 +57,7 @@ jobs:
            docker tag wiki ${{ secrets.DOCKER_HUB_REPO }}:${GITHUB_SHA::7}
            docker push ${{ secrets.DOCKER_HUB_REPO }}:${GITHUB_SHA::7}
            
-    - name: Deploy
+    - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.NCP_SERVER_HOST }}
