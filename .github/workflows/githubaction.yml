@@ -42,7 +42,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew -Djasypt.encryptor.password=1234 build
       
     - name: Cleanup Gradle Cache
       if: ${{ always() }}
