@@ -53,5 +53,5 @@ jobs:
     - name: Docker build
       run: |
            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-           docker build -t zzandi .
+           docker build . -t wiki
            docker push ${{ secrets.DOCKER_HUB_REPO }}
