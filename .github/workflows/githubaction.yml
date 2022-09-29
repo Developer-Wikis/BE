@@ -42,7 +42,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build with Gradle
-      run: ./gradlew -Djasypt.encryptor.password=1234 build
+      run: ./gradlew build
       
     - name: Cleanup Gradle Cache
       if: ${{ always() }}
@@ -54,5 +54,4 @@ jobs:
       run: |
            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
            docker build -t zzandi .
-           docker tag zzandi ${{ secrets.DOCKER_HUB_REPO }}:${GITHUB_SHA::7}
-           docker push ${{ secrets.DOCKER_HUB_REPO }}:${GITHUB_SHA::7}
+           docker push ${{ secrets.DOCKER_HUB_REPO }}
