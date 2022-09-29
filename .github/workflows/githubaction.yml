@@ -61,8 +61,8 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.NCP_SERVER_HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        username: root
+        key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: whoami
      
