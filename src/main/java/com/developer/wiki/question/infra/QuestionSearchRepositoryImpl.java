@@ -4,12 +4,11 @@ import static com.developer.wiki.question.command.domain.QQuestion.question;
 
 import com.developer.wiki.question.command.domain.Category;
 import com.developer.wiki.question.command.domain.Question;
-import com.developer.wiki.question.command.domain.QuestionRepositoryCustom;
+import com.developer.wiki.question.command.domain.QuestionSearchRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import javax.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
 
 @Repository
-public class QuestionSearchRepositoryImpl implements QuestionRepositoryCustom {
+public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
 
   private final JPAQueryFactory jpaQueryFactory;
 
