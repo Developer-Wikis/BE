@@ -21,8 +21,9 @@ public class QuestionSummaryController {
 
   @GetMapping
   public ResponseEntity<Slice<SummaryQuestionResponse>> getSlice(
-      @RequestParam(required = false) Category category, Pageable pageable) {
-    Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findSlice(pageable,category);
+      @RequestParam(required = false) String category, Pageable pageable) {
+    Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findSlice(pageable,
+        Category.of(category));
     return ResponseEntity.ok(summarySlice);
   }
 }

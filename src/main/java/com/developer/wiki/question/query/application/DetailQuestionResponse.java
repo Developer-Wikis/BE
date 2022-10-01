@@ -26,4 +26,6 @@ public class DetailQuestionResponse {
   private Long commentCount;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDateTime createdAt;
+  private String prevId;
+  private String nextId;
 }
