@@ -55,7 +55,7 @@ jobs:
            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
            docker build . -t wiki
            docker tag wiki ${{ secrets.DOCKER_HUB_REPO }}:1.0
-           docker push ${{ secrets.DOCKER_HUB_REPO }}:${GITHUB_SHA::7}
+           docker push ${{ secrets.DOCKER_HUB_REPO }}:1.0
            
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
