@@ -62,7 +62,8 @@ jobs:
       with:
         host: ${{ secrets.NCP_SERVER_HOST }}
         username: root
-        key: ${{ secrets.PRIVATE_KEY }}
+        password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: whoami
+        script: | 
+          docker ps
      
