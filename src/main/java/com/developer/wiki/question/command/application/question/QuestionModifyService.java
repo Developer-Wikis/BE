@@ -1,6 +1,7 @@
 package com.developer.wiki.question.command.application.question;
 
 import com.developer.wiki.question.command.application.dto.ModifyQuestionRequest;
+import com.developer.wiki.question.command.domain.Category;
 import com.developer.wiki.question.command.domain.EntityNotFoundException;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
@@ -20,7 +21,7 @@ public class QuestionModifyService {
     question.matchPassword(modifyQuestionRequest.getPassword());
     question.changePassword(modifyQuestionRequest.getPassword());
     question.changeTitle(modifyQuestionRequest.getTitle());
-    question.changeCategory(modifyQuestionRequest.getCategory());
+    question.changeCategory(Category.of(modifyQuestionRequest.getCategory()));
     question.changeAdditionQuestions(modifyQuestionRequest.getAdditionQuestions());
   }
 }

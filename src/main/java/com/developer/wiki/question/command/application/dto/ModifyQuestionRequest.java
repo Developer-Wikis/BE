@@ -1,6 +1,5 @@
 package com.developer.wiki.question.command.application.dto;
 
-import com.developer.wiki.question.command.domain.Category;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +14,6 @@ public class ModifyQuestionRequest {
 
   private String password;
   private String title;
-  private Category category;
+  private String category;
   private List<String> additionQuestions;
 }

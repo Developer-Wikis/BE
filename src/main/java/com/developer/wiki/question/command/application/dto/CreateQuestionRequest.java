@@ -1,6 +1,5 @@
 package com.developer.wiki.question.command.application.dto;
 
-import com.developer.wiki.question.command.domain.Category;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
@@ -21,8 +20,8 @@ public class CreateQuestionRequest {
   private String password;
   @NotBlank(message = "제목은 null일 수 없습니다.")
   private String title;
-  @CategoryValid
-  private Category category;
+  @NotBlank(message = "카테고리는 null일 수 없습니다.")
+  private String category;
   @Builder.Default
   private List<String> additionQuestions = new ArrayList<>();
 }
