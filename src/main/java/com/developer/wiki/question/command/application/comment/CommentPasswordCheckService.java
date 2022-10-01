@@ -3,7 +3,7 @@ package com.developer.wiki.question.command.application.comment;
 import com.developer.wiki.question.command.application.dto.PasswordRequest;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.CommentRepository;
-import javax.persistence.EntityExistsException;
+import com.developer.wiki.question.command.domain.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class CommentPasswordMatchService {
+public class CommentPasswordCheckService {
 
   private final CommentRepository commentRepository;
 
-  public void checkPassword(Long id, PasswordRequest passwordRequest) {
-    Comment comment = commentRepository.findById(id).orElseThrow(EntityExistsException::new);
-    comment.matchPassword(passwordRequest.getPassword());
+  public boolean checkPassword(Long id, PasswordRequest passwordRequest) {
+    Comment comment = commentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    return comment.checkPassword(passwordRequest.getPassword());
   }
 }

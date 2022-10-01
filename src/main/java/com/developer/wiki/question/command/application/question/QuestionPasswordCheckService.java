@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class QuestionPasswordMatchService {
+public class QuestionPasswordCheckService {
 
   private final QuestionRepository questionRepository;
 
