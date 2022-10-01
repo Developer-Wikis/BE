@@ -54,9 +54,16 @@ public class Comment {
     }
   }
 
+  public boolean checkPassword(String password) {
+    if (!PasswordEncrypter.isMatch(password, this.password)) {
+      return false;
+    }
+    return true;
+  }
+
   public void changePassword(String password) {
-    matchPassword(password);
-    this.password = password;
+
+    this.password = PasswordEncrypter.encrypt(password);
   }
 
   public void changeContent(String content) {
