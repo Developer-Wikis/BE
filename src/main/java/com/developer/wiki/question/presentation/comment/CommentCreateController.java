@@ -2,6 +2,7 @@ package com.developer.wiki.question.presentation.comment;
 
 import com.developer.wiki.question.command.application.comment.CommentCreateService;
 import com.developer.wiki.question.command.application.dto.CreateCommentRequest;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ public class CommentCreateController {
 
   @PostMapping
   public ResponseEntity<Long> create(@PathVariable Long questionId,
-      @RequestBody CreateCommentRequest createCommentRequest) {
+      @RequestBody @Valid CreateCommentRequest createCommentRequest) {
     Long id = commentCreateService.create(questionId, createCommentRequest);
     return ResponseEntity.ok(id);
   }
