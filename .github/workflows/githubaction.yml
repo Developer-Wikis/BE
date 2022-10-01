@@ -57,13 +57,16 @@ jobs:
            docker tag wiki ${{ secrets.DOCKER_HUB_REPO }}:1.0
            docker push ${{ secrets.DOCKER_HUB_REPO }}:1.0
            
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
+    
+    - name: SSH Remote Commands
+      uses: appleboy/ssh-action@v0.1.4        
       with:
-        host: ${{ secrets.NCP_SERVER_HOST }}
+        host: ${{ secrets.NCP_SERVER_HOST }}          
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: | 
-          docker ps
+        timeout: 40s  # 30초 기본        
+        script: |
+          echo "테스트 출력"
+
      
