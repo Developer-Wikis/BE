@@ -1,7 +1,7 @@
 package com.developer.wiki.question.presentation.question;
 
 import com.developer.wiki.question.command.application.dto.PasswordRequest;
-import com.developer.wiki.question.command.application.question.QuestionPasswordMatchService;
+import com.developer.wiki.question.command.application.question.QuestionPasswordCheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/questions")
 @RequiredArgsConstructor
-public class QuestionPasswordMatchController {
+public class QuestionPasswordCheckController {
 
-  private final QuestionPasswordMatchService questionPasswordMatchService;
+  private final QuestionPasswordCheckService questionPasswordCheckService;
 
-  @PostMapping("/{questionId}/match")
-  public ResponseEntity<Void> matchPassword(@PathVariable Long questionId,
+  @PostMapping("/{questionId}/check")
+  public ResponseEntity<Boolean> checkPassword(@PathVariable Long questionId,
       @RequestBody PasswordRequest passwordRequest) {
-    questionPasswordMatchService.checkPassword(questionId, passwordRequest);
-    return ResponseEntity.ok(null);
+    boolean isMatch = questionPasswordCheckService.checkPassword(questionId, passwordRequest);
+    return ResponseEntity.ok(isMatch);
   }
 }

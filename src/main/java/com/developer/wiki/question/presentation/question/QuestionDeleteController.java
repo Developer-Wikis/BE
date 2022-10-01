@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class QuestionDeleteController {
   private final QuestionDeleteService questionDeleteService;
 
   @DeleteMapping("/{questionId}")
-  public ResponseEntity<Void> delete(@PathVariable Long questionId, PasswordRequest passwordRequest) {
+  public ResponseEntity<Void> delete(@PathVariable Long questionId, @RequestBody PasswordRequest passwordRequest) {
     questionDeleteService.delete(questionId,passwordRequest);
     return ResponseEntity.ok(null);
   }

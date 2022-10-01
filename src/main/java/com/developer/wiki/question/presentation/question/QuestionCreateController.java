@@ -2,6 +2,7 @@ package com.developer.wiki.question.presentation.question;
 
 import com.developer.wiki.question.command.application.dto.CreateQuestionRequest;
 import com.developer.wiki.question.command.application.question.QuestionCreateService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class QuestionCreateController {
   private final QuestionCreateService questionCreateService;
 
   @PostMapping
-  public ResponseEntity<Long> create(@RequestBody CreateQuestionRequest createQuestionRequest) {
+  public ResponseEntity<Long> create(@RequestBody @Valid CreateQuestionRequest createQuestionRequest) {
     Long id = questionCreateService.create(createQuestionRequest);
     return ResponseEntity.ok(id);
   }
