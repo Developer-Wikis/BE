@@ -18,9 +18,11 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
 
 @Entity
+@DynamicUpdate
 @Table(name = "question")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,7 +44,7 @@ public class Question {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "category")
-  private Category category = Category.없음;
+  private Category category;
 
   @Column(name = "view_count")
   private Long viewCount;
@@ -51,7 +53,7 @@ public class Question {
   @Column(name = "comment_count")
   private Long commentCount;
 
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   private List<String> additionQuestions = new ArrayList<>();
 
   @Column(name = "created_at")
@@ -67,8 +69,12 @@ public class Question {
     this.password = password;
     this.category = category;
     this.viewCount = 0L;
-    this.additionQuestions = additionQuestions;
+    additionQuestions.stream().forEach(aq -> this.additionQuestions.add(aq));
     this.createdAt = LocalDateTime.now();
+  }
+
+  public void addViewCount() {
+    this.viewCount += 1;
   }
 
   public void matchPassword(String password) {
@@ -77,9 +83,15 @@ public class Question {
     }
   }
 
+  public boolean checkPassword(String password) {
+    if (!PasswordEncrypter.isMatch(password, this.password)) {
+      return false;
+    }
+    return true;
+  }
+
   public void changePassword(String password) {
-    matchPassword(password);
-    this.password = password;
+    this.password = PasswordEncrypter.encrypt(password);
   }
 
   public void changeTitle(String title) {

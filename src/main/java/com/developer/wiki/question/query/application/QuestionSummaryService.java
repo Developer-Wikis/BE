@@ -1,7 +1,9 @@
 package com.developer.wiki.question.query.application;
 
+import com.developer.wiki.question.command.domain.Category;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
+import com.developer.wiki.question.command.domain.QuestionSearchRepository;
 import com.developer.wiki.question.util.QuestionConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class QuestionSummaryService {
 
   private final QuestionRepository questionRepository;
+  private final QuestionSearchRepository questionSearchRepository;
 
-  public Slice<SummaryQuestionResponse> findSlice(Pageable pageable) {
-    Slice<Question> questions = questionRepository.findSliceBy(pageable);
+  public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, Category category) {
+    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, category);
     return questions.map(QuestionConverter::ofSummary);
   }
 }

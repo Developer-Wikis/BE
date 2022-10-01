@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class QuestionPasswordMatchService {
+public class QuestionPasswordCheckService {
 
   private final QuestionRepository questionRepository;
 
-  public void matchPassword(Long id, PasswordRequest passwordRequest) {
+  public boolean checkPassword(Long id, PasswordRequest passwordRequest) {
     Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    question.matchPassword(passwordRequest.getPassword());
+    return question.checkPassword(passwordRequest.getPassword());
   }
 }
