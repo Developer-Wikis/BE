@@ -2,18 +2,17 @@ package com.developer.wiki.question.command.application.dto;
 
 
 import com.developer.wiki.question.command.domain.Category;
+import java.util.Objects;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class CategoryTypeValidator implements ConstraintValidator<CategoryTypeValid, String> {
+public class CategoryValidator implements ConstraintValidator<CategoryValid, Category> {
 
   @Override
-  public boolean isValid(String memberType, ConstraintValidatorContext context) {
-    try {
-      Category.valueOf(memberType.toUpperCase());
-      return true;
-    } catch (Exception e) {
-      return false;
+  public boolean isValid(Category category, ConstraintValidatorContext context) {
+    if (Objects.isNull(category)) {
+      throw new CategoryIsNullException();
     }
+    return true;
   }
 }

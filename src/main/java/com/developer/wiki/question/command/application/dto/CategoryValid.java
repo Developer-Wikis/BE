@@ -7,11 +7,11 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = CategoryTypeValidator.class)
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Constraint(validatedBy = CategoryValidator.class)
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CategoryTypeValid {
-  String message() default "MemberType enum value check";
+public @interface CategoryValid {
+  String message() default "Categery는 null일 수 없습니다.";
 
   Class<?>[] groups() default {};
 
