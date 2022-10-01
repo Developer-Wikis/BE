@@ -68,5 +68,10 @@ jobs:
         timeout: 40s  # 30초 기본        
         script: |
           echo "테스트 출력"
+          docker stop wiki
+          docker rm wiki
+          docker rmi ${{ secrets.DOCKER_HUB_REPO }}:1.0
+          docker pull ${{ secrets.DOCKER_HUB_REPO }}:1.0
+          docker run --name=wiki -p 80:8080 --restart unless-stopped -e TZ=Asia/Seoul -d ${{ secrets.DOCKER_HUB_REPO }}:1.0
 
      
