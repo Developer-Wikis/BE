@@ -1,5 +1,6 @@
 package com.developer.wiki.common;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -7,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ErrorResponse {
 
-  private String message;
+  private List<String> messages;
 
-  public ErrorResponse(String message) {
-    this.message = message;
+  public ErrorResponse(List<String> messages) {
+    this.messages = messages;
   }
 }
