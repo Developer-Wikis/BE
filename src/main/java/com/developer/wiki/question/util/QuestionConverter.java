@@ -5,7 +5,6 @@ import com.developer.wiki.question.command.domain.Category;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.query.application.DetailQuestionResponse;
 import com.developer.wiki.question.query.application.SummaryQuestionResponse;
-import java.util.List;
 
 public class QuestionConverter {
 
