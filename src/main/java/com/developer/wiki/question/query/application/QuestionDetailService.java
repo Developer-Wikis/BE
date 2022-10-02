@@ -18,7 +18,9 @@ public class QuestionDetailService {
   public DetailQuestionResponse findDetail(Long questionId) {
     Question question = questionRepository.findDetail(questionId)
         .orElseThrow(EntityNotFoundException::new);
+    Long prevId = questionRepository.findPrevIdById(questionId).orElse(null);
+    Long nextId = questionRepository.findNextIdById(questionId).orElse(null);
     question.addViewCount();
-    return QuestionConverter.ofDetail(question);
+    return QuestionConverter.ofDetail(question,prevId,nextId);
   }
 }

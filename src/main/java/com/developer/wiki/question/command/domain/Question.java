@@ -3,7 +3,9 @@ package com.developer.wiki.question.command.domain;
 import com.developer.wiki.question.util.PasswordEncrypter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -50,11 +52,10 @@ public class Question {
   private Long viewCount;
 
   @Formula("(select count(1) from comment c where c.question_id=id)")
-  @Column(name = "comment_count")
   private Long commentCount;
 
-  @ElementCollection(fetch = FetchType.EAGER)
-  private List<String> additionQuestions = new ArrayList<>();
+  @ElementCollection(fetch = FetchType.LAZY)
+  private Set<String> additionQuestions = new LinkedHashSet<>();
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
@@ -69,7 +70,7 @@ public class Question {
     this.password = password;
     this.category = category;
     this.viewCount = 0L;
-    additionQuestions.stream().forEach(aq -> this.additionQuestions.add(aq));
+    this.additionQuestions = new LinkedHashSet<>(additionQuestions);
     this.createdAt = LocalDateTime.now();
   }
 
@@ -103,6 +104,6 @@ public class Question {
   }
 
   public void changeAdditionQuestions(List<String> additionQuestions) {
-    this.additionQuestions = additionQuestions;
+    this.additionQuestions = new LinkedHashSet<>(additionQuestions);
   }
 }
