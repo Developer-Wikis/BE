@@ -48,6 +48,7 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
       BooleanBuilder builder = new BooleanBuilder();
       List<Category> categories = getList(category);
       categories.stream().forEach(c -> builder.or(question.category.eq(c)));
+      return builder;
     }
     return new BooleanBuilder(question.category.eq(category));
   }
