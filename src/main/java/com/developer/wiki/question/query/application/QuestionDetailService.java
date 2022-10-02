@@ -4,6 +4,7 @@ import com.developer.wiki.question.command.domain.EntityNotFoundException;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
 import com.developer.wiki.question.util.QuestionConverter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,9 @@ public class QuestionDetailService {
   public DetailQuestionResponse findDetail(Long questionId) {
     Question question = questionRepository.findDetail(questionId)
         .orElseThrow(EntityNotFoundException::new);
+    Long prevId = questionRepository.findPrevIdById(questionId).orElse(null);
+    Long nextId = questionRepository.findNextIdById(questionId).orElse(null);
     question.addViewCount();
-    return QuestionConverter.ofDetail(question);
+    return QuestionConverter.ofDetail(question,prevId,nextId);
   }
 }

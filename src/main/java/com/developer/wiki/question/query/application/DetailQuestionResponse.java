@@ -2,8 +2,7 @@ package com.developer.wiki.question.query.application;
 
 import com.developer.wiki.question.command.domain.Category;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,12 +19,11 @@ public class DetailQuestionResponse {
   private String title;
   private String nickname;
   private Category category;
-  @Builder.Default
-  private List<String> additionQuestions = new ArrayList<>();
+  private Set<String> additionQuestions;
   private Long viewCount;
   private Long commentCount;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDateTime createdAt;
-  private String prevId;
-  private String nextId;
+  private Long prevId;
+  private Long nextId;
 }
