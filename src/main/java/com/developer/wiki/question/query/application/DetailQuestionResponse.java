@@ -1,6 +1,5 @@
 package com.developer.wiki.question.query.application;
 
-import com.developer.wiki.question.command.domain.Category;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ public class DetailQuestionResponse {
   private Long id;
   private String title;
   private String nickname;
-  private Category category;
+  private String category;
   private Set<String> additionQuestions;
   private Long viewCount;
   private Long commentCount;
