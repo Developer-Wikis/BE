@@ -71,6 +71,6 @@ jobs:
           docker rm wiki
           docker rmi ${{ secrets.DOCKER_HUB_REPO }}:1.0
           docker pull ${{ secrets.DOCKER_HUB_REPO }}:1.0
-          docker run --name=wiki -p 80:8080 JAVA_OPTS=-Djasypt.encryptor.password=${{ secrets.ENCRYTOR_PASSWORD }} --restart unless-stopped -e TZ=Asia/Seoul -d ${{ secrets.DOCKER_HUB_REPO }}:1.0
+          docker run --name=wiki -p 80:8080 -e JAVA_OPTS=-Djasypt.encryptor.password=${{ secrets.ENCRYTOR_PASSWORD }} --restart unless-stopped -e TZ=Asia/Seoul -d ${{ secrets.DOCKER_HUB_REPO }}:1.0
 
      
