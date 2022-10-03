@@ -56,6 +56,13 @@ jobs:
            docker tag wiki ${{ secrets.DOCKER_HUB_REPO }}:1.0
            docker push ${{ secrets.DOCKER_HUB_REPO }}:1.0
            
+    - name: Discord notification
+      env:
+       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+       args: '배포가 진행중입니다!!! 서버가 5-6분 뒤에 다시 서버가 시작 됩니다.'
+           
     
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@v0.1.4        
