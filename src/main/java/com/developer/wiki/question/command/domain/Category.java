@@ -12,6 +12,11 @@ public enum Category {
 
   private final String category;
 
+  public static List<Category> frontendAll() {
+    return List.of(Category.FE기본, Category.CSS, Category.HTML,  Category.JAVASCRIPT,
+        Category.REACT, Category.네트워크, Category.디자인패턴, Category.보안, Category.자료구조_알고리즘);
+  }
+
   public static Category of(String category) {
     for (Category c : Category.values()) {
       if (c.category.equals(category)) {
@@ -21,9 +26,8 @@ public enum Category {
     return null;
   }
 
-  public static List<Category> frontendAll() {
-    return List.of(Category.FE기본, Category.CSS, Category.HTML, Category.HTML, Category.JAVASCRIPT,
-        Category.REACT, Category.네트워크, Category.디자인패턴, Category.보안, Category.자료구조_알고리즘);
+  public String getCategory() {
+    return category;
   }
 
   public static List<Category> backendAll() {
