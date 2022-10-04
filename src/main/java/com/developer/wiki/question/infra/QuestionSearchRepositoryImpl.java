@@ -27,7 +27,7 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   @Override
   public Slice<Question> findSliceBy(Pageable pageable, Category category) {
     List<Question> courses = jpaQueryFactory.select(question).from(question)
-        .where(categoryEq(category)).orderBy(question.createdAt.desc()).offset(pageable.getOffset())
+        .where(categoryEq(category),question.isApproved.isTrue()).orderBy(question.createdAt.desc()).offset(pageable.getOffset())
         .limit(pageable.getPageSize() + 1).fetch();
 
     boolean hasNext = false;
