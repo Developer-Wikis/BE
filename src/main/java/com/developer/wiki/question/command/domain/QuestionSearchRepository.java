@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface QuestionSearchRepository {
 
-  Slice<Question> findSliceBy(Pageable pageable, List<Category> category);
+  Slice<Question> findSliceBy(Pageable pageable, List<String> category);
 }
