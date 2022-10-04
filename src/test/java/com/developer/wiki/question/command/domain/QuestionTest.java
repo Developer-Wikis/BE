@@ -14,7 +14,7 @@ class QuestionTest {
   QuestionRepository questionRepository;
 
   @Test
-  void Question_create() {
+  void question_create() {
     Question question = new Question("title", "nickname", PasswordEncrypter.encrypt("234"),
         Category.CSS, List.of("sdf", "SDfdf"));
     Question savedQuestion = questionRepository.save(question);
