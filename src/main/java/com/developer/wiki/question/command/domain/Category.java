@@ -27,7 +27,7 @@ public enum Category {
         return c;
       }
     }
-    return null;
+    throw new NotMatchCategoryException();
   }
 
   public String getCategory() {
