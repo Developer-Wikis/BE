@@ -40,12 +40,9 @@ dependencies {
 
     //testContainer
     implementation("org.mariadb.jdbc:mariadb-java-client:2.7.0")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    testImplementation(platform('org.junit:junit-bom:5.7.0'))
     testImplementation("org.testcontainers:testcontainers:1.17.3")
     testImplementation("org.testcontainers:mariadb:1.17.3")
     testImplementation("org.testcontainers:junit-jupiter:1.17.3")
-    testImplementation("net.java.dev.jna:jna:5.10.0")
 }
 
 tasks.named('test') {

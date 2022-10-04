@@ -1,9 +1,9 @@
 package com.developer.wiki;
 
-import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -14,17 +14,14 @@ public class MariadbTestContainer {
   Logger logger = LoggerFactory.getLogger(getClass());
 
   @Container
-  JdbcDatabaseContainer mariaDB = new MariaDBContainer("mariadb:10.5")
-      .withUsername("myuser") // DB 사용자
-      .withPassword("mypassword") // 암호
-      .withDatabaseName("mydb");
+  private static final MariaDBContainer<?> MARIA_DB_CONTAINER = new MariaDBContainer(
+      "mariadb:10.5");
 
-  @Test
-  void connect() {
-    logger.info("host: {}", mariaDB.getHost());
-    logger.info("port: {}", mariaDB.getMappedPort(3306));
-    logger.info("username: {}", mariaDB.getUsername());
-    logger.info("password: {}", mariaDB.getPassword());
-    logger.info("jdbc url: {}", mariaDB.getJdbcUrl());
+  @DynamicPropertySource
+  public static void properties(DynamicPropertyRegistry registry) {
+    registry.add("spring.datasource.url",MARIA_DB_CONTAINER::getJdbcUrl);
+    registry.add("spring.datasource.driver-class-name",MARIA_DB_CONTAINER::getDriverClassName);
+    registry.add("spring.datasource.username",MARIA_DB_CONTAINER::getUsername);
+    registry.add("spring.datasource.password",MARIA_DB_CONTAINER::getPassword);
   }
 }
