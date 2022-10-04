@@ -49,23 +49,43 @@ jobs:
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
           
-    - name: Docker build
+    - name: Docker build & push to prod
+      if: contains(github.ref, 'main')
       run: |
            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-           docker build . -t wiki
-           docker tag wiki ${{ secrets.DOCKER_HUB_REPO }}:1.0
-           docker push ${{ secrets.DOCKER_HUB_REPO }}:1.0
+           docker build -f Dockerfile-prod -t wiki .
+           docker tag wiki ${{ secrets.DOCKER_HUB_PROD_REPO }}:1.0
+           docker push ${{ secrets.DOCKER_HUB_PROD_REPO }}:1.0
+
+    - name: Docker build & push to dev
+      if: contains(github.ref, 'develop')
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker build -f Dockerfile-dev -t wiki .
+        docker tag wiki ${{ secrets.DOCKER_HUB_DEV_REPO }}:1.0
+        docker push ${{ secrets.DOCKER_HUB_DEV_REPO }}:1.0
            
     - name: Discord notification
+      if: contains(github.ref, 'main')
       env:
        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
-       args: '배포가 진행중입니다!!! 서버가 5-6분 뒤에 다시 서버가 시작 됩니다.'
+       args: '운영 서버 배포가 진행중입니다!!! 서버가 5-6분 뒤에 다시 서버가 시작 됩니다.'
+
+    - name: Discord notification
+      if: contains(github.ref, 'develop')
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+        args: '개발 서버 배포가 진행중입니다!!! 서버가 5-6분 뒤에 다시 서버가 시작 됩니다.'
            
     
-    - name: SSH Remote Commands
-      uses: appleboy/ssh-action@v0.1.4        
+    - name: prod SSH Remote Commands
+      uses: appleboy/ssh-action@v0.1.4
+      id: deploy-prod
+      if: contains(github.ref, 'main')
       with:
         host: ${{ secrets.NCP_SERVER_HOST }}          
         username: ${{ secrets.USERNAME }}
@@ -76,9 +96,29 @@ jobs:
           echo "테스트 출력"
           docker stop wiki
           docker rm wiki
-          docker rmi ${{ secrets.DOCKER_HUB_REPO }}:1.0
-          docker pull ${{ secrets.DOCKER_HUB_REPO }}:1.0
-          docker run --name=wiki -p 8080:8080 -e JAVA_OPTS=-Djasypt.encryptor.password=${{ secrets.ENCRYTOR_PASSWORD }} --restart unless-stopped -e TZ=Asia/Seoul -d ${{ secrets.DOCKER_HUB_REPO }}:1.0
+          docker rmi ${{ secrets.DOCKER_HUB_PROD_REPO }}:1.0
+          docker pull ${{ secrets.DOCKER_HUB_PROD_REPO }}:1.0
+          docker run --name=wiki -p 8080:8080 -e JAVA_OPTS=-Djasypt.encryptor.password=${{ secrets.ENCRYTOR_PASSWORD }} --restart unless-stopped -e TZ=Asia/Seoul -d ${{ secrets.DOCKER_HUB_PROD_REPO }}:1.0
+    
+
+    - name: dev SSH Remote Commands
+      uses: appleboy/ssh-action@v0.1.4
+      id: deploy-dev
+      if: contains(github.ref, 'develop')
+      with:
+        host: ${{ secrets.EC2_SERVER_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        timeout: 40s  # 30초 기본
+        script: |
+          echo "테스트 출력"
+          docker stop wiki
+          docker rm wiki
+          docker rmi ${{ secrets.DOCKER_HUB_DEV_REPO }}:1.0
+          docker pull ${{ secrets.DOCKER_HUB_DEV_REPO }}:1.0
+          docker run --name=wiki -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=dev" -e JAVA_OPTS=-Djasypt.encryptor.password=${{ secrets.ENCRYTOR_PASSWORD }} --restart unless-stopped -e TZ=Asia/Seoul -d ${{ secrets.DOCKER_HUB_DEV_REPO }}:1.0
+    
 
     - name: Send status to Discord
       uses: nebularg/actions-discord-webhook@v1
