@@ -74,12 +74,12 @@ jobs:
        args: '운영 서버 배포가 진행중입니다!!! 서버가 5-6분 뒤에 다시 서버가 시작 됩니다.'
 
     - name: Discord notification
-        if: contains(github.ref, 'develop')
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
-        with:
-          args: '개발 서버 배포가 진행중입니다!!! 서버가 5-6분 뒤에 다시 서버가 시작 됩니다.'
+      if: contains(github.ref, 'develop')
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+        args: '개발 서버 배포가 진행중입니다!!! 서버가 5-6분 뒤에 다시 서버가 시작 됩니다.'
            
     
     - name: prod SSH Remote Commands
