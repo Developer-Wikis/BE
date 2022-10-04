@@ -51,7 +51,7 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
             .collect(Collectors.toList());
 
     BooleanBuilder builder = new BooleanBuilder();
-    if (categoryList.equals(Category.FE_ALL) || categoryList.equals(Category.BE_ALL)) {
+    if (categories.get(0).equals(Category.FE_ALL) || categories.get(0).equals(Category.BE_ALL)) {
       getList(categories.get(0)).stream().forEach(c -> builder.or(question.category.eq(c)));
       return builder;
     }
