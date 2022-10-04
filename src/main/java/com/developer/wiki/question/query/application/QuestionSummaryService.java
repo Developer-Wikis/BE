@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,10 +24,7 @@ public class QuestionSummaryService {
   private final QuestionSearchRepository questionSearchRepository;
 
   public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, List<String> category) {
-    List<Category> categoryList = category.stream()
-            .map(Category::of)
-            .collect(Collectors.toList());
-    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, categoryList);
+    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, category);
     return questions.map(QuestionConverter::ofSummary);
   }
 }

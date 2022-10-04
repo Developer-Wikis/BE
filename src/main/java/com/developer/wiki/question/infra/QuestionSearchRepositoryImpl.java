@@ -8,6 +8,7 @@ import com.developer.wiki.question.command.domain.QuestionSearchRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -25,7 +26,8 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   }
 
   @Override
-  public Slice<Question> findSliceBy(Pageable pageable, List<Category> categoryList) {
+  public Slice<Question> findSliceBy(Pageable pageable, List<String> categoryList) {
+
     List<Question> courses = jpaQueryFactory.select(question).from(question)
         .where(categoryEq(categoryList),question.isApproved.isTrue()).orderBy(question.createdAt.desc()).offset(pageable.getOffset())
         .limit(pageable.getPageSize() + 1).fetch();
@@ -40,17 +42,20 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
     return new SliceImpl<>(courses, pageable, hasNext);
   }
 
-  private BooleanBuilder categoryEq(List<Category> categoryList) {
+  private BooleanBuilder categoryEq(List<String> categoryList) {
     if (ObjectUtils.isEmpty(categoryList)) {
       return null;
     }
+    List<Category> categories = categoryList.stream()
+            .map(Category::of)
+            .collect(Collectors.toList());
+
     BooleanBuilder builder = new BooleanBuilder();
     if (categoryList.equals(Category.FE_ALL) || categoryList.equals(Category.BE_ALL)) {
-      List<Category> categories = getList(categoryList.get(0));
-      categories.stream().forEach(c -> builder.or(question.category.eq(c)));
+      getList(categories.get(0)).stream().forEach(c -> builder.or(question.category.eq(c)));
       return builder;
     }
-    categoryList.stream().forEach(c->builder.or(question.category.eq(c)));
+    categories.stream().forEach(c->builder.or(question.category.eq(c)));
     return builder;
   }
 
