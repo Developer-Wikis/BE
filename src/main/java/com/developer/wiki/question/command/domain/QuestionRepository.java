@@ -13,12 +13,12 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
   Optional<Question> findDetail(Long questionId);
 
   @Query(value = "select query.prevId "
-      + "from (select id,LAG(id,1) over(partition by q.category in :categories order by created_at) as prevId from question as q order by q.created_at) as query "
+      + "from (select id,LAG(id,1) over(partition by q.category in :categories order by created_at) as prevId from question as q where q.is_approved is true order by q.created_at) as query "
       + "where query.id = :questionId", nativeQuery = true)
   Optional<Long> findPrevIdById(Long questionId, List<String> categories);
 
   @Query(value = "select query.nextId "
-      + "from (select id,LEAD(id,1) over(partition by q.category in :categories order by created_at) as nextId from question as q order by q.created_at) as query "
+      + "from (select id,LEAD(id,1) over(partition by q.category in :categories order by created_at) as nextId from question as q where q.is_approved is true order by q.created_at) as query "
       + "where query.id = :questionId", nativeQuery = true)
   Optional<Long> findNextIdById(Long questionId, List<String> categories);
 
