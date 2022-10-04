@@ -11,6 +11,9 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -19,8 +22,11 @@ public class QuestionSummaryService {
   private final QuestionRepository questionRepository;
   private final QuestionSearchRepository questionSearchRepository;
 
-  public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, Category category) {
-    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, category);
+  public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, List<String> category) {
+    List<Category> categoryList = category.stream()
+            .map(Category::of)
+            .collect(Collectors.toList());
+    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, categoryList);
     return questions.map(QuestionConverter::ofSummary);
   }
 }

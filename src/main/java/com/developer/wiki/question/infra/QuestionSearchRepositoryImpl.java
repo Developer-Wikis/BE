@@ -25,9 +25,9 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   }
 
   @Override
-  public Slice<Question> findSliceBy(Pageable pageable, Category category) {
+  public Slice<Question> findSliceBy(Pageable pageable, List<Category> categoryList) {
     List<Question> courses = jpaQueryFactory.select(question).from(question)
-        .where(categoryEq(category),question.isApproved.isTrue()).orderBy(question.createdAt.desc()).offset(pageable.getOffset())
+        .where(categoryEq(categoryList),question.isApproved.isTrue()).orderBy(question.createdAt.desc()).offset(pageable.getOffset())
         .limit(pageable.getPageSize() + 1).fetch();
 
     boolean hasNext = false;
@@ -40,17 +40,18 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
     return new SliceImpl<>(courses, pageable, hasNext);
   }
 
-  private BooleanBuilder categoryEq(Category category) {
-    if (ObjectUtils.isEmpty(category)) {
+  private BooleanBuilder categoryEq(List<Category> categoryList) {
+    if (ObjectUtils.isEmpty(categoryList)) {
       return null;
     }
-    if (category.equals(Category.FE_ALL) || category.equals(Category.BE_ALL)) {
-      BooleanBuilder builder = new BooleanBuilder();
-      List<Category> categories = getList(category);
+    BooleanBuilder builder = new BooleanBuilder();
+    if (categoryList.equals(Category.FE_ALL) || categoryList.equals(Category.BE_ALL)) {
+      List<Category> categories = getList(categoryList.get(0));
       categories.stream().forEach(c -> builder.or(question.category.eq(c)));
       return builder;
     }
-    return new BooleanBuilder(question.category.eq(category));
+    categoryList.stream().forEach(c->builder.or(question.category.eq(c)));
+    return builder;
   }
 
   private List<Category> getList(Category category) {
