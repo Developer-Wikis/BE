@@ -1,6 +1,7 @@
 package com.developer.wiki.question.command.domain;
 
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -13,13 +14,16 @@ public enum Category {
   private final String category;
 
   public static List<Category> frontendAll() {
-    return List.of(Category.FE기본, Category.CSS, Category.HTML,  Category.JAVASCRIPT,
-        Category.REACT, Category.네트워크, Category.디자인패턴, Category.보안, Category.자료구조_알고리즘);
+    return List.of(Category.FE기본, Category.CSS, Category.HTML, Category.JAVASCRIPT, Category.REACT,
+        Category.네트워크, Category.디자인패턴, Category.보안, Category.자료구조_알고리즘);
   }
 
   public static Category of(String category) {
+    if (Objects.isNull(category)) {
+      return null;
+    }
     for (Category c : Category.values()) {
-      if (c.category.equals(category)) {
+      if (c.category.equals(category.toUpperCase())) {
         return c;
       }
     }
