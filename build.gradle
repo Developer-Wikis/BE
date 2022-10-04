@@ -37,6 +37,12 @@ dependencies {
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    //testContainer
+    implementation("org.mariadb.jdbc:mariadb-java-client:2.7.0")
+    testImplementation("org.testcontainers:testcontainers:1.17.3")
+    testImplementation("org.testcontainers:mariadb:1.17.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.17.3")
 }
 
 tasks.named('test') {
