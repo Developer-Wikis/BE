@@ -17,6 +17,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.querydsl.core.BooleanBuilder;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -63,6 +65,9 @@ public class Question {
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
   private List<Comment> comments = new ArrayList<>();
 
+  @Column(name ="is_approved")
+  private Boolean isApproved;
+
   public Question(String title, String nickname, String password, Category category,
       List<String> additionQuestions) {
     this.title = title;
@@ -70,6 +75,7 @@ public class Question {
     this.password = password;
     this.category = category;
     this.viewCount = 0L;
+    this.isApproved=false;
     this.additionQuestions = new LinkedHashSet<>(additionQuestions);
     this.createdAt = LocalDateTime.now();
   }
