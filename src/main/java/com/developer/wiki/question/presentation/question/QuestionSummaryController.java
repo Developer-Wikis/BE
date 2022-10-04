@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/v1/questions")
 @RequiredArgsConstructor
@@ -21,9 +24,8 @@ public class QuestionSummaryController {
 
   @GetMapping
   public ResponseEntity<Slice<SummaryQuestionResponse>> getSlice(
-      @RequestParam(required = false) String category, Pageable pageable) {
-    Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findSlice(pageable,
-        Category.of(category));
+          @RequestParam(required = false) List<String> category, Pageable pageable) {
+    Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findSlice(pageable,category);
     return ResponseEntity.ok(summarySlice);
   }
 }
