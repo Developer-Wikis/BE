@@ -3,19 +3,20 @@ package com.developer.wiki.question.command.domain;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@Slf4j
 public enum Category {
-  FE_ALL("FE ALL"), BE_ALL("BE ALL"), FE기본("FE 기본"), BE기본("BE 기본"), CSS("CSS"), HTML(
-      "HTML"), JAVASCRIPT("JAVASCRIPT"), REACT("REACT"), JAVA("JAVA"), SPRING("SPRING"), 네트워크(
-      "네트워크"), 데이터베이스("데이터베이스"), 디자인패턴("디자인패턴"), 보안("보안"), 운영체제("운영체제"), 자료구조_알고리즘(
-      "자료구조/알고리즘"), 인프라_엔지니어링("인프라/엔지니어링");
+    fe_all, be_all, fe_basic, be_basic, css, html, javascript, react, java,
+    spring, network, database, design_pattern, security, os, data_structure_algorithm,
+    infra_engineering;
 
-  private final String category;
+//  private final String category;
 
   public static List<Category> frontendAll() {
-    return List.of(Category.FE기본, Category.CSS, Category.HTML, Category.JAVASCRIPT, Category.REACT,
-        Category.네트워크, Category.디자인패턴, Category.보안, Category.자료구조_알고리즘);
+    return List.of(Category.fe_basic, Category.css, Category.html, Category.javascript, Category.react,
+        Category.network, Category.design_pattern, Category.security, Category.data_structure_algorithm);
   }
 
   public static Category of(String category) {
@@ -23,19 +24,20 @@ public enum Category {
       return null;
     }
     for (Category c : Category.values()) {
-      if (c.category.equals(category.toUpperCase())) {
+      if (c.toString().equals(category)) {
         return c;
       }
     }
+    log.info("이건 테스트 {}",category);
     throw new NotMatchCategoryException();
   }
 
-  public String getCategory() {
-    return category;
-  }
+//  public String getCategory() {
+//    return category;
+//  }
 
   public static List<Category> backendAll() {
-    return List.of(Category.BE기본, Category.JAVA, Category.SPRING, Category.데이터베이스, Category.운영체제,
-        Category.인프라_엔지니어링, Category.네트워크, Category.디자인패턴, Category.보안, Category.자료구조_알고리즘);
+    return List.of(Category.be_basic, Category.java, Category.spring, Category.database, Category.os,
+        Category.infra_engineering, Category.network, Category.design_pattern, Category.security, Category.data_structure_algorithm);
   }
 }

@@ -35,8 +35,8 @@ public class QuestionDetailService {
   }
 
   private List<Category> getCategory(Category category) {
-    if (category.equals(Category.FE_ALL) || category.equals(Category.BE_ALL)) {
-      return category.equals(Category.FE_ALL) ? Category.frontendAll() : Category.backendAll();
+    if (category.equals(Category.fe_all) || category.equals(Category.be_all)) {
+      return category.equals(Category.fe_all) ? Category.frontendAll() : Category.backendAll();
     }
     return List.of(category);
   }
