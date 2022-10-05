@@ -17,14 +17,14 @@ public class QuestionConverter {
 
   public static SummaryQuestionResponse ofSummary(Question question) {
     return SummaryQuestionResponse.builder().id(question.getId()).title(question.getTitle())
-        .nickname(question.getNickname()).category(question.getCategory().toString())
+        .nickname(question.getNickname()).category(question.getCategory().getCategory())
         .viewCount(question.getViewCount()).commentCount(question.getCommentCount())
         .createdAt(question.getCreatedAt()).build();
   }
 
   public static DetailQuestionResponse ofDetail(Question question, Long prevId, Long nextId) {
     return DetailQuestionResponse.builder().id(question.getId()).title(question.getTitle())
-        .nickname(question.getNickname()).category(question.getCategory().toString())
+        .nickname(question.getNickname()).category(question.getCategory().getCategory())
         .additionQuestions(question.getAdditionQuestions()).viewCount(question.getViewCount())
         .commentCount(question.getCommentCount()).createdAt(question.getCreatedAt()).prevId(prevId)
         .nextId(nextId).build();
