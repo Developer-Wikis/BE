@@ -51,7 +51,7 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
             .collect(Collectors.toList());
 
     BooleanBuilder builder = new BooleanBuilder();
-    if (categories.get(0).equals(Category.FE_ALL) || categories.get(0).equals(Category.BE_ALL)) {
+    if (categories.get(0).equals(Category.fe_all) || categories.get(0).equals(Category.be_all)) {
       getList(categories.get(0)).stream().forEach(c -> builder.or(question.category.eq(c)));
       return builder;
     }
@@ -60,6 +60,6 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   }
 
   private List<Category> getList(Category category) {
-    return category.equals(Category.FE_ALL) ? Category.frontendAll() : Category.backendAll();
+    return category.equals(Category.fe_all) ? Category.frontendAll() : Category.backendAll();
   }
 }
