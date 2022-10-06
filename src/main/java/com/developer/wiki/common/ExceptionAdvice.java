@@ -5,6 +5,9 @@ import com.developer.wiki.common.exception.ConflictException;
 import com.developer.wiki.common.exception.NotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.developer.wiki.common.exception.UnAuthorizedException;
+import com.developer.wiki.question.command.domain.NotMatchPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,5 +48,11 @@ public class ExceptionAdvice {
     return new ErrorResponse(messages);
   }
 
+  @ResponseBody
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  @ExceptionHandler(UnAuthorizedException.class)
+  public ErrorResponse handleNotMatchPasswordException(UnAuthorizedException e) {
+    return new ErrorResponse(List.of(e.getMessage()));
+  }
 
 }
