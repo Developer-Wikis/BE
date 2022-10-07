@@ -3,19 +3,23 @@ package com.developer.wiki.question.command.domain;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@Slf4j
 public enum Category {
-  FE_ALL("FE ALL"), BE_ALL("BE ALL"), FE기본("FE 기본"), BE기본("BE 기본"), CSS("CSS"), HTML(
-      "HTML"), JAVASCRIPT("JAVASCRIPT"), REACT("REACT"), JAVA("JAVA"), SPRING("SPRING"), 네트워크(
-      "네트워크"), 데이터베이스("데이터베이스"), 디자인패턴("디자인패턴"), 보안("보안"), 운영체제("운영체제"), 자료구조_알고리즘(
-      "자료구조/알고리즘"), 인프라_엔지니어링("인프라/엔지니어링");
+  fe_all("fe all"), fe_basic("fe basic"), fe_css("fe css"), fe_html("fe html"), fe_javascript("fe javascript"), fe_react("fe react"),
+  fe_database("fe database"), fe_design_pattern("fe design pattern"), fe_security_network("fe network/security"), fe_os("fe os"),
+  fe_data_structure_algorithm("fe data structure/algorithm"), fe_infra_engineering("fe infra/engineering"),
+  be_all("be all"), be_java("be java"), be_basic("be basic"),
+  be_spring("be spring"), be_database("be database"), be_design_pattern("be design pattern"), be_security_network("be network/security"), be_os("be os"),
+  be_data_structure_algorithm("be data structure/algorithm"), be_infra_engineering("be infra/engineering");
 
-  private final String category;
+   private final String category;
 
   public static List<Category> frontendAll() {
-    return List.of(Category.FE기본, Category.CSS, Category.HTML, Category.JAVASCRIPT, Category.REACT,
-        Category.네트워크, Category.디자인패턴, Category.보안, Category.자료구조_알고리즘);
+    return List.of(Category.fe_basic, Category.fe_css, Category.fe_html, Category.fe_javascript, Category.fe_react
+        , Category.fe_design_pattern, Category.fe_security_network, Category.fe_data_structure_algorithm);
   }
 
   public static Category of(String category) {
@@ -23,7 +27,7 @@ public enum Category {
       return null;
     }
     for (Category c : Category.values()) {
-      if (c.category.equals(category.toUpperCase())) {
+      if (c.category.equals(category.toLowerCase())) {
         return c;
       }
     }
@@ -35,7 +39,7 @@ public enum Category {
   }
 
   public static List<Category> backendAll() {
-    return List.of(Category.BE기본, Category.JAVA, Category.SPRING, Category.데이터베이스, Category.운영체제,
-        Category.인프라_엔지니어링, Category.네트워크, Category.디자인패턴, Category.보안, Category.자료구조_알고리즘);
+    return List.of(Category.be_basic, Category.be_java, Category.be_spring, Category.be_database, Category.be_os,
+        Category.be_infra_engineering, Category.be_design_pattern, Category.be_security_network, Category.be_data_structure_algorithm);
   }
 }
