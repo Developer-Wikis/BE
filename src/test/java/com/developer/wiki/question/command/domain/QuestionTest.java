@@ -16,7 +16,7 @@ class QuestionTest {
   @Test
   void question_create() {
     Question question = new Question("title", "nickname", PasswordEncrypter.encrypt("234"),
-        Category.css, List.of("sdf", "SDfdf"));
+        Category.be_data_structure_algorithm, List.of("sdf", "SDfdf"));
     Question savedQuestion = questionRepository.save(question);
     Assertions.assertThat(savedQuestion.getId()).isNotNull();
   }
