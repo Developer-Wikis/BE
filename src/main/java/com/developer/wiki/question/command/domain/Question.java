@@ -1,6 +1,5 @@
 package com.developer.wiki.question.command.domain;
 
-import com.developer.wiki.question.util.PasswordEncrypter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -17,8 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.querydsl.core.BooleanBuilder;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
