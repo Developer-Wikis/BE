@@ -1,6 +1,5 @@
 package com.developer.wiki.question.command.domain;
 
-import com.developer.wiki.question.util.PasswordEncrypter;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,8 +14,8 @@ class QuestionTest {
 
   @Test
   void question_create() {
-    Question question = new Question("title", "nickname", PasswordEncrypter.encrypt("234"),
-        Category.be_data_structure_algorithm, List.of("sdf", "SDfdf"));
+    Question question = new Question("title", "nickname", Category.be_data_structure_algorithm,
+        List.of("sdf", "SDfdf"));
     Question savedQuestion = questionRepository.save(question);
     Assertions.assertThat(savedQuestion.getId()).isNotNull();
   }
