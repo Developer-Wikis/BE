@@ -17,6 +17,7 @@ public class QuestionPasswordCheckService {
 
   public boolean checkPassword(Long id, PasswordRequest passwordRequest) {
     Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    return question.checkPassword(passwordRequest.getPassword());
+    //return question.checkPassword(passwordRequest.getPassword());
+    throw new UnsupportedOperationException();
   }
 }

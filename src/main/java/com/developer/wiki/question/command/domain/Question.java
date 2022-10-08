@@ -43,9 +43,6 @@ public class Question {
   @Column(name = "nickname")
   private String nickname;
 
-  @Column(name = "password")
-  private String password;
-
   @Enumerated(EnumType.STRING)
   @Column(name = "category")
   private Category category;
@@ -68,11 +65,10 @@ public class Question {
   @Column(name ="is_approved")
   private Boolean isApproved;
 
-  public Question(String title, String nickname, String password, Category category,
+  public Question(String title, String nickname, Category category,
       List<String> additionQuestions) {
     this.title = title;
     this.nickname = nickname;
-    this.password = password;
     this.category = category;
     this.viewCount = 0L;
     this.isApproved=false;
@@ -82,23 +78,6 @@ public class Question {
 
   public void addViewCount() {
     this.viewCount += 1;
-  }
-
-  public void matchPassword(String password) {
-    if (!PasswordEncrypter.isMatch(password, this.password)) {
-      throw new NotMatchPasswordException();
-    }
-  }
-
-  public boolean checkPassword(String password) {
-    if (!PasswordEncrypter.isMatch(password, this.password)) {
-      return false;
-    }
-    return true;
-  }
-
-  public void changePassword(String password) {
-    this.password = PasswordEncrypter.encrypt(password);
   }
 
   public void changeTitle(String title) {

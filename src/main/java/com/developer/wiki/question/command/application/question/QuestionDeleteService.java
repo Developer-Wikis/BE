@@ -16,8 +16,8 @@ public class QuestionDeleteService {
   private final QuestionRepository questionRepository;
 
   public void delete(Long id, PasswordRequest passwordRequest) {
-    Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    question.matchPassword(passwordRequest.getPassword());
-    questionRepository.delete(question);
+    throw new UnsupportedOperationException();
+//    Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+//    questionRepository.delete(question);
   }
 }
