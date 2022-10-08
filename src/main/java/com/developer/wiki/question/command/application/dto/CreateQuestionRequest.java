@@ -16,8 +16,6 @@ public class CreateQuestionRequest {
 
   @NotBlank(message = "닉네임은 null일 수 없습니다.")
   private String nickname;
-  @NotBlank(message = "비밀번호는 null일 수 없습니다.")
-  private String password;
   @NotBlank(message = "제목은 null일 수 없습니다.")
   private String title;
   @NotBlank(message = "카테고리는 null일 수 없습니다.")
