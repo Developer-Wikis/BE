@@ -10,7 +10,6 @@ public class QuestionConverter {
 
   public static Question toQuestion(CreateQuestionRequest createQuestionRequest) {
     return new Question(createQuestionRequest.getTitle(), createQuestionRequest.getNickname(),
-        PasswordEncrypter.encrypt(createQuestionRequest.getPassword()),
         Category.of(createQuestionRequest.getCategory()),
         createQuestionRequest.getAdditionQuestions());
   }

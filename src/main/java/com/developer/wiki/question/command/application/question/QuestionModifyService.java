@@ -18,8 +18,6 @@ public class QuestionModifyService {
 
   public void modify(Long id, ModifyQuestionRequest modifyQuestionRequest) {
     Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    question.matchPassword(modifyQuestionRequest.getPassword());
-    question.changePassword(modifyQuestionRequest.getPassword());
     question.changeTitle(modifyQuestionRequest.getTitle());
     question.changeCategory(Category.of(modifyQuestionRequest.getCategory()));
     question.changeAdditionQuestions(modifyQuestionRequest.getAdditionQuestions());
