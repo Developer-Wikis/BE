@@ -1,7 +1,6 @@
 package com.developer.wiki.question.command.application.question;
 
 import com.developer.wiki.question.command.application.dto.ModifyQuestionRequest;
-import com.developer.wiki.question.command.domain.Category;
 import com.developer.wiki.question.command.domain.EntityNotFoundException;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
@@ -19,7 +18,7 @@ public class QuestionModifyService {
   public void modify(Long id, ModifyQuestionRequest modifyQuestionRequest) {
     Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     question.changeTitle(modifyQuestionRequest.getTitle());
-    question.changeCategory(Category.of(modifyQuestionRequest.getCategory()));
+    //question.changeCategory(Category.of(modifyQuestionRequest.getCategory()));
     question.changeAdditionQuestions(modifyQuestionRequest.getAdditionQuestions());
   }
 }

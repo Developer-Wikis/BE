@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ModifyQuestionRequest {
 
-  private String password;
   private String title;
   private String category;
   private List<String> additionQuestions;
