@@ -1,6 +1,5 @@
 package com.developer.wiki.question.presentation.question;
 
-import com.developer.wiki.question.command.domain.Category;
 import com.developer.wiki.question.query.application.QuestionSummaryService;
 import com.developer.wiki.question.query.application.SummaryQuestionResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/questions")
@@ -24,8 +22,8 @@ public class QuestionSummaryController {
 
   @GetMapping
   public ResponseEntity<Slice<SummaryQuestionResponse>> getSlice(
-          @RequestParam(required = false) List<String> category, Pageable pageable) {
-    Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findSlice(pageable,category);
+      @RequestParam(required = false) String mainCategory, @RequestParam(required = false) List<String> subCategory, Pageable pageable) {
+    Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findSlice(pageable,mainCategory,subCategory);
     return ResponseEntity.ok(summarySlice);
   }
 }
