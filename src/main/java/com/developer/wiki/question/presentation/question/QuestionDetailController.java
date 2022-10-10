@@ -1,6 +1,7 @@
 package com.developer.wiki.question.presentation.question;
 
-import com.developer.wiki.question.command.domain.Category;
+import com.developer.wiki.question.command.domain.MainCategory;
+import com.developer.wiki.question.command.domain.SubCategory;
 import com.developer.wiki.question.query.application.DetailQuestionResponse;
 import com.developer.wiki.question.query.application.QuestionDetailService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,9 @@ public class QuestionDetailController {
 
   @GetMapping("/{questionId}")
   public ResponseEntity<DetailQuestionResponse> getDetail(@PathVariable Long questionId,
-      @RequestParam(required = false) String category) {
+      @RequestParam(required = false) String mainCategory,@RequestParam(required = false) String subCategory) {
     DetailQuestionResponse detail = questionDetailService.findDetail(questionId,
-        Category.of(category));
+        MainCategory.of(mainCategory), SubCategory.of(subCategory));
     return ResponseEntity.ok(detail);
   }
 }

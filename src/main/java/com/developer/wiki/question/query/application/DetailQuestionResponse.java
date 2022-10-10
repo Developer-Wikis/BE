@@ -16,8 +16,8 @@ public class DetailQuestionResponse {
 
   private Long id;
   private String title;
-  private String nickname;
-  private String category;
+  private String mainCategory;
+  private String subCategory;
   private Set<String> additionQuestions;
   private Long viewCount;
   private Long commentCount;

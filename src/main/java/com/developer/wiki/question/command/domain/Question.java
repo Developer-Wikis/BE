@@ -37,12 +37,13 @@ public class Question {
   @Column(name = "title")
   private String title;
 
-  @Column(name = "nickname")
-  private String nickname;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "main_category")
+  private MainCategory mainCategory;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "category")
-  private Category category;
+  @Column(name = "sub_category")
+  private SubCategory subCategory;
 
   @Column(name = "view_count")
   private Long viewCount;
@@ -59,16 +60,16 @@ public class Question {
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
   private List<Comment> comments = new ArrayList<>();
 
-  @Column(name ="is_approved")
+  @Column(name = "is_approved")
   private Boolean isApproved;
 
-  public Question(String title, String nickname, Category category,
+  public Question(String title, MainCategory mainCategory, SubCategory subCategory,
       List<String> additionQuestions) {
     this.title = title;
-    this.nickname = nickname;
-    this.category = category;
+    this.mainCategory = mainCategory;
+    this.subCategory = subCategory;
     this.viewCount = 0L;
-    this.isApproved=false;
+    this.isApproved = false;
     this.additionQuestions = new LinkedHashSet<>(additionQuestions);
     this.createdAt = LocalDateTime.now();
   }
@@ -81,8 +82,12 @@ public class Question {
     this.title = title;
   }
 
-  public void changeCategory(Category category) {
-    this.category = category;
+  public void changeMainCategory(MainCategory mainCategory) {
+    this.mainCategory = mainCategory;
+  }
+
+  public void changeSubCategory(SubCategory subCategory) {
+    this.subCategory = subCategory;
   }
 
   public void changeAdditionQuestions(List<String> additionQuestions) {

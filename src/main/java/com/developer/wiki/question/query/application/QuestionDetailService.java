@@ -1,13 +1,11 @@
 package com.developer.wiki.question.query.application;
 
-import com.developer.wiki.question.command.domain.Category;
 import com.developer.wiki.question.command.domain.EntityNotFoundException;
+import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
+import com.developer.wiki.question.command.domain.SubCategory;
 import com.developer.wiki.question.util.QuestionConverter;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,25 +17,16 @@ public class QuestionDetailService {
 
   private final QuestionRepository questionRepository;
 
-  public DetailQuestionResponse findDetail(Long questionId, Category category) {
+  public DetailQuestionResponse findDetail(Long questionId, MainCategory mainCategory,
+      SubCategory subCategory) {
     Question question = questionRepository.findDetail(questionId)
         .orElseThrow(EntityNotFoundException::new);
-    List<String> categories = Objects.isNull(category) ? getCategoryToString(question.getCategory())
-        : getCategoryToString(category);
-    Long prevId = questionRepository.findPrevIdById(questionId, categories).orElse(null);
-    Long nextId = questionRepository.findNextIdById(questionId, categories).orElse(null);
+    Long prevId = questionRepository.findPrevIdById(questionId, mainCategory.name(),
+        subCategory.name()).orElse(null);
+    Long nextId = questionRepository.findNextIdById(questionId, mainCategory.name(),
+        subCategory.name()).orElse(null);
     question.addViewCount();
     return QuestionConverter.ofDetail(question, prevId, nextId);
   }
 
-  private List<String> getCategoryToString(Category category) {
-    return getCategory(category).stream().map(c -> c.name()).collect(Collectors.toList());
-  }
-
-  private List<Category> getCategory(Category category) {
-    if (category.equals(Category.fe_all) || category.equals(Category.be_all)) {
-      return category.equals(Category.fe_all) ? Category.frontendAll() : Category.backendAll();
-    }
-    return List.of(category);
-  }
 }

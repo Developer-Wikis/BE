@@ -14,7 +14,7 @@ class QuestionTest {
 
   @Test
   void question_create() {
-    Question question = new Question("title", "nickname", Category.be_data_structure_algorithm,
+    Question question = new Question("title", MainCategory.be, SubCategory.css,
         List.of("sdf", "SDfdf"));
     Question savedQuestion = questionRepository.save(question);
     Assertions.assertThat(savedQuestion.getId()).isNotNull();
