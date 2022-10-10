@@ -1,47 +1,71 @@
 package com.developer.wiki.question.command.domain;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j
 public enum SubCategory {
-  all("all"), basic("basic"), css("css"), html("html"), javascript("javascript"), react(
-      "fe react"), database("database"), design_pattern("design_pattern"), security_network(
-      "network/security"), os("os"), data_structure_algorithm(
-      "data_structure/algorithm"), infra_engineering("infra/engineering"), java("java"), spring(
-      "spring");
+    all("all"), basic("basic"), css("css"), html("html"), javascript("javascript"), react(
+            "fe react"), database("database"), design_pattern("design_pattern"), security_network(
+            "network/security"), os("os"), data_structure_algorithm(
+            "data_structure/algorithm"), infra_engineering("infra/engineering"), java("java"), spring(
+            "spring");
 
-  private final String category;
+    private final String category;
 
-//  public static List<SubCategory> frontendAll() {
-//    return List.of(SubCategory.fe_basic, SubCategory.fe_css, SubCategory.fe_html,
-//        SubCategory.fe_javascript, SubCategory.fe_react, SubCategory.fe_design_pattern,
-//        SubCategory.fe_security_network, SubCategory.fe_data_structure_algorithm);
-//  }
-//
-//  public static List<SubCategory> backendAll() {
-//    return List.of(SubCategory.be_basic, SubCategory.be_java, SubCategory.be_spring,
-//        SubCategory.be_database, SubCategory.be_os, SubCategory.be_infra_engineering,
-//        SubCategory.be_design_pattern, SubCategory.be_security_network,
-//        SubCategory.be_data_structure_algorithm);
-//  }
-
-  public static SubCategory of(String category) {
-    if (Objects.isNull(category)) {
-      return null;
+    public List<String> allOrOneSubCategory(MainCategory mainCategory) {
+        if (!this.equals(SubCategory.all)) {
+            return List.of(this).stream().map(c -> c.name()).collect(Collectors.toList());
+        }
+        List<SubCategory> subCategories = mainCategory.equals(MainCategory.fe) ? frontendAll() : backendAll();
+        return subCategories.stream().map(c -> c.name()).collect(Collectors.toList());
     }
-    for (SubCategory c : SubCategory.values()) {
-      if (c.category.equals(category.toLowerCase())) {
-        return c;
-      }
-    }
-    throw new NotMatchCategoryException();
-  }
 
-  public String getCategory() {
-    return category;
-  }
+    public List<SubCategory> frontendAll() {
+        return List.of(SubCategory.basic, SubCategory.java, SubCategory.spring,
+                SubCategory.database, SubCategory.os, SubCategory.infra_engineering,
+                SubCategory.design_pattern, SubCategory.security_network,
+                SubCategory.data_structure_algorithm);
+    }
+
+    public List<SubCategory> backendAll() {
+        return List.of(SubCategory.basic, SubCategory.java, SubCategory.spring,
+                SubCategory.database, SubCategory.os, SubCategory.infra_engineering,
+                SubCategory.design_pattern, SubCategory.security_network,
+                SubCategory.data_structure_algorithm);
+    }
+
+    public static SubCategory of(String category) {
+        if (Objects.isNull(category)) {
+            return null;
+        }
+        for (SubCategory c : SubCategory.values()) {
+            if (c.category.equals(category.toLowerCase())) {
+                return c;
+            }
+        }
+        throw new NotMatchCategoryException();
+    }
+
+    public static SubCategory ofForQuery(String category) {
+        if (Objects.isNull(category)) {
+            return null;
+        }
+        for (SubCategory c : SubCategory.values()) {
+            if (c.name().equals(category)) {
+                return c;
+            }
+        }
+        throw new NotMatchCategoryException();
+    }
+
+    public String getCategory() {
+        return category;
+    }
 
 }

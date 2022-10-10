@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -21,10 +23,12 @@ public class QuestionDetailService {
       SubCategory subCategory) {
     Question question = questionRepository.findDetail(questionId)
         .orElseThrow(EntityNotFoundException::new);
+    List<String> subCategories = subCategory.allOrOneSubCategory(mainCategory);
+    subCategories.forEach(System.out::println);
     Long prevId = questionRepository.findPrevIdById(questionId, mainCategory.name(),
-        subCategory.name()).orElse(null);
-    Long nextId = questionRepository.findNextIdById(questionId, mainCategory.name(),
-        subCategory.name()).orElse(null);
+            subCategories).orElse(null);
+    Long nextId = questionRepository.findNextIdById(questionId, mainCategory.name()
+            ,subCategories).orElse(null);
     question.addViewCount();
     return QuestionConverter.ofDetail(question, prevId, nextId);
   }
