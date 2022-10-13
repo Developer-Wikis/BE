@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public enum SubCategory {
     all("all"), basic("basic"), css("css"), html("html"), javascript("javascript"), react(
-            "fe react"), database("database"), design_pattern("design_pattern"), security_network(
+            "react"), database("database"), design_pattern("design_pattern"), security_network(
             "network/security"), os("os"), data_structure_algorithm(
             "data_structure/algorithm"), infra_engineering("infra/engineering"), java("java"), spring(
             "spring");
