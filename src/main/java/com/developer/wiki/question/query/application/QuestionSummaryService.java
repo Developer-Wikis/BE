@@ -1,7 +1,6 @@
 package com.developer.wiki.question.query.application;
 
 import com.developer.wiki.question.command.domain.Question;
-import com.developer.wiki.question.command.domain.QuestionRepository;
 import com.developer.wiki.question.command.domain.QuestionSearchRepository;
 import com.developer.wiki.question.util.QuestionConverter;
 import java.util.List;
@@ -16,13 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class QuestionSummaryService {
 
-  private final QuestionRepository questionRepository;
   private final QuestionSearchRepository questionSearchRepository;
 
   public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, String mainCategory,
       List<String> subCategory) {
-    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, mainCategory,
-        subCategory);
+    System.out.println("pageable = " + pageable);
+    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, mainCategory, subCategory);
     return questions.map(QuestionConverter::ofSummary);
   }
 }
