@@ -17,27 +17,6 @@ public enum SubCategory {
 
   private final String category;
 
-  public List<String> allOrOneSubCategory(MainCategory mainCategory) {
-    if (!this.equals(SubCategory.all)) {
-      return List.of(this).stream().map(c -> c.name()).collect(Collectors.toList());
-    }
-    List<SubCategory> subCategories =
-        mainCategory.equals(MainCategory.fe) ? frontendAll() : backendAll();
-    return subCategories.stream().map(c -> c.name()).collect(Collectors.toList());
-  }
-
-  public List<SubCategory> frontendAll() {
-    return List.of(SubCategory.basic, SubCategory.css, SubCategory.html, SubCategory.javascript,
-        SubCategory.react, SubCategory.database, SubCategory.design_pattern,
-        SubCategory.security_network, SubCategory.os, SubCategory.data_structure_algorithm);
-  }
-
-  public List<SubCategory> backendAll() {
-    return List.of(SubCategory.basic, SubCategory.java, SubCategory.spring, SubCategory.database,
-        SubCategory.os, SubCategory.infra_engineering, SubCategory.design_pattern,
-        SubCategory.security_network, SubCategory.data_structure_algorithm);
-  }
-
   public static SubCategory of(String category) {
     if (Objects.isNull(category)) {
       return null;
@@ -60,6 +39,27 @@ public enum SubCategory {
       }
     }
     throw new NotMatchCategoryException();
+  }
+
+  public List<String> allOrOneSubCategory(MainCategory mainCategory) {
+    if (!this.equals(SubCategory.all)) {
+      return List.of(this).stream().map(c -> c.name()).collect(Collectors.toList());
+    }
+    List<SubCategory> subCategories =
+        mainCategory.equals(MainCategory.fe) ? frontendAll() : backendAll();
+    return subCategories.stream().map(c -> c.name()).collect(Collectors.toList());
+  }
+
+  public List<SubCategory> frontendAll() {
+    return List.of(SubCategory.basic, SubCategory.css, SubCategory.html, SubCategory.javascript,
+        SubCategory.react, SubCategory.database, SubCategory.design_pattern,
+        SubCategory.security_network, SubCategory.os, SubCategory.data_structure_algorithm);
+  }
+
+  public List<SubCategory> backendAll() {
+    return List.of(SubCategory.basic, SubCategory.java, SubCategory.spring, SubCategory.database,
+        SubCategory.os, SubCategory.infra_engineering, SubCategory.design_pattern,
+        SubCategory.security_network, SubCategory.data_structure_algorithm);
   }
 
   public String getCategory() {
