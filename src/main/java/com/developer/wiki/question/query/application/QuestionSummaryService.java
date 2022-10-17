@@ -19,7 +19,6 @@ public class QuestionSummaryService {
 
   public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, String mainCategory,
       List<String> subCategory) {
-    System.out.println("pageable = " + pageable);
     Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, mainCategory, subCategory);
     return questions.map(QuestionConverter::ofSummary);
   }
