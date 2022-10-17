@@ -4,8 +4,10 @@ import com.developer.wiki.question.command.application.dto.CreateQuestionRequest
 import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.SubCategory;
+import com.developer.wiki.question.command.domain.TailQuestion;
 import com.developer.wiki.question.query.application.DetailQuestionResponse;
 import com.developer.wiki.question.query.application.SummaryQuestionResponse;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class QuestionConverter {
@@ -23,11 +25,12 @@ public class QuestionConverter {
         .commentCount(question.getCommentCount()).createdAt(question.getCreatedAt()).build();
   }
 
-  public static DetailQuestionResponse ofDetail(Question question, Long prevId, Long nextId) {
+  public static DetailQuestionResponse ofDetail(Question question, Set<TailQuestion> tailQuestions,
+      Long prevId, Long nextId) {
     return DetailQuestionResponse.builder().id(question.getId()).title(question.getTitle())
         .mainCategory(question.getMainCategory().name())
         .subCategory(question.getSubCategory().getCategory()).tailQuestions(
-            question.getTailQuestions().stream().map(q -> q.getTailQuestion())
+            tailQuestions.stream().filter(tq -> tq.getIsApproved()).map(q -> q.getTailQuestion())
                 .collect(Collectors.toSet())).viewCount(question.getViewCount())
         .commentCount(question.getCommentCount()).createdAt(question.getCreatedAt()).prevId(prevId)
         .nextId(nextId).build();

@@ -24,13 +24,12 @@ public class QuestionDetailService {
     Question question = questionRepository.findDetail(questionId)
         .orElseThrow(EntityNotFoundException::new);
     List<String> subCategories = subCategory.allOrOneSubCategory(mainCategory);
-    subCategories.forEach(System.out::println);
     Long prevId = questionRepository.findPrevIdById(questionId, mainCategory.name(),
             subCategories).orElse(null);
     Long nextId = questionRepository.findNextIdById(questionId, mainCategory.name()
             ,subCategories).orElse(null);
     question.addViewCount();
-    return QuestionConverter.ofDetail(question, prevId, nextId);
+    return QuestionConverter.ofDetail(question, question.getTailQuestions(),prevId, nextId);
   }
 
 }
