@@ -3,13 +3,12 @@ package com.developer.wiki.common;
 import com.developer.wiki.common.exception.BadRequestException;
 import com.developer.wiki.common.exception.ConflictException;
 import com.developer.wiki.common.exception.NotFoundException;
+import com.developer.wiki.common.exception.UnAuthorizedException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.developer.wiki.common.exception.UnAuthorizedException;
-import com.developer.wiki.question.command.domain.NotMatchPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -46,6 +45,13 @@ public class ExceptionAdvice {
     List<String> messages = e.getBindingResult().getFieldErrors().stream()
         .map(x -> x.getDefaultMessage()).collect(Collectors.toList());
     return new ErrorResponse(messages);
+  }
+
+  @ResponseBody
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(ServletRequestBindingException.class)
+  public ErrorResponse missingServletRequestParameterException(ServletRequestBindingException e) {
+    return new ErrorResponse(List.of(e.getMessage()));
   }
 
   @ResponseBody

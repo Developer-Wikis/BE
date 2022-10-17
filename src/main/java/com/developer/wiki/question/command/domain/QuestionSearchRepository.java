@@ -6,5 +6,6 @@ import org.springframework.data.domain.Slice;
 
 public interface QuestionSearchRepository {
 
-  Slice<Question> findSliceBy(Pageable pageable, String mainCategory, List<String> category);
+  Slice<Question> findSliceBy(Pageable pageable, String mainCategory, List<String> subCategory);
+  Slice<Question> findRandomBy(Pageable pageable, String mainCategory, List<String> subCategory);
 }

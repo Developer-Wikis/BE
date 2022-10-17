@@ -7,20 +7,22 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Service
-@Transactional(readOnly = true)
+@RestController
+@RequestMapping("/api/v1/questions")
 @RequiredArgsConstructor
-public class QuestionSummaryService {
+public class QuestionRandomService {
 
   private final QuestionSearchRepository questionSearchRepository;
 
-  public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, String mainCategory,
+  public Slice<SummaryQuestionResponse> findRandomSlice(
+      Pageable pageable, String mainCategory,
       List<String> subCategory) {
     System.out.println("pageable = " + pageable);
-    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, mainCategory, subCategory);
+    Slice<Question> questions = questionSearchRepository.findRandomBy(pageable, mainCategory,
+        subCategory);
     return questions.map(QuestionConverter::ofSummary);
   }
 }
