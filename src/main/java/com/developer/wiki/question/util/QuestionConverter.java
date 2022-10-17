@@ -6,6 +6,7 @@ import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.SubCategory;
 import com.developer.wiki.question.command.domain.TailQuestion;
 import com.developer.wiki.question.query.application.DetailQuestionResponse;
+import com.developer.wiki.question.query.application.RandomQuestionResponse;
 import com.developer.wiki.question.query.application.SummaryQuestionResponse;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,6 +24,16 @@ public class QuestionConverter {
         .mainCategory(question.getMainCategory().name())
         .subCategory(question.getSubCategory().getCategory()).viewCount(question.getViewCount())
         .commentCount(question.getCommentCount()).createdAt(question.getCreatedAt()).build();
+  }
+
+  public static RandomQuestionResponse ofRandom(Question question) {
+    return RandomQuestionResponse.builder().id(question.getId()).title(question.getTitle())
+        .mainCategory(question.getMainCategory().name())
+        .subCategory(question.getSubCategory().getCategory()).tailQuestions(
+            question.getTailQuestions().stream()
+                .filter(tailQuestion -> tailQuestion.getIsApproved())
+                .map(TailQuestion::getTailQuestion).collect(Collectors.toSet()))
+        .createdAt(question.getCreatedAt()).build();
   }
 
   public static DetailQuestionResponse ofDetail(Question question, Set<TailQuestion> tailQuestions,

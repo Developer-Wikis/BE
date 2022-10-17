@@ -1,7 +1,7 @@
 package com.developer.wiki.question.presentation.question;
 
 import com.developer.wiki.question.query.application.QuestionRandomService;
-import com.developer.wiki.question.query.application.SummaryQuestionResponse;
+import com.developer.wiki.question.query.application.RandomQuestionResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +20,9 @@ public class QuestionRandomController {
   private final QuestionRandomService questionRandomService;
 
   @GetMapping("/random")
-  public ResponseEntity<Slice<SummaryQuestionResponse>> random(@RequestParam String mainCategory,
+  public ResponseEntity<Slice<RandomQuestionResponse>> random(@RequestParam String mainCategory,
       @RequestParam List<String> subCategory) {
-    Slice<SummaryQuestionResponse> randomSlice = questionRandomService.findRandomSlice(
+    Slice<RandomQuestionResponse> randomSlice = questionRandomService.findRandomSlice(
         PageRequest.of(0, 300), mainCategory, subCategory);
     return ResponseEntity.ok(randomSlice);
   }
