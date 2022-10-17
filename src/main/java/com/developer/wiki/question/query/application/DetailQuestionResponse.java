@@ -18,7 +18,7 @@ public class DetailQuestionResponse {
   private String title;
   private String mainCategory;
   private String subCategory;
-  private Set<String> additionQuestions;
+  private Set<String> tailQuestions;
   private Long viewCount;
   private Long commentCount;
   @DateTimeFormat(pattern = "yyyy-MM-dd")

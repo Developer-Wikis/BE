@@ -21,5 +21,5 @@ public class CreateQuestionRequest {
   @NotBlank(message = "서브 카테고리는 null일 수 없습니다.")
   private String subCategory;
   @Builder.Default
-  private List<String> additionQuestions = new ArrayList<>();
+  private List<String> tailQuestions = new ArrayList<>();
 }
