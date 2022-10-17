@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long>{
 
-  @Query("SELECT distinct q FROM Question q left join fetch q.tailQuestions as tq where q.id = :questionId and tq.isApproved is true")
+  @Query("SELECT distinct q FROM Question q where q.id = :questionId")
   Optional<Question> findDetail(Long questionId);
 
   @Query(value = "select query.prevId "

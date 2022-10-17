@@ -6,11 +6,10 @@ import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
 import com.developer.wiki.question.command.domain.SubCategory;
 import com.developer.wiki.question.util.QuestionConverter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -24,13 +23,12 @@ public class QuestionDetailService {
     Question question = questionRepository.findDetail(questionId)
         .orElseThrow(EntityNotFoundException::new);
     List<String> subCategories = subCategory.allOrOneSubCategory(mainCategory);
-    subCategories.forEach(System.out::println);
     Long prevId = questionRepository.findPrevIdById(questionId, mainCategory.name(),
             subCategories).orElse(null);
     Long nextId = questionRepository.findNextIdById(questionId, mainCategory.name()
             ,subCategories).orElse(null);
     question.addViewCount();
-    return QuestionConverter.ofDetail(question, prevId, nextId);
+    return QuestionConverter.ofDetail(question, question.getTailQuestions(),prevId, nextId);
   }
 
 }
