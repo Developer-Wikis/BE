@@ -1,2 +1,15 @@
-package com.developer.wiki.question.presentation.question;public class QuestionTailService {
+package com.developer.wiki.question.command.application.question;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class QuestionTailService {
+
+  public Long tailCreate(String tailQuestion) {
+    return 1L;
+  }
 }

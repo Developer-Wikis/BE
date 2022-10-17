@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -51,8 +50,8 @@ public class Question {
   @Formula("(select count(1) from comment c where c.question_id=id)")
   private Long commentCount;
 
-  @ElementCollection(fetch = FetchType.LAZY)
-  private Set<String> additionQuestions = new LinkedHashSet<>();
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
+  private Set<TailQuestion> tailQuestions = new LinkedHashSet<>();
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
@@ -63,14 +62,12 @@ public class Question {
   @Column(name = "is_approved")
   private Boolean isApproved;
 
-  public Question(String title, MainCategory mainCategory, SubCategory subCategory,
-      List<String> additionQuestions) {
+  public Question(String title, MainCategory mainCategory, SubCategory subCategory) {
     this.title = title;
     this.mainCategory = mainCategory;
     this.subCategory = subCategory;
     this.viewCount = 0L;
     this.isApproved = false;
-    this.additionQuestions = new LinkedHashSet<>(additionQuestions);
     this.createdAt = LocalDateTime.now();
   }
 
@@ -78,19 +75,15 @@ public class Question {
     this.viewCount += 1;
   }
 
+  public void addTailQuestions(List<TailQuestion> tailQuestions) {
+    this.tailQuestions = new LinkedHashSet<>(tailQuestions);
+  }
+
   public void changeTitle(String title) {
     this.title = title;
   }
 
-  public void changeMainCategory(MainCategory mainCategory) {
-    this.mainCategory = mainCategory;
-  }
-
-  public void changeSubCategory(SubCategory subCategory) {
-    this.subCategory = subCategory;
-  }
-
-  public void changeAdditionQuestions(List<String> additionQuestions) {
-    this.additionQuestions = new LinkedHashSet<>(additionQuestions);
+  public void changeTailQuestions(List<TailQuestion> tailQuestions) {
+    this.tailQuestions = new LinkedHashSet<>(tailQuestions);
   }
 }
