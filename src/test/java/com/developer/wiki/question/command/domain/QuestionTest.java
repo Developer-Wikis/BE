@@ -1,6 +1,5 @@
 package com.developer.wiki.question.command.domain;
 
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,7 @@ class QuestionTest {
 
   @Test
   void question_create() {
-    Question question = new Question("title", MainCategory.be, SubCategory.css,
-        List.of("sdf", "SDfdf"));
+    Question question = new Question("title", MainCategory.be, SubCategory.css);
     Question savedQuestion = questionRepository.save(question);
     Assertions.assertThat(savedQuestion.getId()).isNotNull();
   }
