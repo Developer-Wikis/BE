@@ -67,7 +67,7 @@ public class Question {
     this.mainCategory = mainCategory;
     this.subCategory = subCategory;
     this.viewCount = 0L;
-    this.isApproved = false;
+    this.isApproved = true;
     this.createdAt = LocalDateTime.now();
   }
 
