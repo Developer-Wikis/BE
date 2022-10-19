@@ -37,6 +37,6 @@ public class TailQuestion {
   public TailQuestion(String tailQuestion, Question question) {
     this.tailQuestion = tailQuestion;
     this.question = question;
-    this.isApproved = Boolean.FALSE;
+    this.isApproved = Boolean.TRUE;
   }
 }
