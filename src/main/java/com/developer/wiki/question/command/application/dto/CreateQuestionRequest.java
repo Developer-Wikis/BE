@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateQuestionRequest {
 
-  @NotBlank(message = "닉네임은 null일 수 없습니다.")
-  private String nickname;
   @NotBlank(message = "제목은 null일 수 없습니다.")
   private String title;
-  @NotBlank(message = "카테고리는 null일 수 없습니다.")
-  private String category;
+  @NotBlank(message = "메인 카테고리는 null일 수 없습니다.")
+  private String mainCategory;
+  @NotBlank(message = "서브 카테고리는 null일 수 없습니다.")
+  private String subCategory;
   @Builder.Default
-  private List<String> additionQuestions = new ArrayList<>();
+  private List<String> tailQuestions = new ArrayList<>();
 }

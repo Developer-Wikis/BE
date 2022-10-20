@@ -1,6 +1,6 @@
 package com.developer.wiki.question.command.application.dto;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModifyQuestionRequest {
+public class CreateTailQuestionRequest {
 
-  private String title;
-  private String category;
-  private List<String> additionQuestions;
+  @NotBlank(message = "질문은 null일 수 없습니다.")
+  private String tailQuestion;
 }

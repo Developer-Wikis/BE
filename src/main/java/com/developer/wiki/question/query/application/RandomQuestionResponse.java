@@ -12,17 +12,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailQuestionResponse {
+public class RandomQuestionResponse {
 
   private Long id;
   private String title;
   private String mainCategory;
   private String subCategory;
   private Set<String> tailQuestions;
-  private Long viewCount;
-  private Long commentCount;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDateTime createdAt;
-  private Long prevId;
-  private Long nextId;
 }

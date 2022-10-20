@@ -13,13 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class QuestionSummaryService {
+public class QuestionRandomService {
 
   private final QuestionSearchRepository questionSearchRepository;
 
-  public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, String mainCategory,
+  public Slice<RandomQuestionResponse> findRandomSlice(Pageable pageable, String mainCategory,
       List<String> subCategory) {
-    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, mainCategory, subCategory);
-    return questions.map(QuestionConverter::ofSummary);
+    Slice<Question> questions = questionSearchRepository.findRandomBy(pageable, mainCategory,
+        subCategory);
+    return questions.map(QuestionConverter::ofRandom);
   }
 }

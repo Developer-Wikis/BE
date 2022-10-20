@@ -1,11 +1,11 @@
 package com.developer.wiki.question.command.domain;
 
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-import java.util.List;
-
 public interface QuestionSearchRepository {
 
-  Slice<Question> findSliceBy(Pageable pageable, List<String> category);
+  Slice<Question> findSliceBy(Pageable pageable, String mainCategory, List<String> subCategory);
+  Slice<Question> findRandomBy(Pageable pageable, String mainCategory, List<String> subCategory);
 }

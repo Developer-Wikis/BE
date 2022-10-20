@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,12 +36,13 @@ public class Question {
   @Column(name = "title")
   private String title;
 
-  @Column(name = "nickname")
-  private String nickname;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "main_category")
+  private MainCategory mainCategory;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "category")
-  private Category category;
+  @Column(name = "sub_category")
+  private SubCategory subCategory;
 
   @Column(name = "view_count")
   private Long viewCount;
@@ -50,8 +50,8 @@ public class Question {
   @Formula("(select count(1) from comment c where c.question_id=id)")
   private Long commentCount;
 
-  @ElementCollection(fetch = FetchType.LAZY)
-  private Set<String> additionQuestions = new LinkedHashSet<>();
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
+  private Set<TailQuestion> tailQuestions = new LinkedHashSet<>();
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
@@ -59,17 +59,15 @@ public class Question {
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
   private List<Comment> comments = new ArrayList<>();
 
-  @Column(name ="is_approved")
+  @Column(name = "is_approved")
   private Boolean isApproved;
 
-  public Question(String title, String nickname, Category category,
-      List<String> additionQuestions) {
+  public Question(String title, MainCategory mainCategory, SubCategory subCategory) {
     this.title = title;
-    this.nickname = nickname;
-    this.category = category;
+    this.mainCategory = mainCategory;
+    this.subCategory = subCategory;
     this.viewCount = 0L;
-    this.isApproved=false;
-    this.additionQuestions = new LinkedHashSet<>(additionQuestions);
+    this.isApproved = true;
     this.createdAt = LocalDateTime.now();
   }
 
@@ -77,15 +75,15 @@ public class Question {
     this.viewCount += 1;
   }
 
+  public void addTailQuestions(List<TailQuestion> tailQuestions) {
+    this.tailQuestions = new LinkedHashSet<>(tailQuestions);
+  }
+
   public void changeTitle(String title) {
     this.title = title;
   }
 
-  public void changeCategory(Category category) {
-    this.category = category;
-  }
-
-  public void changeAdditionQuestions(List<String> additionQuestions) {
-    this.additionQuestions = new LinkedHashSet<>(additionQuestions);
+  public void changeTailQuestions(List<TailQuestion> tailQuestions) {
+    this.tailQuestions = new LinkedHashSet<>(tailQuestions);
   }
 }

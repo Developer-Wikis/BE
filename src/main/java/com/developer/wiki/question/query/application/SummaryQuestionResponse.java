@@ -15,8 +15,8 @@ public class SummaryQuestionResponse {
 
   private Long id;
   private String title;
-  private String nickname;
-  private String category;
+  private String mainCategory;
+  private String subCategory;
   private Long viewCount;
   private Long commentCount;
   @DateTimeFormat(pattern = "yyyy-MM-dd")

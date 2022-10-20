@@ -2,11 +2,14 @@ package com.developer.wiki.question.infra;
 
 import static com.developer.wiki.question.command.domain.QQuestion.question;
 
-import com.developer.wiki.question.command.domain.Category;
+import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionSearchRepository;
+import com.developer.wiki.question.command.domain.SubCategory;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -26,10 +29,12 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   }
 
   @Override
-  public Slice<Question> findSliceBy(Pageable pageable, List<String> categoryList) {
+  public Slice<Question> findSliceBy(Pageable pageable, String mainCategory,
+      List<String> subCategory) {
 
     List<Question> courses = jpaQueryFactory.select(question).from(question)
-        .where(categoryEq(categoryList),question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())
+        .where(mainCategoryEq(mainCategory), subCategoryEq(mainCategory, subCategory),
+            question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())
         .limit(pageable.getPageSize() + 1).fetch();
 
     boolean hasNext = false;
@@ -42,24 +47,42 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
     return new SliceImpl<>(courses, pageable, hasNext);
   }
 
-  private BooleanBuilder categoryEq(List<String> categoryList) {
-    if (ObjectUtils.isEmpty(categoryList)) {
-      return null;
+  @Override
+  public Slice<Question> findRandomBy(Pageable pageable, String mainCategory,
+      List<String> subCategory) {
+    List<Question> courses = jpaQueryFactory.select(question).from(question)
+        .where(mainCategoryEq(mainCategory), subCategoryEq(mainCategory, subCategory),
+            question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())
+        .limit(pageable.getPageSize() + 1).fetch();
+    boolean hasNext = false;
+    Collections.shuffle(courses);
+    if (courses.size() > pageable.getPageSize()) {
+      courses.remove(pageable.getPageSize());
+      hasNext = true;
     }
-    List<Category> categories = categoryList.stream()
-            .map(Category::of)
-            .collect(Collectors.toList());
 
-    BooleanBuilder builder = new BooleanBuilder();
-    if (categories.get(0).equals(Category.fe_all) || categories.get(0).equals(Category.be_all)) {
-      getList(categories.get(0)).stream().forEach(c -> builder.or(question.category.eq(c)));
-      return builder;
-    }
-    categories.stream().forEach(c->builder.or(question.category.eq(c)));
-    return builder;
+    return new SliceImpl<>(courses, pageable, hasNext);
   }
 
-  private List<Category> getList(Category category) {
-    return category.equals(Category.fe_all) ? Category.frontendAll() : Category.backendAll();
+  private BooleanExpression mainCategoryEq(String mainCategory) {
+    return ObjectUtils.isEmpty(mainCategory) ? null
+        : question.mainCategory.eq(MainCategory.of(mainCategory));
+  }
+
+  private BooleanBuilder subCategoryEq(String mainCategory, List<String> subCategories) {
+    if (ObjectUtils.isEmpty(subCategories)) {
+      return null;
+    }
+    BooleanBuilder builder = new BooleanBuilder();
+    if (subCategories.get(0).equals(SubCategory.all.name())) {
+      List<String> subCategoryList = SubCategory.of(subCategories.get(0))
+          .allOrOneSubCategory(MainCategory.of(mainCategory));
+      subCategoryList.stream().map(SubCategory::ofForQuery).collect(Collectors.toList())
+          .forEach(s -> builder.or(question.subCategory.eq(s)));
+      return builder;
+    }
+    subCategories.stream().map(SubCategory::of).collect(Collectors.toList())
+        .forEach(s -> builder.or(question.subCategory.eq(s)));
+    return builder;
   }
 }
