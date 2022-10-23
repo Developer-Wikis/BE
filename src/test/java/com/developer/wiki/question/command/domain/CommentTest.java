@@ -11,7 +11,7 @@ class CommentTest {
   @Autowired
   CommentRepository commentRepository;
 
-  @Test
+  //@Test
   void comment_create() {
     Comment comment = new Comment("nickname", PasswordEncrypter.encrypt("sdf"), "content", null);
     Comment savedComment = commentRepository.save(comment);

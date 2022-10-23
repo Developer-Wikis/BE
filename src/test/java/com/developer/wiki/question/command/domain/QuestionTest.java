@@ -11,7 +11,7 @@ class QuestionTest {
   @Autowired
   QuestionRepository questionRepository;
 
-  @Test
+  //@Test
   void question_create() {
     Question question = new Question("title", MainCategory.be, SubCategory.css);
     Question savedQuestion = questionRepository.save(question);
