@@ -4,6 +4,7 @@ import com.developer.wiki.oauth.*;
 import com.developer.wiki.oauth.dto.GoogleOAuthToken;
 import com.developer.wiki.oauth.dto.GoogleResponseDto;
 import com.developer.wiki.oauth.dto.GoogleUser;
+import com.developer.wiki.oauth.util.UrlConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class OauthService {
     private final TokenService tokenService;
     private final UserRepository userRepository;
     public GoogleResponseDto oAuthLogin(String code, String redirectUrl) throws IOException {
-        ResponseEntity<String> accessTokenResponse= googleOauthService.requestAccessToken(code,redirectUrl);
+        ResponseEntity<String> accessTokenResponse= googleOauthService.requestAccessToken(code, UrlConverter.of(redirectUrl));
         GoogleOAuthToken oAuthToken=googleOauthService.getAccessToken(accessTokenResponse);
         ResponseEntity<String> userInfoResponse=googleOauthService.requestUserInfo(oAuthToken);
         GoogleUser googleUser= googleOauthService.getUserInfo(userInfoResponse);
