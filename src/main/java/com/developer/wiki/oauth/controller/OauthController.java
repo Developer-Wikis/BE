@@ -17,7 +17,7 @@ import java.io.IOException;
 @RequestMapping("/api/v1/oauth")
 public class OauthController {
     private  final OauthService oauthService;
-    @GetMapping("")
+    @GetMapping("/google/userinfo")
     public ResponseEntity<GoogleResponseDto> getGoogleUserInfo(@RequestParam("code") String code,@RequestParam("redirectUrl")String redirectUrl) throws IOException {
         System.out.println(">> 소셜 로그인 API 서버로부터 받은 code :"+ code);
         System.out.println(">> 소셜 로그인 API 서버로부터 받은 url :"+ redirectUrl);
