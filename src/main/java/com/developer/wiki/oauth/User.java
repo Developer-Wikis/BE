@@ -10,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 
 @Entity
-@DynamicUpdate
 @Table(name = "user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,7 +29,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    User(String name, String email){
+    public User(String name, String email){
         if(name.isEmpty() || email.isEmpty()){
             throw new BadRequestException("email or name 값이 없습니다.");
         }
