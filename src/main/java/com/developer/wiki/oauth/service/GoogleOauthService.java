@@ -71,7 +71,7 @@ public class GoogleOauthService {
             return responseEntity;
         }catch (RestClientException e){
             e.printStackTrace();
-            throw new BadRequestException(String.format("인가코드로 구글의 AccessToken을 발급하지 못했습니다. code : %s, redirectUrl : %s",code,redirectUrl));
+            throw new BadRequestException(String.format("인가코드로 구글의 AccessToken을 발급하지 못했습니다. code : %s, redirectUrl : %s,  오류 내용 : %s",code,redirectUrl,e.getMessage()));
         }
     }
 

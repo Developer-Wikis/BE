@@ -24,10 +24,10 @@ public class OauthController {
         GoogleResponseDto GoogleUser = oauthService.oAuthLogin(code,redirectUrl);
         return new ResponseEntity<>(GoogleUser, HttpStatus.OK);
     }
-    @GetMapping("/google/url")
-    public void getGoogleUrl(@RequestParam String url, HttpServletResponse response) throws IOException {
-        System.out.println("asdasdasd"+url);
+    @GetMapping("/google")
+    public ResponseEntity<String> getGoogleUrl(@RequestParam String url, HttpServletResponse response) throws IOException {
         String redirectUrl=oauthService.googleUrl(url);
-        response.sendRedirect(redirectUrl);
+        //response.sendRedirect(redirectUrl);
+        return ResponseEntity.ok(redirectUrl);
     }
 }
