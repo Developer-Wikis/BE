@@ -26,7 +26,8 @@ public class OauthService {
         if(user==null) {
             User user1 = new User(
                     googleUser.getName(),
-                    googleUser.getEmail());
+                    googleUser.getEmail(),
+                    googleUser.getPicture());
             userRepository.save(user1);
         }
         Token token = tokenService.generateToken(googleUser.getEmail(), "ROLE_USER");

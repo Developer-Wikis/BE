@@ -36,8 +36,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         var memberAttribute = oAuth2Attribute.convertToMap();
         System.out.println((String)memberAttribute.get("email"));
         User user =userRepository.findByEmail((String)memberAttribute.get("email")).orElse(null);
+        System.out.println(memberAttribute.toString());
         if(user==null) {
-            User user1 = new User((String) memberAttribute.get("name"), (String) memberAttribute.get("email"));
+            User user1 = new User((String) memberAttribute.get("name"), (String) memberAttribute.get("email"),(String) memberAttribute.get("picture"));
             userRepository.save(user1);
         }
 

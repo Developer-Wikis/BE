@@ -1,16 +1,13 @@
 package com.developer.wiki.oauth.controller;
 
 import com.developer.wiki.oauth.dto.GoogleResponseDto;
-import com.developer.wiki.oauth.dto.UrlRequest;
 import com.developer.wiki.oauth.service.OauthService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 @RequiredArgsConstructor
 @RestController
