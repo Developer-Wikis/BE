@@ -38,8 +38,8 @@ public class TokenService {
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact(),
                 Jwts.builder()
-                        .setClaims(claims)
                         .setIssuedAt(now)
+                        .setIssuer("devWiki")
                         .setExpiration(new Date(now.getTime() + refreshPeriod))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact());

@@ -1,10 +1,8 @@
 package com.developer.wiki.oauth;
 
+import antlr.StringUtils;
 import com.developer.wiki.common.exception.BadRequestException;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -12,8 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+@NoArgsConstructor
+public class User{
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -25,16 +23,19 @@ public class User {
     @Column(unique = true,name="email")
     private String email;
 
+    private String profileUrl;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    public User(String name, String email){
-        if(name.isEmpty() || email.isEmpty()){
+    public User(String name, String email,String profileUrl){
+        if(name.isEmpty() || email.isEmpty() || profileUrl.isEmpty()){
             throw new BadRequestException("email or name 값이 없습니다.");
         }
         this.name=name;
         this.email=email;
+        this.profileUrl=profileUrl;
         this.role=Role.USER;
     }
 }
