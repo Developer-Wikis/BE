@@ -36,12 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers( "/oauth2/authorization/**","/api/v1/oauth/**").permitAll()
             .anyRequest().authenticated();
-    http.formLogin().disable()
-            .oauth2Login()
-            .userInfoEndpoint()
-            .userService(customOAuth2UserService)
-            .and()
-            .successHandler(oAuth2SuccessHandler);
+    http.formLogin().disable();
     http.addFilterBefore(new JwtFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
   }
 
