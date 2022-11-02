@@ -7,6 +7,7 @@ import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -34,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers( "/oauth2/authorization/**","/api/v1/oauth/**").permitAll()
+            .antMatchers( HttpMethod.GET,"/api/v1/questions/**").permitAll()
+            .antMatchers( "/api/v1/oauth/**").permitAll()
             .anyRequest().authenticated();
     http.formLogin().disable();
     http.addFilterBefore(new JwtFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
