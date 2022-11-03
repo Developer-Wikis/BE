@@ -19,6 +19,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -45,5 +46,37 @@ public class JwtFilter extends GenericFilterBean {
     public Authentication getAuthentication(User user) {
         return new UsernamePasswordAuthenticationToken(user, "",
                 Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+    }
+
+    private Map<String, Object> validateAccessToken(HttpServletRequest request) throws AccessTokenException {
+
+        String headerStr = request.getHeader("Authorization");
+
+        if(headerStr == null  || headerStr.length() < 8){
+            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.UNACCEPT);
+        }
+
+        //Bearer 생략
+        String tokenType = headerStr.substring(0,6);
+        String tokenStr =  headerStr.substring(7);
+
+        if(tokenType.equalsIgnoreCase("Bearer") == false){
+            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.BADTYPE);
+        }
+
+        try{
+            Map<String, Object> values = jwtUtil.validateToken(tokenStr);
+
+            return values;
+        }catch(MalformedJwtException malformedJwtException){
+            log.error("MalformedJwtException----------------------");
+            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.MALFORM);
+        }catch(SignatureException signatureException){
+            log.error("SignatureException----------------------");
+            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.BADSIGN);
+        }catch(ExpiredJwtException expiredJwtException){
+            log.error("ExpiredJwtException----------------------");
+            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.EXPIRED);
+        }
     }
 }

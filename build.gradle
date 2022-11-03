@@ -48,6 +48,8 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers:1.17.3")
     testImplementation("org.testcontainers:mariadb:1.17.3")
     testImplementation("org.testcontainers:junit-jupiter:1.17.3")
+
+    implementation 'com.google.code.gson:gson:2.8.9'
 }
 
 tasks.named('test') {
