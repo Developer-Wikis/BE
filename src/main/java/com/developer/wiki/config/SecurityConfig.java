@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
             .antMatchers( HttpMethod.GET,"/api/v1/questions/**").permitAll()
             .antMatchers( "/api/v1/oauth/**").permitAll()
             .anyRequest().authenticated();
