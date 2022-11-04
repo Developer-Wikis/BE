@@ -20,11 +20,11 @@ public class AccessTokenException extends RuntimeException {
         EXPIRED(403, "Expired Token");
 
         private int status;
-        private String msg;
+        private String messages;
 
         TOKEN_ERROR(int status, String msg){
             this.status = status;
-            this.msg = msg;
+            this.messages = msg;
         }
 
         public int getStatus() {
@@ -32,7 +32,7 @@ public class AccessTokenException extends RuntimeException {
         }
 
         public String getMsg() {
-            return this.msg;
+            return this.messages;
         }
     }
 
@@ -48,7 +48,7 @@ public class AccessTokenException extends RuntimeException {
 
         Gson gson = new Gson();
 
-        String responseStr = gson.toJson(Map.of("msg", token_error.getMsg(), "time", new Date()));
+        String responseStr = gson.toJson(Map.of("messages", token_error.getMsg()));
 
         try {
             response.getWriter().println(responseStr);
