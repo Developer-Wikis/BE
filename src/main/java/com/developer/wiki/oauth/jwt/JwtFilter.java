@@ -4,6 +4,7 @@ import com.developer.wiki.common.exception.NotFoundException;
 import com.developer.wiki.oauth.TokenService;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,9 +36,6 @@ public class JwtFilter extends GenericFilterBean {
             User user=userRepository.findByEmail(email).orElseThrow(()-> new NotFoundException("유저가 없습니다"));
             Authentication auth = getAuthentication(user);
             SecurityContextHolder.getContext().setAuthentication(auth);
-        }
-        else{
-            log.info("헤더에 토큰이 없습니다.");
         }
         chain.doFilter(request, response);
     }

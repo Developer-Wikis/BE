@@ -5,6 +5,7 @@ import com.developer.wiki.oauth.OAuth2SuccessHandler;
 import com.developer.wiki.oauth.TokenService;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.jwt.JwtFilter;
+import com.developer.wiki.oauth.jwt.newJwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -38,10 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers( HttpMethod.GET,"/api/v1/questions/**").permitAll()
             .antMatchers( "/api/v1/oauth/**").permitAll()
             .anyRequest().authenticated();
-    http.formLogin().disable();
-    http.addFilterBefore(new JwtFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
+    http.formLogin().disable()
+            .oauth2Login()
+            .userInfoEndpoint()
+            .userService(customOAuth2UserService)
+            .and()
+            .successHandler(oAuth2SuccessHandler);
+    http.addFilterBefore(new newJwtFilter(userRepository,tokenService), UsernamePasswordAuthenticationFilter.class);
   }
-
-
-
 }
