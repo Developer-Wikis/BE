@@ -2,6 +2,7 @@ package com.developer.wiki.oauth.controller;
 
 
 import com.developer.wiki.oauth.User;
+import com.developer.wiki.oauth.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping
-    public ResponseEntity<User> getUserInfo(@AuthenticationPrincipal User currentUser){
-        return ResponseEntity.ok().body(currentUser);
+    public ResponseEntity<UserResponseDto> getUserInfo(@AuthenticationPrincipal User currentUser){
+        return ResponseEntity.ok().body(currentUser.toDto());
     }
 }

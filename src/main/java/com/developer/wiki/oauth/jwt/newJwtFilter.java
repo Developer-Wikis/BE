@@ -34,7 +34,7 @@ public class newJwtFilter  extends OncePerRequestFilter {
         log.info("Token Check Filter..........................");
         try{
             String path = request.getRequestURI();
-            if ((path.startsWith("/api/v1/questions")&&request.getMethod().equals("GET"))||path.startsWith("/api/v1/oauth")) {
+            if ((path.startsWith("/api/v1/questions")&&request.getMethod().equals("GET"))||path.startsWith("/api/v1/oauth")||path.startsWith("/api/v1/questions/")) {
                 log.info("넘어간다~~~~");
                 filterChain.doFilter(request, response);
                 return;

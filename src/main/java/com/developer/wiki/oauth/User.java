@@ -2,6 +2,7 @@ package com.developer.wiki.oauth;
 
 import antlr.StringUtils;
 import com.developer.wiki.common.exception.BadRequestException;
+import com.developer.wiki.oauth.dto.UserResponseDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -37,5 +38,9 @@ public class User{
         this.email=email;
         this.profileUrl=profileUrl;
         this.role=Role.USER;
+    }
+
+    public UserResponseDto toDto(){
+        return  new UserResponseDto(this);
     }
 }

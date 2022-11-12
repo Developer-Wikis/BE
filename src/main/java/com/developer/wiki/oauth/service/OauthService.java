@@ -31,7 +31,7 @@ public class OauthService {
             userRepository.save(user1);
         }
         Token token = tokenService.generateToken(googleUser.getEmail(), "ROLE_USER");
-        GoogleResponseDto googleResponseDto=new GoogleResponseDto(googleUser.getName(),googleUser.getEmail(),token.getJwtToken(),token.getRefreshToken());
+        GoogleResponseDto googleResponseDto=new GoogleResponseDto(user,token.getJwtToken(),token.getRefreshToken());
         return googleResponseDto;
     }
 
