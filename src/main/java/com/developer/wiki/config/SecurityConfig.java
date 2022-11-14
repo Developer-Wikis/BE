@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers( HttpMethod.GET,"/api/v1/questions/**").permitAll()
             .antMatchers( HttpMethod.POST,"/api/v1/questions/**").permitAll()
             .antMatchers( "/api/v1/oauth/**").permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().permitAll();
     http.formLogin().disable()
             .oauth2Login()
             .userInfoEndpoint()
