@@ -1,7 +1,6 @@
-package com.developer.wiki.oauth.controller;
+package com.developer.wiki.bookmark;
 
 import com.developer.wiki.oauth.User;
-import com.developer.wiki.oauth.service.BookmarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/bookmarka")
 public class BookmarkController {
+
   private final BookmarkService bookmarkService;
 
   @PostMapping("/{questionId}")
   public ResponseEntity getUserInfo(@AuthenticationPrincipal User currentUser,
       @PathVariable Long questionId) {
-    bookmarkService.bookmark
+    bookmarkService.toggle(questionId, currentUser.getId());
     return ResponseEntity.ok().build();
   }
 }
