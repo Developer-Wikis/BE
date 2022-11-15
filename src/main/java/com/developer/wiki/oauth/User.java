@@ -30,6 +30,9 @@ public class User{
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+
+    private String refreshToken;
+
     public User(String name, String email,String profileUrl){
         if(name.isEmpty() || email.isEmpty() || profileUrl.isEmpty()){
             throw new BadRequestException("email or name 값이 없습니다.");
@@ -42,5 +45,9 @@ public class User{
 
     public UserResponseDto toDto(){
         return  new UserResponseDto(this);
+    }
+
+    public void updateRefreshToken(String token){
+        this.refreshToken=token;
     }
 }

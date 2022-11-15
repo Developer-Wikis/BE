@@ -5,7 +5,9 @@ import com.developer.wiki.oauth.OAuth2SuccessHandler;
 import com.developer.wiki.oauth.TokenService;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.jwt.JwtFilter;
+import com.developer.wiki.oauth.jwt.RefreshTokenFilter;
 import com.developer.wiki.oauth.jwt.newJwtFilter;
+import com.developer.wiki.oauth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -27,7 +29,7 @@ import java.util.Arrays;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final CustomOAuth2UserService customOAuth2UserService;
   private final OAuth2SuccessHandler oAuth2SuccessHandler;
-  private final TokenService tokenService;
+  private final JwtUtil jwtUtil;
   private final UserRepository userRepository;
 
   @Bean
@@ -53,7 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .userService(customOAuth2UserService)
             .and()
             .successHandler(oAuth2SuccessHandler);
-    http.addFilterBefore(new newJwtFilter(userRepository,tokenService), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(new newJwtFilter(userRepository,jwtUtil), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(new RefreshTokenFilter("/api/v1/refreshToken", jwtUtil,userRepository),
+            newJwtFilter.class);
   }
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {

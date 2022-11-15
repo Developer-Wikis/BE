@@ -5,6 +5,7 @@ import com.developer.wiki.oauth.TokenService;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.exception.AccessTokenException;
+import com.developer.wiki.oauth.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -22,13 +23,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
 
 
 @Log4j2
 @RequiredArgsConstructor
 public class newJwtFilter  extends OncePerRequestFilter {
     private final UserRepository userRepository;
-    private final TokenService tokenService;
+    private final JwtUtil jwtUtil;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("Token Check Filter..........................");
@@ -75,9 +77,8 @@ public class newJwtFilter  extends OncePerRequestFilter {
 
         try{
             //Map<String, Object> values = jwtUtil.validateToken(tokenStr);
-            String email=tokenService.getUid(tokenStr);
-
-            return email;
+            Map<String, Object> email=jwtUtil.validateToken(tokenStr);
+            return (String)email.get("email");
         }catch(MalformedJwtException malformedJwtException){
             log.error("MalformedJwtException----------------------");
             throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.MALFORM);
