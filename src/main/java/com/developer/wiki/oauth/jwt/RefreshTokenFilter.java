@@ -1,7 +1,4 @@
 package com.developer.wiki.oauth.jwt;
-
-import com.developer.wiki.oauth.TokenService;
-import com.developer.wiki.oauth.TokenType;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.exception.RefreshTokenException;

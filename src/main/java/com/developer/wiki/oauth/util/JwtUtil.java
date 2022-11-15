@@ -1,6 +1,6 @@
 package com.developer.wiki.oauth.util;
 
-import com.developer.wiki.oauth.TokenType;
+
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
