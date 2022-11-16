@@ -25,4 +25,5 @@ public class DetailQuestionResponse {
   private LocalDateTime createdAt;
   private Long prevId;
   private Long nextId;
+  private Boolean isBookmarked;
 }
