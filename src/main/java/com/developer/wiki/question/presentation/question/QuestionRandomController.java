@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/questions")
 @RequiredArgsConstructor
-public class QuestionRandomController {
+public class 리QuestionRandomController {
 
   private final QuestionRandomService questionRandomService;
 
