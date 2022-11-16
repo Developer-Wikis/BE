@@ -13,11 +13,11 @@ public class AccessTokenException extends RuntimeException {
     TOKEN_ERROR token_error;
 
     public enum TOKEN_ERROR {
-        UNACCEPT(401,"Token is null or too short"),
-        BADTYPE(401, "Token type Bearer"),
+        UNACCEPT(403,"Token is null or too short"),
+        BADTYPE(403, "Token type Bearer"),
         MALFORM(403, "Malformed Token"),
         BADSIGN(403, "BadSignatured Token"),
-        EXPIRED(403, "Expired Token");
+        EXPIRED(401, "Expired Token");
 
         private int status;
         private String messages;
