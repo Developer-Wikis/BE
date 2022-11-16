@@ -1,6 +1,5 @@
 package com.developer.wiki.question.infra;
 
-import static com.developer.wiki.question.command.domain.QQuestion.question;
 
 import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.Question;
@@ -18,6 +17,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
+
+import static com.developer.wiki.question.command.domain.QQuestion.question;
 
 @Repository
 public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
