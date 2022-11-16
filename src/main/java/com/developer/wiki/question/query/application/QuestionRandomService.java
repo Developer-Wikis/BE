@@ -18,7 +18,7 @@ public class QuestionRandomService {
 
   private final QuestionSearchRepository questionSearchRepository;
 
-  public Slice<RandomQuestionResponse> findRandomSlice(Pageable pageable, String mainCategory,
+  public Slice<RandomQuestionResponse> findRandomPage(Pageable pageable, String mainCategory,
       List<String> subCategory, User currentUser) {
     Slice<Question> questions = questionSearchRepository.findRandomBy(pageable, mainCategory,
         subCategory);

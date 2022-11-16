@@ -6,13 +6,17 @@ import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionSearchRepository;
 import com.developer.wiki.question.command.domain.SubCategory;
+import com.developer.wiki.question.query.application.SummaryQuestionResponse;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -29,22 +33,20 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   }
 
   @Override
-  public Slice<Question> findSliceBy(Pageable pageable, String mainCategory,
-      List<String> subCategory) {
+  public Page<SummaryQuestionResponse> findPageByUserId(Pageable pageable, String mainCategory,
+      List<String> subCategory, Long userId) {
 
-    List<Question> courses = jpaQueryFactory.select(question).from(question)
+    List<SummaryQuestionResponse> questions = jpaQueryFactory.select(
+            Projections.fields(SummaryQuestionResponse.class, question.id, question.title,
+                question.mainCategory, question.subCategory, question.viewCount, question.commentCount,
+                question.createdAt)).from(question)
         .where(mainCategoryEq(mainCategory), subCategoryEq(mainCategory, subCategory),
             question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())
         .limit(pageable.getPageSize() + 1).fetch();
 
-    boolean hasNext = false;
+    Long count = jpaQueryFactory.select(question.count()).from(question).fetchOne();
 
-    if (courses.size() > pageable.getPageSize()) {
-      courses.remove(pageable.getPageSize());
-      hasNext = true;
-    }
-
-    return new SliceImpl<>(courses, pageable, hasNext);
+    return new PageImpl<>(questions, pageable, count);
   }
 
   @Override

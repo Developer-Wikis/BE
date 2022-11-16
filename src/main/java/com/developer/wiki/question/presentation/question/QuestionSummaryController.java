@@ -26,7 +26,7 @@ public class QuestionSummaryController {
       @AuthenticationPrincipal User currentUser,
       @RequestParam(required = false) String mainCategory,
       @RequestParam(required = false) List<String> subCategory, Pageable pageable) {
-    Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findSlice(pageable,
+    Slice<SummaryQuestionResponse> summarySlice = questionSummaryService.findPage(pageable,
         mainCategory, subCategory,currentUser);
     return ResponseEntity.ok(summarySlice);
   }

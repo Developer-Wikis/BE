@@ -25,7 +25,7 @@ public class QuestionRandomController {
   public ResponseEntity<Slice<RandomQuestionResponse>> random(
       @AuthenticationPrincipal User currentUser, @RequestParam String mainCategory,
       @RequestParam List<String> subCategory) {
-    Slice<RandomQuestionResponse> randomSlice = questionRandomService.findRandomSlice(
+    Slice<RandomQuestionResponse> randomSlice = questionRandomService.findRandomPage(
         PageRequest.of(0, 300), mainCategory, subCategory, currentUser);
     return ResponseEntity.ok(randomSlice);
   }
