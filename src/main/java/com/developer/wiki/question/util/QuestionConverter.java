@@ -37,13 +37,13 @@ public class QuestionConverter {
   }
 
   public static DetailQuestionResponse ofDetail(Question question, Set<TailQuestion> tailQuestions,
-      Long prevId, Long nextId) {
+      Long prevId, Long nextId, Boolean bookmarkedQuestion) {
     return DetailQuestionResponse.builder().id(question.getId()).title(question.getTitle())
         .mainCategory(question.getMainCategory().name())
         .subCategory(question.getSubCategory().getCategory()).tailQuestions(
             tailQuestions.stream().filter(tq -> tq.getIsApproved()).map(q -> q.getTailQuestion())
                 .collect(Collectors.toSet())).viewCount(question.getViewCount())
         .commentCount(question.getCommentCount()).createdAt(question.getCreatedAt()).prevId(prevId)
-        .nextId(nextId).build();
+        .nextId(nextId).isBookmarked(bookmarkedQuestion).build();
   }
 }

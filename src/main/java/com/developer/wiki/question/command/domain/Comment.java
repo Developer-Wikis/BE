@@ -33,19 +33,36 @@ public class Comment {
   @Column(name = "content")
   private String content;
 
+  @Column(name = "status")
+  private CommentStatus commentStatus;
+
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
   @ManyToOne
   @JoinColumn(name = "question_id")
   private Question question;
+  @Column(name = "user_id")
+  private Long userId;
 
   public Comment(String nickname, String password, String content, Question question) {
     this.nickname = nickname;
     this.password = password;
     this.content = content;
+    this.commentStatus = CommentStatus.ANONYMOUS;
     this.question = question;
     this.createdAt = LocalDateTime.now();
+    this.userId = null;
+  }
+
+  public Comment(String nickname, String password, String content, Question question, Long userId) {
+    this.nickname = nickname;
+    this.password = password;
+    this.content = content;
+    this.commentStatus = CommentStatus.USER;
+    this.question = question;
+    this.createdAt = LocalDateTime.now();
+    this.userId = userId;
   }
 
   public void matchPassword(String password) {
