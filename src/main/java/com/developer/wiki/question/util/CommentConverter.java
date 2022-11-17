@@ -4,6 +4,7 @@ import com.developer.wiki.question.command.application.dto.CreateCommentRequest;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.query.application.SummaryCommentResponse;
+import java.util.Objects;
 
 public class CommentConverter {
 
@@ -21,7 +22,9 @@ public class CommentConverter {
   }
 
   public static SummaryCommentResponse ofSummary(Comment comment) {
-    return SummaryCommentResponse.builder().id(comment.getId()).nickname(comment.getNickname())
+    return SummaryCommentResponse.builder().id(comment.getId()).username(comment.getNickname())
+        .role(comment.getCommentRole().name())
+        .userId(Objects.isNull(comment.getId()) ? null : comment.getId())
         .content(comment.getContent()).createdAt(comment.getCreatedAt()).build();
   }
 }

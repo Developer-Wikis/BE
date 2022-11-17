@@ -4,6 +4,8 @@ import com.developer.wiki.question.util.PasswordEncrypter;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -33,8 +35,9 @@ public class Comment {
   @Column(name = "content")
   private String content;
 
-  @Column(name = "status")
-  private CommentStatus commentStatus;
+  @Column(name = "role")
+  @Enumerated(EnumType.STRING)
+  private CommentRole commentRole;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
@@ -49,7 +52,7 @@ public class Comment {
     this.nickname = nickname;
     this.password = password;
     this.content = content;
-    this.commentStatus = CommentStatus.ANONYMOUS;
+    this.commentRole = CommentRole.ANONYMOUS;
     this.question = question;
     this.createdAt = LocalDateTime.now();
     this.userId = null;
@@ -59,7 +62,7 @@ public class Comment {
     this.nickname = nickname;
     this.password = password;
     this.content = content;
-    this.commentStatus = CommentStatus.USER;
+    this.commentRole = CommentRole.USER;
     this.question = question;
     this.createdAt = LocalDateTime.now();
     this.userId = userId;
