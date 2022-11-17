@@ -33,6 +33,9 @@ public class Comment {
   @Column(name = "content")
   private String content;
 
+  @Column(name = "status")
+  private CommentStatus commentStatus;
+
   @Column(name = "created_at")
   private LocalDateTime createdAt;
 
@@ -46,6 +49,7 @@ public class Comment {
     this.nickname = nickname;
     this.password = password;
     this.content = content;
+    this.commentStatus = CommentStatus.ANONYMOUS;
     this.question = question;
     this.createdAt = LocalDateTime.now();
     this.userId = null;
@@ -55,6 +59,7 @@ public class Comment {
     this.nickname = nickname;
     this.password = password;
     this.content = content;
+    this.commentStatus = CommentStatus.USER;
     this.question = question;
     this.createdAt = LocalDateTime.now();
     this.userId = userId;
