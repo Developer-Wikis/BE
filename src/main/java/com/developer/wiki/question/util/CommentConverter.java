@@ -10,15 +10,18 @@ public class CommentConverter {
   public static Comment toComment(CreateCommentRequest createCommentRequest, Question question) {
     return new Comment(createCommentRequest.getNickname(),
         PasswordEncrypter.encrypt(createCommentRequest.getPassword()),
-        createCommentRequest.getContent(),question);
+        createCommentRequest.getContent(), question);
+  }
+
+  public static Comment toCommentByUser(CreateCommentRequest createCommentRequest,
+      Question question, Long userId) {
+    return new Comment(createCommentRequest.getNickname(),
+        PasswordEncrypter.encrypt(createCommentRequest.getPassword()),
+        createCommentRequest.getContent(), question, userId);
   }
 
   public static SummaryCommentResponse ofSummary(Comment comment) {
-    return SummaryCommentResponse.builder()
-        .id(comment.getId())
-        .nickname(comment.getNickname())
-        .content(comment.getContent())
-        .createdAt(comment.getCreatedAt())
-        .build();
+    return SummaryCommentResponse.builder().id(comment.getId()).nickname(comment.getNickname())
+        .content(comment.getContent()).createdAt(comment.getCreatedAt()).build();
   }
 }

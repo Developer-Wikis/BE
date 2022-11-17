@@ -39,6 +39,8 @@ public class Comment {
   @ManyToOne
   @JoinColumn(name = "question_id")
   private Question question;
+  @Column(name = "user_id")
+  private Long userId;
 
   public Comment(String nickname, String password, String content, Question question) {
     this.nickname = nickname;
@@ -46,6 +48,16 @@ public class Comment {
     this.content = content;
     this.question = question;
     this.createdAt = LocalDateTime.now();
+    this.userId = null;
+  }
+
+  public Comment(String nickname, String password, String content, Question question, Long userId) {
+    this.nickname = nickname;
+    this.password = password;
+    this.content = content;
+    this.question = question;
+    this.createdAt = LocalDateTime.now();
+    this.userId = userId;
   }
 
   public void matchPassword(String password) {
