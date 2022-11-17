@@ -1,5 +1,5 @@
 package com.developer.wiki.question.command.domain;
 
-public enum CommentStatus {
+public enum CommentRole {
   ANONYMOUS, USER;
 }
