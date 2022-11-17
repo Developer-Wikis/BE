@@ -1,5 +1,6 @@
 package com.developer.wiki.question.command.application.comment;
 
+import com.developer.wiki.common.exception.UnAuthorizedException;
 import com.developer.wiki.question.command.application.dto.PasswordRequest;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.CommentRepository;
@@ -18,8 +19,10 @@ public class CommentPasswordCheckService {
 
   public boolean checkPassword(Long id, PasswordRequest passwordRequest, Long userId) {
     Comment comment = commentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    if (Objects.isNull(userId) || userId.equals(comment.getUserId())) {
-      return comment.checkPassword(passwordRequest.getPassword());
+    //Null이 아니면서, id도 맞지 않을때
+    if (!Objects.isNull(userId) && !userId.equals(comment.getUserId())) {
+      throw new UnAuthorizedException("수정 권한이 없습니다.");
     }
+    return comment.checkPassword(passwordRequest.getPassword());
   }
 }
