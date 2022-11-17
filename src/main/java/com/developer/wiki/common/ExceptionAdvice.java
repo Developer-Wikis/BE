@@ -39,6 +39,13 @@ public class ExceptionAdvice {
   }
 
   @ResponseBody
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  @ExceptionHandler(UnAuthorizedException.class)
+  public ErrorResponse unAuthorizedException(UnAuthorizedException e) {
+    return new ErrorResponse(List.of(e.getMessage()));
+  }
+
+  @ResponseBody
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(value = {BindException.class})
   public ErrorResponse methodArgumentNotValidException(BindException e) {
