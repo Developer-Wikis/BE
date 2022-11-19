@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class UserResponseDto {
     private Long id;
-    private String name;
+    private String username;
     private String email;
     private String profileUrl;
     private String role;
@@ -16,7 +16,7 @@ public class UserResponseDto {
     @Builder
     public UserResponseDto(User user){
         this.id= user.getId();
-        this.name= user.getName();
+        this.username= user.getName();
         this.email= user.getEmail();
         this.profileUrl= user.getProfileUrl();
         this.role=user.getRole().name();
