@@ -38,8 +38,8 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
       List<String> subCategory, Long userId) {
 
     List<SummaryQuestionResponse> questions = jpaQueryFactory.select(
-            Projections.fields(SummaryQuestionResponse.class, question.id, question.title,
-                question.mainCategory, question.subCategory, question.viewCount, question.commentCount,
+                    Projections.constructor(SummaryQuestionResponse.class, question.id, question.title,
+                    question.mainCategory, question.subCategory, question.viewCount, question.commentCount,
                 question.createdAt)).from(question)
         .where(mainCategoryEq(mainCategory), subCategoryEq(mainCategory, subCategory),
             question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())
