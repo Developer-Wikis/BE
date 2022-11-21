@@ -1,7 +1,6 @@
 package com.developer.wiki.oauth.jwt;
 
 import com.developer.wiki.common.exception.NotFoundException;
-import com.developer.wiki.oauth.TokenService;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.exception.AccessTokenException;
@@ -9,6 +8,14 @@ import com.developer.wiki.oauth.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,14 +23,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
 
 
 @Log4j2
@@ -36,7 +35,7 @@ public class newJwtFilter  extends OncePerRequestFilter {
         log.info("Token Check Filter..........................");
         try{
             String path = request.getRequestURI();
-            if ((path.startsWith("/api/v1/questions")&&request.getMethod().equals("GET"))||path.startsWith("/api/v1/oauth")||path.startsWith("/api/v1/questions/")) {
+            if (path.startsWith("/api/v1/oauth")) {
                 log.info("넘어간다~~~~");
                 filterChain.doFilter(request, response);
                 return;
@@ -44,6 +43,10 @@ public class newJwtFilter  extends OncePerRequestFilter {
 
 
             String email = validateAccessToken(request);
+            if(Objects.isNull(email)){
+                filterChain.doFilter(request,response);
+                return;
+            }
             log.info("email: " + email);
             User user=userRepository.findByEmail(email).orElseThrow(()-> new NotFoundException("유저가 없습니다"));
             Authentication auth = getAuthentication(user);
@@ -63,8 +66,9 @@ public class newJwtFilter  extends OncePerRequestFilter {
 
         String headerStr = request.getHeader("Authorization");
 
-        if(headerStr == null  || headerStr.length() < 8){
-            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.UNACCEPT);
+        if(headerStr==null){
+            System.out.println("222222"+headerStr);
+            return null;
         }
 
         //Bearer 생략
