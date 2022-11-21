@@ -1,6 +1,5 @@
 package com.developer.wiki.question.infra;
 
-import static com.developer.wiki.question.command.domain.QQuestion.question;
 
 import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.Question;
@@ -23,6 +22,8 @@ import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
 
+import static com.developer.wiki.question.command.domain.QQuestion.question;
+
 @Repository
 public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
 
@@ -37,8 +38,8 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
       List<String> subCategory, Long userId) {
 
     List<SummaryQuestionResponse> questions = jpaQueryFactory.select(
-            Projections.fields(SummaryQuestionResponse.class, question.id, question.title,
-                question.mainCategory, question.subCategory, question.viewCount, question.commentCount,
+                    Projections.constructor(SummaryQuestionResponse.class, question.id, question.title,
+                    question.mainCategory, question.subCategory, question.viewCount, question.commentCount,
                 question.createdAt)).from(question)
         .where(mainCategoryEq(mainCategory), subCategoryEq(mainCategory, subCategory),
             question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())

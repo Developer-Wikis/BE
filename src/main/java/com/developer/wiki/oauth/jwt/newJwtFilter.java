@@ -1,5 +1,6 @@
 package com.developer.wiki.oauth.jwt;
 
+import com.developer.wiki.common.exception.BadRequestException;
 import com.developer.wiki.common.exception.NotFoundException;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
@@ -41,14 +42,13 @@ public class newJwtFilter  extends OncePerRequestFilter {
                 return;
             }
 
-
             String email = validateAccessToken(request);
             if(Objects.isNull(email)){
                 filterChain.doFilter(request,response);
                 return;
             }
             log.info("email: " + email);
-            User user=userRepository.findByEmail(email).orElseThrow(()-> new NotFoundException("유저가 없습니다"));
+            User user=userRepository.findByEmail(email).orElseThrow(()-> new AccessTokenException(AccessTokenException.TOKEN_ERROR.NOTFOUND));
             Authentication auth = getAuthentication(user);
             SecurityContextHolder.getContext().setAuthentication(auth);
             filterChain.doFilter(request,response);
@@ -62,13 +62,14 @@ public class newJwtFilter  extends OncePerRequestFilter {
     }
 
 
-    private String validateAccessToken(HttpServletRequest request) throws AccessTokenException {
+    private String validateAccessToken(HttpServletRequest request,FilterChain filterChain,HttpServletResponse response) throws AccessTokenException, ServletException, IOException {
 
         String headerStr = request.getHeader("Authorization");
 
         if(headerStr==null){
             System.out.println("222222"+headerStr);
             return null;
+
         }
 
         //Bearer 생략
