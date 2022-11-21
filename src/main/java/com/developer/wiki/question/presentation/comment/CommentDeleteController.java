@@ -1,6 +1,5 @@
 package com.developer.wiki.question.presentation.comment;
 
-import com.developer.wiki.common.exception.UnAuthorizedException;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.question.command.application.comment.CommentDeleteService;
 import com.developer.wiki.question.command.application.dto.PasswordRequest;
@@ -24,10 +23,8 @@ public class CommentDeleteController {
   @DeleteMapping("/{commentId}")
   public ResponseEntity<Void> delete(@AuthenticationPrincipal User currentUser,
       @PathVariable Long commentId, @RequestBody PasswordRequest passwordRequest) {
-    if (Objects.isNull(currentUser)) {
-      throw new UnAuthorizedException("토큰이 필요합니다.");
-    }
-    commentDeleteService.delete(commentId, passwordRequest);
+    Long userId = Objects.isNull(currentUser) ? null : currentUser.getId();
+    commentDeleteService.delete(commentId, passwordRequest,userId);
     return ResponseEntity.ok(null);
   }
 }
