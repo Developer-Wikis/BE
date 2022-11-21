@@ -46,7 +46,7 @@ public class Comment {
   @JoinColumn(name = "question_id")
   private Question question;
   @Column(name = "user_id")
-  private Long userId;
+  private Long userId = null;
 
   public Comment(String nickname, String password, String content, Question question) {
     this.nickname = nickname;
@@ -88,5 +88,9 @@ public class Comment {
 
   public void changeContent(String content) {
     this.content = content;
+  }
+
+  public Long getUserId() {
+    return userId;
   }
 }
