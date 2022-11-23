@@ -62,7 +62,7 @@ public class newJwtFilter  extends OncePerRequestFilter {
     }
 
 
-    private String validateAccessToken(HttpServletRequest request,FilterChain filterChain,HttpServletResponse response) throws AccessTokenException, ServletException, IOException {
+    private String validateAccessToken(HttpServletRequest request) throws AccessTokenException, ServletException, IOException {
 
         String headerStr = request.getHeader("Authorization");
 
