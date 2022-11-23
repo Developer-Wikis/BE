@@ -1,6 +1,6 @@
 package com.developer.wiki.oauth.jwt;
 
-정import com.developer.wiki.oauth.User;
+import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.exception.AccessTokenException;
 import com.developer.wiki.oauth.util.JwtUtil;
