@@ -26,71 +26,76 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Log4j2
 @RequiredArgsConstructor
-public class newJwtFilter  extends OncePerRequestFilter {
-    private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.info("Token Check Filter..........................");
-        try{
-            String path = request.getRequestURI();
-            if (path.startsWith("/api/v1/oauth")) {
-                log.info("넘어간다~~~~");
-                filterChain.doFilter(request, response);
-                return;
-            }
+public class newJwtFilter extends OncePerRequestFilter {
 
-            String email = validateAccessToken(request);
-            if(Objects.isNull(email)){
-                filterChain.doFilter(request,response);
-                return;
-            }
-            log.info("email: " + email);
-            User user=userRepository.findByEmail(email).orElseThrow(()-> new AccessTokenException(AccessTokenException.TOKEN_ERROR.NOTFOUND));
-            Authentication auth = getAuthentication(user);
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            filterChain.doFilter(request,response);
-        }catch(AccessTokenException accessTokenException){
-            accessTokenException.sendResponseError(response);
-        }
+  private final UserRepository userRepository;
+  private final JwtUtil jwtUtil;
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+      FilterChain filterChain) throws ServletException, IOException {
+    log.info("Token Check Filter..........................");
+    try {
+      String path = request.getRequestURI();
+      if (path.startsWith("/api/v1/oauth")) {
+        log.info("넘어간다~~~~");
+        filterChain.doFilter(request, response);
+        return;
+      }
+
+      String email = validateAccessToken(request);
+      if (Objects.isNull(email)) {
+        filterChain.doFilter(request, response);
+        return;
+      }
+      log.info("email: " + email);
+      User user = userRepository.findByEmail(email)
+          .orElseThrow(() -> new AccessTokenException(AccessTokenException.TOKEN_ERROR.NOTFOUND));
+      Authentication auth = getAuthentication(user);
+      SecurityContextHolder.getContext().setAuthentication(auth);
+      filterChain.doFilter(request, response);
+    } catch (AccessTokenException accessTokenException) {
+      accessTokenException.sendResponseError(response);
     }
-    private Authentication getAuthentication(User user) {
-        return new UsernamePasswordAuthenticationToken(user, "",
-                Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+  }
+
+  private Authentication getAuthentication(User user) {
+    return new UsernamePasswordAuthenticationToken(user, "",
+        Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+  }
+
+
+  private String validateAccessToken(HttpServletRequest request) throws AccessTokenException {
+
+    String headerStr = request.getHeader("Authorization");
+
+    if (headerStr == null) {
+      System.out.println("222222" + headerStr);
+      return null;
+
     }
 
+    //Bearer 생략
+    String tokenType = headerStr.substring(0, 6);
+    String tokenStr = headerStr.substring(7);
 
-    private String validateAccessToken(HttpServletRequest request) throws AccessTokenException, ServletException, IOException {
-
-        String headerStr = request.getHeader("Authorization");
-
-        if(headerStr==null){
-            System.out.println("222222"+headerStr);
-            return null;
-
-        }
-
-        //Bearer 생략
-        String tokenType = headerStr.substring(0,6);
-        String tokenStr =  headerStr.substring(7);
-
-        if(tokenType.equalsIgnoreCase("Bearer") == false){
-            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.BADTYPE);
-        }
-
-        try{
-            //Map<String, Object> values = jwtUtil.validateToken(tokenStr);
-            Map<String, Object> email=jwtUtil.validateToken(tokenStr);
-            return (String)email.get("email");
-        }catch(MalformedJwtException malformedJwtException){
-            log.error("MalformedJwtException----------------------");
-            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.MALFORM);
-        }catch(SignatureException signatureException){
-            log.error("SignatureException----------------------");
-            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.BADSIGN);
-        }catch(ExpiredJwtException expiredJwtException){
-            log.error("ExpiredJwtException----------------------");
-            throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.EXPIRED);
-        }
+    if (tokenType.equalsIgnoreCase("Bearer") == false) {
+      throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.BADTYPE);
     }
+
+    try {
+      //Map<String, Object> values = jwtUtil.validateToken(tokenStr);
+      Map<String, Object> email = jwtUtil.validateToken(tokenStr);
+      return (String) email.get("email");
+    } catch (MalformedJwtException malformedJwtException) {
+      log.error("MalformedJwtException----------------------");
+      throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.MALFORM);
+    } catch (SignatureException signatureException) {
+      log.error("SignatureException----------------------");
+      throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.BADSIGN);
+    } catch (ExpiredJwtException expiredJwtException) {
+      log.error("ExpiredJwtException----------------------");
+      throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.EXPIRED);
+    }
+  }
 }
