@@ -1,8 +1,6 @@
 package com.developer.wiki.oauth.jwt;
 
-import com.developer.wiki.common.exception.BadRequestException;
-import com.developer.wiki.common.exception.NotFoundException;
-import com.developer.wiki.oauth.User;
+정import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.exception.AccessTokenException;
 import com.developer.wiki.oauth.util.JwtUtil;
@@ -62,7 +60,7 @@ public class newJwtFilter  extends OncePerRequestFilter {
     }
 
 
-    private String validateAccessToken(HttpServletRequest request,FilterChain filterChain,HttpServletResponse response) throws AccessTokenException, ServletException, IOException {
+    private String validateAccessToken(HttpServletRequest request) throws AccessTokenException, ServletException, IOException {
 
         String headerStr = request.getHeader("Authorization");
 
