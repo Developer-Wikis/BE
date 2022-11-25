@@ -24,7 +24,7 @@ public class CommentConverter {
   public static SummaryCommentResponse ofSummary(Comment comment) {
     return SummaryCommentResponse.builder().id(comment.getId()).username(comment.getNickname())
         .role(comment.getCommentRole().name())
-        .userId(Objects.isNull(comment.getId()) ? null : comment.getId())
+        .userId(Objects.isNull(comment.getId()) ? null : comment.getUserId())
         .content(comment.getContent()).createdAt(comment.getCreatedAt()).build();
   }
 }
