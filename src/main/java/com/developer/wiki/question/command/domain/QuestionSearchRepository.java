@@ -11,5 +11,8 @@ public interface QuestionSearchRepository {
   Page<SummaryQuestionResponse> findPageByUserId(Pageable pageable, String mainCategory, List<String> subCategory,
       Long userId);
 
+  Page<SummaryQuestionResponse> findBookmarkByUserId(Pageable pageable, String mainCategory, List<String> subCategory,
+      Long userId);
+
   Slice<Question> findRandomBy(Pageable pageable, String mainCategory, List<String> subCategory);
 }

@@ -54,6 +54,26 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   }
 
   @Override
+  public Page<SummaryQuestionResponse> findBookmarkByUserId(Pageable pageable, String mainCategory,
+      List<String> subCategory, Long userId) {
+    List<Question> questions = jpaQueryFactory.select(question).from(question)
+        .leftJoin(question.bookmarks)
+        .where(question.bookmarks.any().userId.eq(userId), mainCategoryEq(mainCategory),
+            subCategoryEq(mainCategory, subCategory), question.isApproved.isTrue())
+        .orderBy(question.id.asc()).offset(pageable.getOffset()).limit(pageable.getPageSize() + 1)
+        .distinct().fetch();
+    List<SummaryQuestionResponse> summaryQuestionResponses = questions.stream().map(question -> {
+      Boolean isBookmarked = exist(question.getId(), userId);
+      return new SummaryQuestionResponse(question.getId(), question.getTitle(),
+          question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
+          question.getCommentCount(), question.getCreatedAt(), isBookmarked);
+    }).collect(Collectors.toList());
+    System.out.println(summaryQuestionResponses);
+    Long count = jpaQueryFactory.select(question.count()).from(question).fetchOne();
+    return new PageImpl<>(summaryQuestionResponses, pageable, count);
+  }
+
+  @Override
   public Slice<Question> findRandomBy(Pageable pageable, String mainCategory,
       List<String> subCategory) {
     List<Question> courses = jpaQueryFactory.select(question).from(question)
