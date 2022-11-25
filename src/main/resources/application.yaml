@@ -2,7 +2,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
   config:
-    import: application-oauth.yaml
+    import:
+      - application-oauth.yaml
+      - application-ncp.yaml
   jpa:
     open-in-view: false
     show-sql: true

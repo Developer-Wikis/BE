@@ -51,4 +51,13 @@ public class User{
     public void updateRefreshToken(String token){
         this.refreshToken=token;
     }
+
+    public void changeUserName(String newUserName){
+        if(newUserName.isEmpty()) throw new BadRequestException("userName is empty");
+        this.name=newUserName;
+    }
+    public void changeUserProfileUrl(String newUrl){
+        if(newUrl.isEmpty()) throw new BadRequestException("newUrl is empty");
+        this.profileUrl=newUrl;
+    }
 }
