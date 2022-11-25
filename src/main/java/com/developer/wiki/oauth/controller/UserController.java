@@ -50,19 +50,11 @@ public class UserController {
     }
 
     @PostMapping("/image/{userId}")
-    public ResponseEntity<String> changeImg(@AuthenticationPrincipal User currentUser, @RequestParam("image") MultipartFile file, @PathVariable Long userId) throws IOException {
+    public ResponseEntity<ImageDto> changeImg(@AuthenticationPrincipal User currentUser, @RequestParam("image") MultipartFile file, @PathVariable Long userId) throws IOException {
         if(!currentUser.getId().equals(userId)) throw new BadRequestException("Not Match Userid");
         if(file.isEmpty()) throw new BadRequestException("파일은 Null이 될수 없습니다.");
-        String originalName=file.getOriginalFilename();
-        System.out.println("!!!!!!!!!!!!!!!오리지널"+originalName);
-        String[] name=originalName.split("\\.");
-        System.out.println(name.length);
-        final String ext = name[1];
-        final String saveFileName = getUuid() +"."+ ext;
-        System.out.println(saveFileName);
-        return ResponseEntity.ok(awsService.upload(saveFileName,file));
+        String url=userService.updateUserProfile(file, userId);
+        return ResponseEntity.ok(new ImageDto(url));
     }
-    private static String getUuid() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
-    }
+
 }
