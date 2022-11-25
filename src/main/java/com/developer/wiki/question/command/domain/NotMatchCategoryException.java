@@ -9,4 +9,7 @@ public class NotMatchCategoryException extends BadRequestException {
   public NotMatchCategoryException() {
     super(NOT_MATCH_CATEGORY);
   }
+  public NotMatchCategoryException(String error) {
+    super(error);
+  }
 }
