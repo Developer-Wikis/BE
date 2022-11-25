@@ -1,0 +1,13 @@
+cloud:
+  aws:
+    credentials:
+      access-key: ENC(cGBvyLuYjKZ6eldcPBUNLOuO08CGMKetB8njxUmcJOM=)
+      secret-key: ENC(mN3n2krPI0WFexB4NGfwdAuY6TK3GxT3GfvLtGy6AIf18xTnri3PUHO9l+y5jGiQf7qqI0s6B1M=)
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    s3:
+      endpoint: https://kr.object.ncloudstorage.com
+      bucket: devwiki
+    defaultUrl : https://kr.object.ncloudstorage.com/devwiki

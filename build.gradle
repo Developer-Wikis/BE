@@ -50,6 +50,9 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.17.3")
 
     implementation 'com.google.code.gson:gson:2.8.9'
+    // AWS 의존성 추가
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
