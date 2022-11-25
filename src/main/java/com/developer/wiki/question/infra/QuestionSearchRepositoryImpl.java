@@ -1,17 +1,20 @@
 package com.developer.wiki.question.infra;
 
 
+import static com.developer.wiki.bookmark.QBookmark.bookmark;
+import static com.developer.wiki.question.command.domain.QQuestion.question;
+
 import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionSearchRepository;
 import com.developer.wiki.question.command.domain.SubCategory;
 import com.developer.wiki.question.query.application.SummaryQuestionResponse;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
@@ -21,8 +24,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
-
-import static com.developer.wiki.question.command.domain.QQuestion.question;
 
 @Repository
 public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
@@ -36,18 +37,40 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   @Override
   public Page<SummaryQuestionResponse> findPageByUserId(Pageable pageable, String mainCategory,
       List<String> subCategory, Long userId) {
-
-    List<SummaryQuestionResponse> questions = jpaQueryFactory.select(
-                    Projections.constructor(SummaryQuestionResponse.class, question.id, question.title,
-                    question.mainCategory, question.subCategory, question.viewCount, question.commentCount,
-                question.createdAt)).from(question)
+    List<Question> questions = jpaQueryFactory.select(question).from(question)
+        .leftJoin(question.bookmarks)
         .where(mainCategoryEq(mainCategory), subCategoryEq(mainCategory, subCategory),
             question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())
-        .limit(pageable.getPageSize() + 1).fetch();
-
+        .limit(pageable.getPageSize() + 1).distinct().fetch();
+    List<SummaryQuestionResponse> summaryQuestionResponses = questions.stream().map(question -> {
+      Boolean isBookmarked = exist(question.getId(), userId);
+      return new SummaryQuestionResponse(question.getId(), question.getTitle(),
+          question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
+          question.getCommentCount(), question.getCreatedAt(), isBookmarked);
+    }).collect(Collectors.toList());
+    System.out.println(summaryQuestionResponses);
     Long count = jpaQueryFactory.select(question.count()).from(question).fetchOne();
+    return new PageImpl<>(summaryQuestionResponses, pageable, count);
+  }
 
-    return new PageImpl<>(questions, pageable, count);
+  @Override
+  public Page<SummaryQuestionResponse> findBookmarkByUserId(Pageable pageable, String mainCategory,
+      List<String> subCategory, Long userId) {
+    List<Question> questions = jpaQueryFactory.select(question).from(question)
+        .leftJoin(question.bookmarks)
+        .where(question.bookmarks.any().userId.eq(userId), mainCategoryEq(mainCategory),
+            subCategoryEq(mainCategory, subCategory), question.isApproved.isTrue())
+        .orderBy(question.id.asc()).offset(pageable.getOffset()).limit(pageable.getPageSize() + 1)
+        .distinct().fetch();
+    List<SummaryQuestionResponse> summaryQuestionResponses = questions.stream().map(question -> {
+      Boolean isBookmarked = exist(question.getId(), userId);
+      return new SummaryQuestionResponse(question.getId(), question.getTitle(),
+          question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
+          question.getCommentCount(), question.getCreatedAt(), isBookmarked);
+    }).collect(Collectors.toList());
+    System.out.println(summaryQuestionResponses);
+    Long count = jpaQueryFactory.select(question.count()).from(question).fetchOne();
+    return new PageImpl<>(summaryQuestionResponses, pageable, count);
   }
 
   @Override
@@ -88,4 +111,20 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
         .forEach(s -> builder.or(question.subCategory.eq(s)));
     return builder;
   }
+
+  private BooleanExpression userIdEq(Long userId) {
+    return Objects.isNull(userId) ? null : bookmark.userId.eq(userId);
+  }
+
+  public Boolean exist(Long questionId, Long userId) {
+    if (userId == null) {
+      userId = 0L;
+    }
+    Integer fetchOne = jpaQueryFactory.selectOne().from(bookmark)
+        .where(bookmark.question.id.eq(questionId), userIdEq(userId)).fetchFirst();
+
+    return fetchOne != null;
+
+  }
+
 }

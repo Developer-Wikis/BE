@@ -1,5 +1,6 @@
 package com.developer.wiki.question.command.domain;
 
+import com.developer.wiki.bookmark.Bookmark;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -61,6 +62,9 @@ public class Question {
 
   @Column(name = "is_approved")
   private Boolean isApproved;
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
+  private Set<Bookmark> bookmarks = new LinkedHashSet<>();
 
   public Question(String title, MainCategory mainCategory, SubCategory subCategory) {
     this.title = title;
