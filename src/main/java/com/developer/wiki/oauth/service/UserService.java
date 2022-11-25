@@ -5,6 +5,7 @@ import com.developer.wiki.common.exception.NotFoundException;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.util.AwsService;
+import com.developer.wiki.oauth.util.ExtType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +41,7 @@ public class UserService {
         String originalName=file.getOriginalFilename();
         String[] name=originalName.split("\\.");
         final String ext = name[1];
-        final String saveFileName = getUuid() +"."+ ext;
+        final String saveFileName = getUuid() +"."+ ExtType.validType(ext);
         System.out.println(saveFileName);
         var newUrl=awsService.upload(saveFileName,file);
         user.changeUserProfileUrl(newUrl);
