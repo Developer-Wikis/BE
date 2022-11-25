@@ -3,8 +3,7 @@ package com.developer.wiki.oauth.util;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
@@ -48,6 +47,9 @@ public class AwsService {
         final Upload upload =  transferManager.upload(request);
         try {
             upload.waitForCompletion();
+            AccessControlList accessControlList = s3Config.amazonS3Client().getObjectAcl(bucketName, saveFileName);
+            accessControlList.grantPermission(GroupGrantee.AllUsers, Permission.Read);
+            s3Config.amazonS3Client().setObjectAcl(bucketName, saveFileName, accessControlList);
             return defaultUrl+saveFileName;
         } catch (AmazonClientException | InterruptedException amazonClientException) {
             amazonClientException.printStackTrace();
