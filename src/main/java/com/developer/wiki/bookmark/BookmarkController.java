@@ -38,4 +38,6 @@ public class BookmarkController {
     Boolean isBookmarked = bookmarkService.getBookmarked(questionId, currentUser.getId());
     return ResponseEntity.ok(isBookmarked);
   }
+
+
 }

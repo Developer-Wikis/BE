@@ -2,12 +2,15 @@ package com.developer.wiki.oauth.controller;
 
 
 import com.developer.wiki.common.exception.BadRequestException;
+import com.developer.wiki.common.exception.UnAuthorizedException;
 import com.developer.wiki.oauth.User;
+import com.developer.wiki.oauth.dto.CommentDto;
 import com.developer.wiki.oauth.dto.ImageDto;
 import com.developer.wiki.oauth.dto.NicknameDto;
 import com.developer.wiki.oauth.dto.UserResponseDto;
 import com.developer.wiki.oauth.service.UserService;
 import com.developer.wiki.oauth.util.AwsService;
+import com.developer.wiki.question.command.domain.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -55,6 +59,15 @@ public class UserController {
         if(file.isEmpty()) throw new BadRequestException("파일은 Null이 될수 없습니다.");
         String url=userService.updateUserProfile(file, userId);
         return ResponseEntity.ok(new ImageDto(url));
+    }
+
+    @GetMapping("/comment")
+    public ResponseEntity<List<CommentDto>> getCommentList(@AuthenticationPrincipal User currentUser){
+        if (Objects.isNull(currentUser)) {
+            throw new UnAuthorizedException("토큰이 필요합니다.");
+        }
+        var list=userService.findCommentList(currentUser.getId());
+        return ResponseEntity.ok(list);
     }
 
 }
