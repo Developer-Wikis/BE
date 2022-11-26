@@ -45,7 +45,7 @@ public class UserController {
                                                       @PathVariable(name = "userId")Long userId,
                                                       @RequestBody @Valid NicknameDto nicknameDto){
         if(!currentUser.getId().equals(userId)) throw new BadRequestException("Not Match Userid");
-        String newUserName=userService.updateUserName(nicknameDto.getUserName(),userId);
+        String newUserName=userService.updateUserName(nicknameDto.getUsername(),userId);
         return ResponseEntity.ok(new NicknameDto(newUserName));
     }
 
