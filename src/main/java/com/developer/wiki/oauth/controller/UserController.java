@@ -40,7 +40,7 @@ public class UserController {
 
 
 
-    @PostMapping("/nickname/{userId}")
+    @PostMapping("/username/{userId}")
     public ResponseEntity<NicknameDto> changeUserName(@AuthenticationPrincipal User currentUser,
                                                       @PathVariable(name = "userId")Long userId,
                                                       @RequestBody @Valid NicknameDto nicknameDto){
