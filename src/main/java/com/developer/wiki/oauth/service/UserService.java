@@ -11,6 +11,7 @@ import com.developer.wiki.oauth.util.ExtType;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,4 +66,11 @@ public class UserService {
                .collect(Collectors.toList());
     }
 
+    @Transactional
+    public Boolean updateUserDefaultProfile(Long userId) {
+        User user=userRepository.findById(userId)
+                .orElseThrow(()-> new NotFoundException("유저가 없습니다."));
+        user.changeUserDefaultProfileUrl();
+        return true;
+    }
 }

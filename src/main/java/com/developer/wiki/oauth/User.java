@@ -60,4 +60,8 @@ public class User{
         if(newUrl.isEmpty()) throw new BadRequestException("newUrl is empty");
         this.profileUrl=newUrl;
     }
+
+    public void changeUserDefaultProfileUrl(){
+        this.profileUrl=null;
+    }
 }
