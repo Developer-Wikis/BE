@@ -72,14 +72,17 @@ public class newJwtFilter extends OncePerRequestFilter {
     if (headerStr == null) {
       System.out.println("222222" + headerStr);
       return null;
-
     }
-
+    if(headerStr.length()<=7){
+      System.out.println("익명 사용자다!!!!");
+      return null;
+    }
     //Bearer 생략
     String tokenType = headerStr.substring(0, 6);
     String tokenStr = headerStr.substring(7);
 
-    if (tokenType.equalsIgnoreCase("Bearer") == false) {
+
+    if (!tokenType.equalsIgnoreCase("Bearer")) {
       throw new AccessTokenException(AccessTokenException.TOKEN_ERROR.BADTYPE);
     }
 
