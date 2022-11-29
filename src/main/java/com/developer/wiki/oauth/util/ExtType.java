@@ -10,7 +10,7 @@ import java.util.Objects;
 @Getter
 @RequiredArgsConstructor
 public enum ExtType {
-    JPG("jpg"),PNG("png"),JPEG("jpeg");
+    JPG("jpg"),PNG("png"),JPEG("jpeg"),GIF("gif");
     private final String value;
 
     public static String validType(String type) {

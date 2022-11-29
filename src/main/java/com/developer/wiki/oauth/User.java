@@ -1,13 +1,12 @@
 package com.developer.wiki.oauth;
 
-import antlr.StringUtils;
+
 import com.developer.wiki.common.exception.BadRequestException;
 import com.developer.wiki.oauth.dto.UserResponseDto;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user")
@@ -62,6 +61,8 @@ public class User{
     }
 
     public void changeUserDefaultProfileUrl(){
-        this.profileUrl=null;
+        if(!Objects.isNull(this.profileUrl)){
+            this.profileUrl=null;
+        }
     }
 }
