@@ -12,6 +12,8 @@ import com.developer.wiki.oauth.service.UserService;
 import com.developer.wiki.oauth.util.AwsService;
 import com.developer.wiki.question.command.domain.Comment;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,6 @@ import java.util.UUID;
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
-    private final AwsService awsService;
 
     @GetMapping
     public ResponseEntity<UserResponseDto> getUserInfo(@AuthenticationPrincipal User currentUser){
@@ -62,11 +63,11 @@ public class UserController {
     }
 
     @GetMapping("/comment")
-    public ResponseEntity<List<CommentDto>> getCommentList(@AuthenticationPrincipal User currentUser){
+    public ResponseEntity<Page<CommentDto>> getCommentList(@AuthenticationPrincipal User currentUser, Pageable pageable){
         if (Objects.isNull(currentUser)) {
             throw new UnAuthorizedException("토큰이 필요합니다.");
         }
-        var list=userService.findCommentList(currentUser.getId());
+        var list=userService.findCommentList(currentUser.getId(),pageable);
         return ResponseEntity.ok(list);
     }
 

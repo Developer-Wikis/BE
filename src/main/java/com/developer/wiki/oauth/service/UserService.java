@@ -11,6 +11,9 @@ import com.developer.wiki.oauth.util.ExtType;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,11 +62,16 @@ public class UserService {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
     @Transactional
-    public List<CommentDto> findCommentList(Long userId){
+    public Page<CommentDto> findCommentList(Long userId, Pageable pageable){
        List<Comment> list=commentRepository.findByUserId(userId);
-       return list.stream()
-               .map(comment -> modelMapperConfig.modelMapper().map(comment,CommentDto.class))
+       List<CommentDto> commentDtoList=list.stream()
+               .map(comment -> new CommentDto(comment.getId(),comment.getContent(),comment.getCreatedAt(),comment.getQuestion().getTitle(),comment.getQuestion().getMainCategory())
+               )
                .collect(Collectors.toList());
+        final int start = (int)pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), commentDtoList.size());
+       Page<CommentDto> pageComment=new PageImpl<CommentDto>(commentDtoList.subList(start,end),pageable,commentDtoList.size());
+       return pageComment;
     }
 
     @Transactional
