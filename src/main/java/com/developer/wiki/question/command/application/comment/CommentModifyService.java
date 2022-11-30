@@ -5,10 +5,11 @@ import com.developer.wiki.question.command.application.dto.ModifyCommentRequest;
 import com.developer.wiki.question.command.domain.Comment;
 import com.developer.wiki.question.command.domain.CommentRepository;
 import com.developer.wiki.question.command.domain.EntityNotFoundException;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Service
 @Transactional

@@ -1,11 +1,12 @@
 package com.developer.wiki.oauth.service;
 
-import com.developer.wiki.oauth.*;
+import com.developer.wiki.oauth.TokenService;
+import com.developer.wiki.oauth.User;
+import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.dto.GoogleOAuthToken;
 import com.developer.wiki.oauth.dto.GoogleResponseDto;
 import com.developer.wiki.oauth.dto.GoogleUser;
 import com.developer.wiki.oauth.util.JwtUtil;
-import com.developer.wiki.oauth.util.UrlConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

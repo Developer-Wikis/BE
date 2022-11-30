@@ -1,10 +1,11 @@
 package com.developer.wiki.question.command.domain;
 
 import com.developer.wiki.question.query.application.SummaryQuestionResponse;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+
+import java.util.List;
 
 public interface QuestionSearchRepository {
 

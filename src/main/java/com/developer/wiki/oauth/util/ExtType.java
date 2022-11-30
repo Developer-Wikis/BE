@@ -1,11 +1,8 @@
 package com.developer.wiki.oauth.util;
 
-import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.NotMatchCategoryException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Objects;
 
 @Getter
 @RequiredArgsConstructor

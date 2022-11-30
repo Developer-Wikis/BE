@@ -2,13 +2,10 @@ package com.developer.wiki.question.query.application;
 
 import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.SubCategory;
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter

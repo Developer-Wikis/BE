@@ -3,7 +3,8 @@ package com.developer.wiki.oauth;
 
 import com.developer.wiki.common.exception.BadRequestException;
 import com.developer.wiki.oauth.dto.UserResponseDto;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -43,9 +44,6 @@ public class User{
         this.role=Role.USER;
     }
 
-    public UserResponseDto toDto(){
-        return  new UserResponseDto(this);
-    }
 
     public void updateRefreshToken(String token){
         this.refreshToken=token;
