@@ -58,7 +58,6 @@ public class GoogleOauthService {
 
     public ResponseEntity<String> requestAccessToken(String code,String redirectUrl) {
         String GOOGLE_TOKEN_REQUEST_URL="https://oauth2.googleapis.com/token";
-        RestTemplate restTemplate=new RestTemplate();
         Map<String, Object> params = new HashMap<>();
         params.put("code", code);
         params.put("client_id", GOOGLE_SNS_CLIENT_ID);
@@ -79,7 +78,6 @@ public class GoogleOauthService {
         System.out.println("response.getBody() = " + response.getBody());
         GoogleOAuthToken googleOAuthToken= objectMapper.readValue(response.getBody(),GoogleOAuthToken.class);
         return googleOAuthToken;
-
     }
 
     public ResponseEntity<String> requestUserInfo(GoogleOAuthToken oAuthToken) {
