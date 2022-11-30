@@ -2,13 +2,14 @@ package com.developer.wiki.question.query.application;
 
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.question.command.domain.QuestionSearchRepository;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)

@@ -1,14 +1,13 @@
 package com.developer.wiki.oauth.dto;
 
 import com.developer.wiki.question.command.domain.MainCategory;
+import com.developer.wiki.question.command.domain.SubCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jboss.jandex.Main;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +17,8 @@ public class CommentDto {
     private String content;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;
+    private Long questionId;
     private String title;
     private MainCategory mainCategory;
+    private SubCategory subCategory;
 }

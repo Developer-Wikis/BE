@@ -4,13 +4,12 @@ package com.developer.wiki.oauth.controller;
 import com.developer.wiki.common.exception.BadRequestException;
 import com.developer.wiki.common.exception.UnAuthorizedException;
 import com.developer.wiki.oauth.User;
+import com.developer.wiki.oauth.UserFacade;
 import com.developer.wiki.oauth.dto.CommentDto;
 import com.developer.wiki.oauth.dto.ImageDto;
 import com.developer.wiki.oauth.dto.NicknameDto;
 import com.developer.wiki.oauth.dto.UserResponseDto;
 import com.developer.wiki.oauth.service.UserService;
-import com.developer.wiki.oauth.util.AwsService;
-import com.developer.wiki.question.command.domain.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,19 +20,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
+    private final UserFacade userFacade;
 
     @GetMapping
     public ResponseEntity<UserResponseDto> getUserInfo(@AuthenticationPrincipal User currentUser){
-        return ResponseEntity.ok().body(currentUser.toDto());
+        //북마크 갯수, 답글 갯수 도 내려주기
+        var userInfo=userFacade.getUserInfo(currentUser);
+        return ResponseEntity.ok().body(userInfo);
     }
 
     @DeleteMapping("/{userId}")

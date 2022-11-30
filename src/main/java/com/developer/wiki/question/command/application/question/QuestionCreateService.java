@@ -6,11 +6,12 @@ import com.developer.wiki.question.command.domain.QuestionRepository;
 import com.developer.wiki.question.command.domain.TailQuestion;
 import com.developer.wiki.question.command.domain.TailQuestionRepository;
 import com.developer.wiki.question.util.QuestionConverter;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional

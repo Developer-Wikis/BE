@@ -4,8 +4,6 @@ import com.developer.wiki.common.exception.BadRequestException;
 import com.developer.wiki.common.exception.ConflictException;
 import com.developer.wiki.common.exception.NotFoundException;
 import com.developer.wiki.common.exception.UnAuthorizedException;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -13,6 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ExceptionAdvice {

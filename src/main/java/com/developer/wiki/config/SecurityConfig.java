@@ -2,9 +2,7 @@ package com.developer.wiki.config;
 
 import com.developer.wiki.oauth.CustomOAuth2UserService;
 import com.developer.wiki.oauth.OAuth2SuccessHandler;
-import com.developer.wiki.oauth.TokenService;
 import com.developer.wiki.oauth.UserRepository;
-import com.developer.wiki.oauth.jwt.JwtFilter;
 import com.developer.wiki.oauth.jwt.RefreshTokenFilter;
 import com.developer.wiki.oauth.jwt.newJwtFilter;
 import com.developer.wiki.oauth.util.JwtUtil;

@@ -1,11 +1,7 @@
 package com.developer.wiki.question.command.application.question;
 
 import com.developer.wiki.question.command.application.dto.CreateTailQuestionRequest;
-import com.developer.wiki.question.command.domain.EntityNotFoundException;
-import com.developer.wiki.question.command.domain.Question;
-import com.developer.wiki.question.command.domain.QuestionRepository;
-import com.developer.wiki.question.command.domain.TailQuestion;
-import com.developer.wiki.question.command.domain.TailQuestionRepository;
+import com.developer.wiki.question.command.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

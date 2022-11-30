@@ -2,7 +2,6 @@ package com.developer.wiki.oauth.service;
 
 import com.developer.wiki.common.exception.BadRequestException;
 import com.developer.wiki.common.exception.NotFoundException;
-import com.developer.wiki.config.ModelMapperConfig;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.dto.CommentDto;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +28,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final AwsService awsService;
-    private final ModelMapperConfig modelMapperConfig;
     @Transactional
     public void deleteUser(Long userId){
         userRepository.deleteById(userId);
@@ -65,12 +62,20 @@ public class UserService {
     public Page<CommentDto> findCommentList(Long userId, Pageable pageable){
        List<Comment> list=commentRepository.findByUserId(userId);
        List<CommentDto> commentDtoList=list.stream()
-               .map(comment -> new CommentDto(comment.getId(),comment.getContent(),comment.getCreatedAt(),comment.getQuestion().getTitle(),comment.getQuestion().getMainCategory())
+               .map(comment -> new CommentDto(
+                       comment.getId()
+                       ,comment.getContent()
+                       ,comment.getCreatedAt()
+                       ,comment.getQuestion().getId()
+                       ,comment.getQuestion().getTitle()
+                       ,comment.getQuestion().getMainCategory()
+                       ,comment.getQuestion().getSubCategory()
+                       )
                )
                .collect(Collectors.toList());
         final int start = (int)pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), commentDtoList.size());
-       Page<CommentDto> pageComment=new PageImpl<CommentDto>(commentDtoList.subList(start,end),pageable,commentDtoList.size());
+       Page<CommentDto> pageComment=new PageImpl<>(commentDtoList.subList(start,end),pageable,commentDtoList.size());
        return pageComment;
     }
 

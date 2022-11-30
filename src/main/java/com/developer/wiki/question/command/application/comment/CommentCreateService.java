@@ -1,16 +1,13 @@
 package com.developer.wiki.question.command.application.comment;
 
 import com.developer.wiki.question.command.application.dto.CreateCommentRequest;
-import com.developer.wiki.question.command.domain.Comment;
-import com.developer.wiki.question.command.domain.CommentRepository;
-import com.developer.wiki.question.command.domain.EntityNotFoundException;
-import com.developer.wiki.question.command.domain.Question;
-import com.developer.wiki.question.command.domain.QuestionRepository;
+import com.developer.wiki.question.command.domain.*;
 import com.developer.wiki.question.util.CommentConverter;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Service
 @Transactional

@@ -4,10 +4,11 @@ import com.developer.wiki.common.exception.NotFoundException;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
-import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @Transactional
@@ -53,4 +54,7 @@ public class BookmarkService {
     bookmarkRepository.delete(bookmark);
   }
 
+    public Long getMyBookMarkSize(Long userId) {
+        return bookmarkRepository.countByUserId(userId);
+    }
 }
