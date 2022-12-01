@@ -14,6 +14,10 @@ spring:
       hibernate.format_sql: true
       hibernate:
         default_batch_fetch_size: 1000
+  servlet:
+    multipart:
+      maxFileSize: 5MB
+      maxRequestSize: 10MB
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: ENC(aDY7D1okxkccvPE9kZk6XZmpxK07cD4poaCeU3DLsJOfD1rCsB5FzvDEN8Y1bQePmSCGgAvL8OM=)
