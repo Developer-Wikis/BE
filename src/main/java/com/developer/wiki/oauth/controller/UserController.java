@@ -71,7 +71,7 @@ public class UserController {
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping("/profile/default/{userId}")
+    @PutMapping("/profile/default/{userId}")
     public ResponseEntity<Boolean> changeDefaultProfile(@AuthenticationPrincipal User currentUser,
                                                       @PathVariable(name = "userId")Long userId){
         if(!currentUser.getId().equals(userId)) throw new BadRequestException("Not Match Userid");
