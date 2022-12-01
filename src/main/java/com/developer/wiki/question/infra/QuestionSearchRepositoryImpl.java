@@ -1,6 +1,9 @@
 package com.developer.wiki.question.infra;
 
 
+import static com.developer.wiki.bookmark.QBookmark.bookmark;
+import static com.developer.wiki.question.command.domain.QQuestion.question;
+
 import com.developer.wiki.question.command.domain.MainCategory;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionSearchRepository;
@@ -9,18 +12,18 @@ import com.developer.wiki.question.query.application.SummaryQuestionResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.*;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.ObjectUtils;
-
-import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static com.developer.wiki.bookmark.QBookmark.bookmark;
-import static com.developer.wiki.question.command.domain.QQuestion.question;
+import javax.persistence.EntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.ObjectUtils;
 
 @Repository
 public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
@@ -38,16 +41,14 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
         .leftJoin(question.bookmarks)
         .where(mainCategoryEq(mainCategory), subCategoryEq(mainCategory, subCategory),
             question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())
-        .limit(pageable.getPageSize() + 1).distinct().fetch();
+        .limit(pageable.getPageSize()).distinct().fetch();
     List<SummaryQuestionResponse> summaryQuestionResponses = questions.stream().map(question -> {
       Boolean isBookmarked = exist(question.getId(), userId);
       return new SummaryQuestionResponse(question.getId(), question.getTitle(),
           question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
           question.getCommentCount(), question.getCreatedAt(), isBookmarked);
     }).collect(Collectors.toList());
-    System.out.println(summaryQuestionResponses);
-    Long count = jpaQueryFactory.select(question.count()).from(question).fetchOne();
-    return new PageImpl<>(summaryQuestionResponses, pageable, count);
+    return new PageImpl<>(summaryQuestionResponses, pageable, questions.size());
   }
 
   @Override
@@ -65,9 +66,7 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
           question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
           question.getCommentCount(), question.getCreatedAt(), isBookmarked);
     }).collect(Collectors.toList());
-    System.out.println(summaryQuestionResponses);
-    Long count = jpaQueryFactory.select(question.count()).from(question).fetchOne();
-    return new PageImpl<>(summaryQuestionResponses, pageable, count);
+    return new PageImpl<>(summaryQuestionResponses, pageable, questions.size());
   }
 
   @Override
