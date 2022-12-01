@@ -1,11 +1,10 @@
 package com.developer.wiki.question.command.domain;
 
 import com.developer.wiki.question.query.application.SummaryQuestionResponse;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-
-import java.util.List;
 
 public interface QuestionSearchRepository {
 
@@ -16,4 +15,6 @@ public interface QuestionSearchRepository {
       Long userId);
 
   Slice<Question> findRandomBy(Pageable pageable, String mainCategory, List<String> subCategory);
+
+  Page<SummaryQuestionResponse> findPageByUserIdAndKeyword(Pageable pageable, Long userId, String keyword);
 }

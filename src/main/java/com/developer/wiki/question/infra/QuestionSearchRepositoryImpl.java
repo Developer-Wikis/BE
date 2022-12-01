@@ -86,6 +86,23 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
     return new SliceImpl<>(courses, pageable, hasNext);
   }
 
+  @Override
+  public Page<SummaryQuestionResponse> findPageByUserIdAndKeyword(Pageable pageable, Long userId,
+      String keyword) {
+    List<Question> questions = jpaQueryFactory.select(question).from(question)
+        .leftJoin(question.bookmarks)
+        .where(keywordListContains(keyword), question.isApproved.isTrue())
+        .orderBy(question.id.asc()).offset(pageable.getOffset()).limit(pageable.getPageSize())
+        .distinct().fetch();
+    List<SummaryQuestionResponse> summaryQuestionResponses = questions.stream().map(question -> {
+      Boolean isBookmarked = exist(question.getId(), userId);
+      return new SummaryQuestionResponse(question.getId(), question.getTitle(),
+          question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
+          question.getCommentCount(), question.getCreatedAt(), isBookmarked);
+    }).collect(Collectors.toList());
+    return new PageImpl<>(summaryQuestionResponses, pageable, questions.size());
+  }
+
   private BooleanExpression mainCategoryEq(String mainCategory) {
     return ObjectUtils.isEmpty(mainCategory) ? null
         : question.mainCategory.eq(MainCategory.of(mainCategory));
@@ -112,7 +129,7 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
     return Objects.isNull(userId) ? null : bookmark.userId.eq(userId);
   }
 
-  public Boolean exist(Long questionId, Long userId) {
+  private Boolean exist(Long questionId, Long userId) {
     if (userId == null) {
       userId = 0L;
     }
@@ -121,6 +138,19 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
 
     return fetchOne != null;
 
+  }
+
+  private BooleanBuilder keywordListContains(String keyword) {
+    if (ObjectUtils.isEmpty(keyword)) {
+      return null;
+    }
+    BooleanBuilder builder = new BooleanBuilder();
+    String[] splitedKeyword = keyword.split(" ");
+    for (String value : splitedKeyword) {
+      builder.or(question.title.contains(value));
+      builder.or(question.tailQuestions.any().tailQuestion.contains(value));
+    }
+    return builder;
   }
 
 }
