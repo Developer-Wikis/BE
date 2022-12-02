@@ -1,12 +1,20 @@
 package com.developer.wiki.question.command.domain;
 
+import com.developer.wiki.oauth.User;
 import com.developer.wiki.question.util.PasswordEncrypter;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comment")
@@ -38,8 +46,8 @@ public class Comment {
   @ManyToOne
   @JoinColumn(name = "question_id")
   private Question question;
-  @Column(name = "user_id")
-  private Long userId = null;
+  @ManyToOne
+  private User user;
 
   public Comment(String nickname, String password, String content, Question question) {
     this.nickname = nickname;
@@ -48,17 +56,14 @@ public class Comment {
     this.commentRole = CommentRole.ANONYMOUS;
     this.question = question;
     this.createdAt = LocalDateTime.now();
-    this.userId = null;
   }
 
-  public Comment(String nickname, String password, String content, Question question, Long userId) {
-    this.nickname = nickname;
-    this.password = password;
+  public Comment(String content, Question question, User user) {
     this.content = content;
     this.commentRole = CommentRole.USER;
     this.question = question;
     this.createdAt = LocalDateTime.now();
-    this.userId = userId;
+    this.user = user;
   }
 
   public void matchPassword(String password) {
@@ -83,7 +88,4 @@ public class Comment {
     this.content = content;
   }
 
-  public Long getUserId() {
-    return userId;
-  }
 }
