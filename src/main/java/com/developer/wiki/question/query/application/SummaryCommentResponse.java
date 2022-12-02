@@ -1,12 +1,11 @@
 package com.developer.wiki.question.query.application;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -18,7 +17,10 @@ public class SummaryCommentResponse {
   private String username;
   private String role;
   private Long userId;
+  private String profileUrl;
   private String content;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDateTime createdAt;
+
+
 }
