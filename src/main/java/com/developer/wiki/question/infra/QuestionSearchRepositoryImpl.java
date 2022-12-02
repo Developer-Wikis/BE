@@ -48,7 +48,13 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
           question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
           question.getCommentCount(), question.getCreatedAt(), isBookmarked);
     }).collect(Collectors.toList());
-    return new PageImpl<>(summaryQuestionResponses, pageable, questions.size());
+    long total = jpaQueryFactory.select(question).from(question)
+        .leftJoin(question.bookmarks)
+        .where(mainCategoryEq(mainCategory), subCategoryEq(mainCategory, subCategory),
+            question.isApproved.isTrue()).orderBy(question.id.asc()).offset(pageable.getOffset())
+        .limit(pageable.getPageSize()).distinct()
+        .fetchCount();
+    return new PageImpl<>(summaryQuestionResponses, pageable, total);
   }
 
   @Override
@@ -66,7 +72,13 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
           question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
           question.getCommentCount(), question.getCreatedAt(), isBookmarked);
     }).collect(Collectors.toList());
-    return new PageImpl<>(summaryQuestionResponses, pageable, questions.size());
+    long total = jpaQueryFactory.select(question).from(question)
+        .leftJoin(question.bookmarks)
+        .where(question.bookmarks.any().userId.eq(userId), mainCategoryEq(mainCategory),
+            subCategoryEq(mainCategory, subCategory), question.isApproved.isTrue())
+        .orderBy(question.id.asc()).offset(pageable.getOffset()).limit(pageable.getPageSize() + 1)
+        .distinct().fetchCount();
+    return new PageImpl<>(summaryQuestionResponses, pageable, total);
   }
 
   @Override
@@ -100,7 +112,12 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
           question.getMainCategory(), question.getSubCategory(), question.getViewCount(),
           question.getCommentCount(), question.getCreatedAt(), isBookmarked);
     }).collect(Collectors.toList());
-    return new PageImpl<>(summaryQuestionResponses, pageable, questions.size());
+    long total = jpaQueryFactory.select(question).from(question)
+        .leftJoin(question.bookmarks)
+        .where(keywordListContains(keyword), question.isApproved.isTrue())
+        .orderBy(question.id.asc()).offset(pageable.getOffset()).limit(pageable.getPageSize())
+        .distinct().fetchCount();
+    return new PageImpl<>(summaryQuestionResponses, pageable, total);
   }
 
   private BooleanExpression mainCategoryEq(String mainCategory) {
