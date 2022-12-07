@@ -12,7 +12,7 @@ public class UserResponseDto {
     private String profileUrl;
     private String role;
     private Long commentSize;
-    private Long bookMarkSize;
+    private Long bookmarkSize;
 
 
     public UserResponseDto(User user,Long commentSize, Long bookMarkSize){
@@ -22,6 +22,6 @@ public class UserResponseDto {
         this.profileUrl= user.getProfileUrl();
         this.role=user.getRole().name();
         this.commentSize=commentSize;
-        this.bookMarkSize=bookMarkSize;
+        this.bookmarkSize=bookMarkSize;
     }
 }

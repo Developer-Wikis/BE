@@ -68,8 +68,8 @@ public class UserService {
                        ,comment.getCreatedAt()
                        ,comment.getQuestion().getId()
                        ,comment.getQuestion().getTitle()
-                       ,comment.getQuestion().getMainCategory()
-                       ,comment.getQuestion().getSubCategory()
+                       ,comment.getQuestion().getMainCategory().name()
+                       ,comment.getQuestion().getSubCategory().getCategory()
                        )
                )
                .collect(Collectors.toList());
