@@ -19,6 +19,6 @@ public class CommentDto {
     private LocalDateTime createdAt;
     private Long questionId;
     private String title;
-    private MainCategory mainCategory;
-    private SubCategory subCategory;
+    private String mainCategory;
+    private String subCategory;
 }
