@@ -19,7 +19,7 @@ public class CommentDeleteController {
 
   @DeleteMapping("/{commentId}")
   public ResponseEntity<Void> delete(@AuthenticationPrincipal User currentUser,
-      @PathVariable Long commentId, @RequestBody PasswordRequest passwordRequest) {
+      @PathVariable Long commentId, @RequestBody(required = false) PasswordRequest passwordRequest) {
     Long userId = Objects.isNull(currentUser) ? null : currentUser.getId();
     commentDeleteService.delete(commentId, passwordRequest,userId);
     return ResponseEntity.ok(null);
