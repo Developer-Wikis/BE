@@ -3,6 +3,7 @@ package com.developer.wiki.question.command.domain;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.question.util.PasswordEncrypter;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -73,6 +74,9 @@ public class Comment {
   }
 
   public boolean checkPassword(String password) {
+    if (Objects.isNull(this.password)) {
+      return false;
+    }
     if (!PasswordEncrypter.isMatch(password, this.password)) {
       return false;
     }
