@@ -1,14 +1,12 @@
 package com.developer.wiki.bookmark;
 
 import com.developer.wiki.common.exception.NotFoundException;
-import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.question.command.domain.Question;
 import com.developer.wiki.question.command.domain.QuestionRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @Transactional
@@ -16,33 +14,26 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class BookmarkService {
 
   private final QuestionRepository questionRepository;
-  private final UserRepository userRepository;
   private final BookmarkRepository bookmarkRepository;
 
   public Boolean toggle(Long questionId, Long userId) {
     Question question = questionRepository.findById(questionId)
         .orElseThrow(() -> new NotFoundException("존재하지 않는 ID입니다."));
-    AtomicBoolean isBookmarked = new AtomicBoolean();
-    bookmarkRepository.findByUserIdAndQuestion(userId, question).ifPresentOrElse(bookmark -> {
-      unBookmark(bookmark);
-      isBookmarked.set(false);
-    }, () -> {
+    List<Bookmark> bookmarks = bookmarkRepository.findAllByUserIdAndQuestion(userId, question);
+    if (bookmarks.isEmpty()) {
       bookmark(userId, question);
-      isBookmarked.set(true);
-    });
-    return isBookmarked.get();
+      return true;
+    } else {
+      unBookmark(userId, question);
+      return false;
+    }
   }
 
   public Boolean getBookmarked(Long questionId, Long userId) {
     Question question = questionRepository.findById(questionId)
         .orElseThrow(() -> new NotFoundException("존재하지 않는 ID입니다."));
-    AtomicBoolean isBookmarked = new AtomicBoolean();
-    bookmarkRepository.findByUserIdAndQuestion(userId, question).ifPresentOrElse(bookmark -> {
-      isBookmarked.set(true);
-    }, () -> {
-      isBookmarked.set(false);
-    });
-    return isBookmarked.get();
+    List<Bookmark> bookmarks = bookmarkRepository.findAllByUserIdAndQuestion(userId, question);
+    return bookmarks.isEmpty() ? true : false;
   }
 
   private void bookmark(Long userId, Question question) {
@@ -50,11 +41,11 @@ public class BookmarkService {
     bookmarkRepository.save(bookmark);
   }
 
-  private void unBookmark(Bookmark bookmark) {
-    bookmarkRepository.delete(bookmark);
+  private void unBookmark(Long userId, Question question) {
+    bookmarkRepository.deleteByUserIdAndQuestion(userId, question);
   }
 
-    public Long getMyBookMarkSize(Long userId) {
-        return bookmarkRepository.countByUserId(userId);
-    }
+  public Long getMyBookMarkSize(Long userId) {
+    return bookmarkRepository.countByUserId(userId);
+  }
 }
