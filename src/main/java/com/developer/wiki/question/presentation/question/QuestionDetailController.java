@@ -34,6 +34,6 @@ public class QuestionDetailController {
   @PutMapping("/{questionId}/add")
   public ResponseEntity<Void> addViewCount(@PathVariable Long questionId) {
     questionDetailService.addViewCount(questionId);
-    return (ResponseEntity<Void>) ResponseEntity.ok();
+    return ResponseEntity.ok().body(null);
   }
 }

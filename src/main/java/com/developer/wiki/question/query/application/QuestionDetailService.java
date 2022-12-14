@@ -31,7 +31,6 @@ public class QuestionDetailService {
         .orElse(null);
     Long nextId = questionRepository.findNextIdById(questionId, mainCategory.name(), subCategories)
         .orElse(null);
-    question.addViewCount();
     return QuestionConverter.ofDetail(question, question.getTailQuestions(), prevId, nextId,
         isBookmarkedQuestion(currentUser, question));
   }
