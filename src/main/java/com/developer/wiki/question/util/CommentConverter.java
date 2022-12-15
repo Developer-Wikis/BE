@@ -26,7 +26,7 @@ public class CommentConverter {
   }
 
   public static SummaryCommentResponse ofSummary(Comment comment) {
-    return SummaryCommentResponse.builder().id(comment.getId()).username(comment.getNickname())
+    return SummaryCommentResponse.builder().id(comment.getId()).username(Objects.isNull(comment.getUser()) ? comment.getNickname() : comment.getUser().getName())
         .role(comment.getCommentRole().name())
         .userId(Objects.isNull(comment.getUser()) ? null : comment.getUser().getId())
         .profileUrl(Objects.isNull(comment.getUser()) ? null : comment.getUser().getProfileUrl())
