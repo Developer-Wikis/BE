@@ -64,7 +64,7 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
         .leftJoin(question.bookmarks)
         .where(question.bookmarks.any().userId.eq(userId), mainCategoryEq(mainCategory),
             subCategoryEq(mainCategory, subCategory), question.isApproved.isTrue())
-        .orderBy(question.id.asc()).offset(pageable.getOffset()).limit(pageable.getPageSize() + 1)
+        .orderBy(question.id.asc()).offset(pageable.getOffset()).limit(pageable.getPageSize())
         .distinct().fetch();
     List<SummaryQuestionResponse> summaryQuestionResponses = questions.stream().map(question -> {
       Boolean isBookmarked = exist(question.getId(), userId);
