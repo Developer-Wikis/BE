@@ -60,7 +60,7 @@ public class UserService {
     }
     @Transactional
     public Page<CommentDto> findCommentList(Long userId, Pageable pageable){
-       List<Comment> list=commentRepository.findByUserId(userId);
+       List<Comment> list=commentRepository.findByUserIdOrderByCreatedAtDesc(userId);
        List<CommentDto> commentDtoList=list.stream()
                .map(comment -> new CommentDto(
                        comment.getId()
