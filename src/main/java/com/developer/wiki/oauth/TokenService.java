@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 
@@ -34,7 +35,7 @@ public class TokenService {
                 Jwts.builder()
                         .setClaims(claims)
                         .setIssuedAt(now)
-                        .setExpiration(new Date(now.getTime() + tokenPeriod))
+                        .setExpiration(new Date(now.getTime() + Duration.ofMinutes(5).toMillis()))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact(),
                 Jwts.builder()

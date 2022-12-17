@@ -8,7 +8,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Slf4j
 public enum MainCategory {
-  fe, be;
+  fe, be, all;
 
   public static MainCategory of(String category) {
     if (Objects.isNull(category)) {
