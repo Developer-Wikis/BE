@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class JwtUtil {
                     .setHeader(headers)
                     .setClaims(payloads)
                     .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
-                    .setExpiration(new Date(now.getTime() + tokenPeriod))
+                    .setExpiration(new Date(now.getTime() + Duration.ofMinutes(5).toMillis()))
                     .signWith(SignatureAlgorithm.HS256, key.getBytes())
                     .compact();
             return jwtStr;
