@@ -121,6 +121,9 @@ public class QuestionSearchRepositoryImpl implements QuestionSearchRepository {
   }
 
   private BooleanExpression mainCategoryEq(String mainCategory) {
+    if(mainCategory.equals("all")){
+      return ObjectUtils.isEmpty(mainCategory) ? null : question.mainCategory.eq(MainCategory.of("fe")).or(question.mainCategory.eq(MainCategory.of("be")));
+    }
     return ObjectUtils.isEmpty(mainCategory) ? null
         : question.mainCategory.eq(MainCategory.of(mainCategory));
   }
