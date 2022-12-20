@@ -35,13 +35,13 @@ public class TokenService {
                 Jwts.builder()
                         .setClaims(claims)
                         .setIssuedAt(now)
-                        .setExpiration(new Date(now.getTime() + Duration.ofMinutes(5).toMillis()))
+                        .setExpiration(new Date(now.getTime() + Duration.ofMinutes(1).toMillis()))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact(),
                 Jwts.builder()
                         .setIssuedAt(now)
                         .setIssuer("devWiki")
-                        .setExpiration(new Date(now.getTime() + refreshPeriod))
+                        .setExpiration(new Date(now.getTime() + Duration.ofMinutes(2).toMillis()))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact());
     }
