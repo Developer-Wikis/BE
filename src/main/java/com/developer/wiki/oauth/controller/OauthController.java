@@ -29,9 +29,6 @@ import java.util.Map;
 @RequestMapping("/api/v1/oauth")
 public class OauthController {
     private  final OauthService oauthService;
-
-    private final RestTemplate restTemplate;
-
     private final ObjectMapper objectMapper;
     @Value("${custom.github.client-id}")
     private  String GITHUB_CLIENT_ID;

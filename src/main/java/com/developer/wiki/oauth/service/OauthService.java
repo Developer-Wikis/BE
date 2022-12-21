@@ -1,6 +1,5 @@
 package com.developer.wiki.oauth.service;
 
-import com.developer.wiki.oauth.TokenService;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.dto.GoogleOAuthToken;
@@ -19,7 +18,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OauthService {
     private final GoogleOauthService googleOauthService;
-    private final TokenService tokenService;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     @Transactional

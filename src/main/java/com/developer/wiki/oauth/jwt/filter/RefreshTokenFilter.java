@@ -1,4 +1,4 @@
-package com.developer.wiki.oauth.jwt;
+package com.developer.wiki.oauth.jwt.filter;
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
 import com.developer.wiki.oauth.exception.RefreshTokenException;
@@ -96,9 +96,12 @@ public class RefreshTokenFilter  extends OncePerRequestFilter {
 
         //RefrshToken이 3일도 안남았다면
         //TODO User안에 update Token해주기
-        if(gapTime < (60 *60 * 24 * 3* 1000L  ) ){
+        if(gapTime < (60 *60 * 24 * 3* 1000L) ){
             log.info("new Refresh Token required...  ");
+            User currentUser=userRepository.findByRefreshToken(refreshTokenValue).orElseThrow();
             refreshTokenValue = jwtUtil.generateRefreshToken();
+            currentUser.updateRefreshToken(refreshTokenValue);
+            userRepository.save(currentUser);
         }
 
         log.info("Refresh Token result....................");

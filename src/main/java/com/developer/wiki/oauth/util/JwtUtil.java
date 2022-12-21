@@ -38,7 +38,7 @@ public class JwtUtil {
                     .setHeader(headers)
                     .setClaims(payloads)
                     .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
-                    .setExpiration(new Date(now.getTime() + Duration.ofMinutes(5).toMillis()))
+                    .setExpiration(new Date(now.getTime() + Duration.ofMinutes(1).toMillis()))
                     .signWith(SignatureAlgorithm.HS256, key.getBytes())
                     .compact();
             return jwtStr;
@@ -55,7 +55,7 @@ public class JwtUtil {
                 .setHeader(headers)
                 .setClaims(payloads)
                 .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
-                .setExpiration(new Date(now.getTime() + refreshPeriod))
+                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(10).toMillis()))
                 .signWith(SignatureAlgorithm.HS256, key.getBytes())
                 .compact();
         return jwtStr;
