@@ -1,5 +1,6 @@
 package com.developer.wiki.oauth;
 
+import com.developer.wiki.oauth.jwt.Token;
 import com.developer.wiki.oauth.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
-    private final TokenService tokenService;
     private final UserRequestMapper userRequestMapper;
     private final ObjectMapper objectMapper;
     private final JwtUtil jwtUtil;
