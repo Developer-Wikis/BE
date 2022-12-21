@@ -1,4 +1,4 @@
-package com.developer.wiki.oauth.jwt;
+package com.developer.wiki.oauth.jwt.filter;
 
 import com.developer.wiki.oauth.User;
 import com.developer.wiki.oauth.UserRepository;
@@ -88,7 +88,6 @@ public class newJwtFilter extends OncePerRequestFilter {
     }
 
     try {
-      //Map<String, Object> values = jwtUtil.validateToken(tokenStr);
       Map<String, Object> email = jwtUtil.validateToken(tokenStr);
       return (String) email.get("email");
     } catch (MalformedJwtException malformedJwtException) {

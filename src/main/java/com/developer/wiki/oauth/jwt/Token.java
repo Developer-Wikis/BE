@@ -1,4 +1,4 @@
-package com.developer.wiki.oauth;
+package com.developer.wiki.oauth.jwt;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
