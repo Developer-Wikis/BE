@@ -4,20 +4,19 @@ package com.developer.wiki.oauth.util;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 @Component
 @Log4j2
 public class JwtUtil {
-    private final long  tokenPeriod = 60 *60 * 24 * 7* 1000L; //1주
+    private final long  tokenPeriod = 60 *30 * 24 * 7* 1000L; //1주
     private  final long refreshPeriod = 60 * 60 * 24 * 7 * 1000L*3; //3주
 
     @Value("${custom.jwt.secretKey}")
@@ -38,7 +37,7 @@ public class JwtUtil {
                     .setHeader(headers)
                     .setClaims(payloads)
                     .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
-                    .setExpiration(new Date(now.getTime() + Duration.ofMinutes(1).toMillis()))
+                    .setExpiration(new Date(now.getTime() + Duration.ofMinutes(30).toMillis()))
                     .signWith(SignatureAlgorithm.HS256, key.getBytes())
                     .compact();
             return jwtStr;
@@ -55,7 +54,7 @@ public class JwtUtil {
                 .setHeader(headers)
                 .setClaims(payloads)
                 .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
-                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(2).toMillis()))
+                .setExpiration(new Date(now.getTime() + Duration.ofDays(7).toMillis()))
                 .signWith(SignatureAlgorithm.HS256, key.getBytes())
                 .compact();
         return jwtStr;
