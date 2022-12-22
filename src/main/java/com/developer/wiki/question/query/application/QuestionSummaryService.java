@@ -1,14 +1,15 @@
 package com.developer.wiki.question.query.application;
 
-import com.developer.wiki.question.command.domain.Question;
+import com.developer.wiki.oauth.User;
 import com.developer.wiki.question.command.domain.QuestionSearchRepository;
-import com.developer.wiki.question.util.QuestionConverter;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,9 +18,10 @@ public class QuestionSummaryService {
 
   private final QuestionSearchRepository questionSearchRepository;
 
-  public Slice<SummaryQuestionResponse> findSlice(Pageable pageable, String mainCategory,
-      List<String> subCategory) {
-    Slice<Question> questions = questionSearchRepository.findSliceBy(pageable, mainCategory, subCategory);
-    return questions.map(QuestionConverter::ofSummary);
+  public Slice<SummaryQuestionResponse> findPage(Pageable pageable, String mainCategory,
+      List<String> subCategory, User currentUser) {
+    Long userId = Objects.isNull(currentUser) ? null : currentUser.getId();
+    return questionSearchRepository.findPageByUserId(pageable, mainCategory,
+        subCategory,userId);
   }
 }

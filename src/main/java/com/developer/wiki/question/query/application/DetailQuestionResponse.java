@@ -1,12 +1,13 @@
 package com.developer.wiki.question.query.application;
 
-import java.time.LocalDateTime;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Builder
@@ -25,4 +26,5 @@ public class DetailQuestionResponse {
   private LocalDateTime createdAt;
   private Long prevId;
   private Long nextId;
+  private Boolean isBookmarked;
 }

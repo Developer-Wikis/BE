@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ENC(Stk5BNqlTPDUykrnPM0g7bOZ+T/c4kAa191scAucdBOZHq9Eq8eLFTbtFhoBeNRKoMMEXGfUC6MHHFxk4DqReqRiSNpue7u7XblRjluFdL9VKbQxsRH0Aw==)
+            client-secret: ENC(zJ/hEIdsY55cmXyEk8M2SYJ6RUGhxJByLc1whUj6IAfh9ZwWmYSDkdtI5k8jQPE9)
+            scope:
+              - profile
+              - email
+custom:
+  google:
+    scope : https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email
+    client-id: ENC(Stk5BNqlTPDUykrnPM0g7bOZ+T/c4kAa191scAucdBOZHq9Eq8eLFTbtFhoBeNRKoMMEXGfUC6MHHFxk4DqReqRiSNpue7u7XblRjluFdL9VKbQxsRH0Aw==)
+    client-secret: ENC(zJ/hEIdsY55cmXyEk8M2SYJ6RUGhxJByLc1whUj6IAfh9ZwWmYSDkdtI5k8jQPE9)
+  github:
+    client-id : ENC(PlT5DdeWhTqT/jyP81Ao4w5z53UDZ2t6cN7V0O+xtaI=)
+    client-secret : ENC(+xbNlumfURi7aixRrtMODILbhQY800HSVSz6/nIiOYLuTbbhcRvesFJsj45GhxA3HddjrOsUaCQ=)
+  jwt:
+    secretKey: ENC(4eL6R6/CT+2w1ss8z9kbLCGT+TLF4JrAw4HATFWQGA0ZVg53roc2Ej/OOKsI5G/9kBSzPV8dZ5l84UNnKMF8Iw==)

@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class CommentTest {
   @Autowired
   CommentRepository commentRepository;
 
-  @Test
+  //@Test
   void comment_create() {
     Comment comment = new Comment("nickname", PasswordEncrypter.encrypt("sdf"), "content", null);
     Comment savedComment = commentRepository.save(comment);

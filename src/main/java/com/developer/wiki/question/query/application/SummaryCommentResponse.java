@@ -14,8 +14,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class SummaryCommentResponse {
 
   private Long id;
-  private String nickname;
+  private String username;
+  private String role;
+  private Long userId;
+  private String profileUrl;
   private String content;
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDateTime createdAt;
+
+
 }
