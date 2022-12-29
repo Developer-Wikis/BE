@@ -51,7 +51,6 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.9'
     // AWS 의존성 추가
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.1.1'
