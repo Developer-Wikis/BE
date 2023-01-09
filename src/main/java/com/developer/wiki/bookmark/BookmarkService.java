@@ -33,7 +33,7 @@ public class BookmarkService {
     Question question = questionRepository.findById(questionId)
         .orElseThrow(() -> new NotFoundException("존재하지 않는 ID입니다."));
     List<Bookmark> bookmarks = bookmarkRepository.findAllByUserIdAndQuestion(userId, question);
-    return bookmarks.isEmpty() ? true : false;
+    return bookmarks.isEmpty() ? false : true;
   }
 
   private void bookmark(Long userId, Question question) {
