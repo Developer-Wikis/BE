@@ -15,7 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class User{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 

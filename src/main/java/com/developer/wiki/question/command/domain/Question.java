@@ -22,7 +22,7 @@ import java.util.Set;
 public class Question {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 

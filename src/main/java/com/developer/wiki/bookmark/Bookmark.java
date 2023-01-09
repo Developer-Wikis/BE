@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Bookmark {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
