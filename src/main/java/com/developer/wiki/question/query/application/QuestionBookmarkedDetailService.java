@@ -35,7 +35,7 @@ public class QuestionBookmarkedDetailService {
 
   private Boolean isBookmarkedQuestion(User currentUser, Question question) {
     if (!Objects.isNull(currentUser)) {
-      return bookmarkRepository.existsByUserIdAndQuestion(currentUser.getId(), question);
+      return bookmarkRepository.existsByUserIdAndQuestion_Id(currentUser.getId(), question.getId());
     }
     return Boolean.FALSE;
   }
