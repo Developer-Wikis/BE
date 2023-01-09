@@ -24,7 +24,7 @@ public class RefreshTokenException extends RuntimeException{
 
     public void sendResponseError(HttpServletResponse response){
 
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         Gson gson = new Gson();
